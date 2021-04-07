@@ -3,28 +3,25 @@ from .transform import Transform
 
 class Copy(Transform):
     def __init__(self, source, input, outputs):
-        super().__init__('copy', input, outputs, source)
-
-        if len(self._inputs) != 1:
-            raise TransformException(f"Wrong number of inputs to Copy {len(self._inputs)}.")
+        super().__init__('copy', (input,), outputs, source)
 
         if not source:
-            raise TransformException(f"Can't Copy from missing input.")
+            raise TransformException(f"Can't {self._name} from missing input.")
 
         schema = source.schema()
         if self.input() not in schema:
-            raise TransformException(f"Copy input field '{self.input()}' missing.")
+            raise TransformException(f"Missing input field '{self.input()}' in {self._name}.")
 
         for output in self._outputs:
             if output in schema:
-                raise TransformException(f"Copy output field '{output}' overwrites an existing field.")
+                raise TransformException(f"Output field '{output}' in {self._name} overwrites an existing field.")
 
     def input(self):
         return self._inputs[0]
 
     def _fan_out(self, d):
         if d is not None:
-            for idx, output in enumerate(self._outputs):
+            for output in self._outputs:
                 d[output] = d[self.input()]
         return d
 
