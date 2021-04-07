@@ -1,13 +1,10 @@
 import unittest
 from context import *
 
-def Construct(source=None, limit=1, offset=0):
-    return txf.Limit(source, limit, offset)
-
 class TestLimit(unittest.TestCase):
 
     def assert_window(self, offset, limit):
-        t = Construct(None, limit, offset)
+        t = txf.Limit(None, limit, offset)
 
         self.assertEqual('limit', t.name(), )
         self.assertEqual(tuple(), t.inputs())
@@ -34,7 +31,7 @@ class TestLimit(unittest.TestCase):
         self.assert_window(50, 25)
 
     def test_invalid_offset(self):
-        self.assertRaises(txf.TransformException, Construct, (None, 50, -1))
+        self.assertRaises(txf.TransformException, txf.Limit, None, 50, -1)
 
     def test_invalid_limit(self):
-        self.assertRaises(txf.TransformException, Construct, (None, -50, 0))
+        self.assertRaises(txf.TransformException, txf.Limit, None, -50, 0)
