@@ -27,5 +27,6 @@ class Cast(Transform):
 
     def next(self):
         row = super().next()
-        row[self.input()] = self._type(row[self.input()])
+        if row is not None:
+            row[self.input()] = self._type(row[self.input()])
         return row

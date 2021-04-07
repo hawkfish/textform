@@ -1,6 +1,9 @@
 import unittest
 from context import *
 
+class MockEmpty(txf.Transform):
+    def next(self) : return None
+
 class TestAdd(unittest.TestCase):
 
     def assert_construct(self, outputs, values):
@@ -54,6 +57,10 @@ class TestAdd(unittest.TestCase):
         outputs = ('Add 1', 'Add 2',)
         values = ('Thing 1', 2,)
         t = self.assert_add_multiple(outputs, values)
+
+    def test_last_row(self):
+        t = txf.Add(MockEmpty('empty'), 'Added', 1)
+        self.assertIsNone(t.next())
 
     def test_mismatch(self):
         self.assertRaises(txf.TransformException, txf.Add, None, ('Add 1', 'Add 2',), (2,))

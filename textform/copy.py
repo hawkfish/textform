@@ -23,8 +23,9 @@ class Copy(Transform):
         return self._inputs[0]
 
     def _fan_out(self, d):
-        for idx, output in enumerate(self._outputs):
-            d[output] = d[self.input()]
+        if d is not None:
+            for idx, output in enumerate(self._outputs):
+                d[output] = d[self.input()]
         return d
 
     def schema(self):

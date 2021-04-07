@@ -31,6 +31,7 @@ class Add(Transform):
 
     def next(self):
         row = super().next()
-        for idx, output in enumerate(self._outputs):
-            row[output] = self._values[idx]
+        if row is not None:
+            for idx, output in enumerate(self._outputs):
+                row[output] = self._values[idx]
         return row

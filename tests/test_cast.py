@@ -1,6 +1,9 @@
 import unittest
 from context import *
 
+class MockEmpty(txf.Transform):
+    def next(self) : return None
+
 class TestCast(unittest.TestCase):
 
     def assert_cast(self, input, type_, value):
@@ -23,6 +26,12 @@ class TestCast(unittest.TestCase):
 
     def test_cast_int(self):
         self.assert_cast('Target', str, 10)
+
+    def test_last_row(self):
+        input = 'Added'
+        t = txf.Add(MockEmpty('empty'), input, '10')
+        t = txf.Cast(t, input, int)
+        self.assertIsNone(t.next())
 
     def test_root(self):
         self.assertRaises(txf.TransformException, txf.Cast, None, 'Target', str)

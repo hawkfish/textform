@@ -1,6 +1,9 @@
 import unittest
 from context import *
 
+class MockEmpty(txf.Transform):
+    def next(self) : return None
+
 class TestCopy(unittest.TestCase):
 
     def assert_construct(self, input, outputs, values):
@@ -49,6 +52,12 @@ class TestCopy(unittest.TestCase):
         outputs = ('Clone 1', 'Clone 2',)
         value = 1
         t = self.assert_copy_multiple(input, outputs, value)
+
+    def test_last_row(self):
+        input = 'Added'
+        t = txf.Add(MockEmpty('empty'), input, '10')
+        t = txf.Copy(t, input, 'Clone')
+        self.assertIsNone(t.next())
 
     def test_root(self):
         self.assertRaises(txf.TransformException, txf.Copy, None, 'Added', 'Clone')
