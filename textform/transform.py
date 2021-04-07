@@ -1,5 +1,4 @@
-class TransformException(Exception):
-    pass
+from .common import TransformException
 
 class Transform:
     def __init__(self, name, inputs=(), outputs=(), source=None):
