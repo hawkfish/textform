@@ -7,8 +7,9 @@ class MockEmpty(txf.Transform):
 class TestCopy(unittest.TestCase):
 
     def assert_copy(self, input, outputs, value):
-        extra = 'Extra'
-        s = txf.Add(None, (extra, input,), (0, value,))
+        left = 'Left'
+        right = 'Right'
+        s = txf.Add(None, (left, input, right,), (0, value, 1,))
         t = txf.Copy(s, input, outputs)
 
         self.assertEqual('copy', t.name(), )
@@ -17,14 +18,17 @@ class TestCopy(unittest.TestCase):
         self.assertEqual(outputs, t.outputs())
 
         expected = list(s.outputs())
-        expected.extend(outputs)
+        expected[2:2] = list(outputs)
         self.assertEqual(expected, t.layout())
 
         schema = t.schema()
-        self.assertEqual(2 + len(outputs), len(schema))
+        self.assertEqual(3 + len(outputs), len(schema))
 
-        self.assertTrue(extra in schema)
-        self.assertEqual(int, schema[extra]['type'])
+        self.assertTrue(left in schema)
+        self.assertEqual(int, schema[left]['type'])
+
+        self.assertTrue(right in schema)
+        self.assertEqual(int, schema[right]['type'])
 
         self.assertTrue(input in schema)
         self.assertEqual(type(value), schema[input]['type'])

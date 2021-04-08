@@ -19,10 +19,10 @@ class Copy(Transform):
 
     def layout(self):
         #   Copy doesn't drop the inputs
-        layout = self._source.layout() if self._source else []
-        #   Outputs are inserted at the first removed input
+        layout = self._source.layout()
+        #   Output is inserted after the last input
         rightmost = layout.index(self.input()) + 1
-        layout[rightmost:] = list(self.outputs())
+        layout[rightmost:rightmost] = list(self.outputs())
 
         return layout
 
