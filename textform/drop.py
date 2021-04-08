@@ -10,6 +10,11 @@ class Drop(Transform):
             del d[input]
         return d
 
+    def layout(self):
+        layout = self._source.layout() if self._source else []
+        layout = list(filter(lambda input: input not in self._inputs, layout))
+        return layout
+
     def schema(self):
         return self._delete_inputs(super().schema())
 

@@ -59,6 +59,18 @@ class Transform:
     def outputs(self): return self._outputs
     def source(self): return self._source
 
+    def layout(self):
+        layout = self._source.layout() if self._source else []
+
+        #   Outputs are inserted at the first removed input
+        leftmost = len(layout)
+        if self._inputs:
+            leftmost = min([layout.index(input) for input in self._inputs])
+            layout = list(filter(lambda input: input not in self._inputs, layout))
+        layout[leftmost:leftmost] = list(self.outputs())
+
+        return layout
+
     def schema(self):
         if self._source: return self._source.schema()
         return {}

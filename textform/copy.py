@@ -17,6 +17,15 @@ class Copy(Transform):
                 d[output] = d[self.input()]
         return d
 
+    def layout(self):
+        #   Copy doesn't drop the inputs
+        layout = self._source.layout() if self._source else []
+        #   Outputs are inserted at the first removed input
+        rightmost = layout.index(self.input()) + 1
+        layout[rightmost:] = list(self.outputs())
+
+        return layout
+
     def schema(self):
         return self._fan_out(super().schema())
 

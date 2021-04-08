@@ -11,6 +11,9 @@ class TestDrop(unittest.TestCase):
         self.assertEqual(s, t.source())
         self.assertEqual(tuple(), t.outputs())
 
+        expected = list(filter(lambda input: input not in drops, inputs))
+        self.assertEqual(expected, t.layout())
+
         return t
 
     def assert_drop_all_one(self, input, value):

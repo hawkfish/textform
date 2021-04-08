@@ -6,34 +6,39 @@ class MockEmpty(txf.Transform):
 
 class TestCopy(unittest.TestCase):
 
-    def assert_construct(self, input, outputs, values):
-        s = txf.Add(None, input, values)
+    def assert_copy(self, input, outputs, value):
+        extra = 'Extra'
+        s = txf.Add(None, (extra, input,), (0, value,))
         t = txf.Copy(s, input, outputs)
 
         self.assertEqual('copy', t.name(), )
         self.assertEqual(s, t.source())
         self.assertEqual(input, t.input())
+        self.assertEqual(outputs, t.outputs())
+
+        expected = list(s.outputs())
+        expected.extend(outputs)
+        self.assertEqual(expected, t.layout())
+
+        schema = t.schema()
+        self.assertEqual(2 + len(outputs), len(schema))
+
+        self.assertTrue(extra in schema)
+        self.assertEqual(int, schema[extra]['type'])
+
+        self.assertTrue(input in schema)
+        self.assertEqual(type(value), schema[input]['type'])
+
+        row = t.next()
+        for output in outputs:
+            self.assertTrue(output in schema)
+            self.assertEqual(schema[input]['type'], schema[output]['type'])
+            self.assertEqual(row[input], row[output])
 
         return t
 
     def assert_copy_one(self, input, output, value):
-        t = self.assert_construct(input, output, value)
-
-        self.assertEqual((output,), t.outputs())
-
-        self.assertEqual({output: {'type': type(value)}, input: {'type': type(value)}}, t.schema())
-        self.assertEqual({output: value, input: value}, t.next())
-
-    def assert_copy_multiple(self, input, outputs, value):
-        t = self.assert_construct(input, outputs, value)
-
-        self.assertEqual(outputs, t.outputs())
-
-        schema = t.schema()
-        row = t.next()
-        for i, output in enumerate(outputs):
-            self.assertEqual(schema[input], schema[output])
-            self.assertEqual(row[input], row[output])
+        return self.assert_copy(input, (output,), value)
 
     def test_copy_string(self):
         self.assert_copy_one('Added', 'Clone', 'String')
@@ -45,13 +50,13 @@ class TestCopy(unittest.TestCase):
         input = 'Added'
         outputs = ('Clone 1', 'Clone 2',)
         value = 'String',
-        t = self.assert_copy_multiple(input, outputs, value)
+        t = self.assert_copy(input, outputs, value)
 
     def test_copy_ints(self):
         input = 'Added'
         outputs = ('Clone 1', 'Clone 2',)
         value = 1
-        t = self.assert_copy_multiple(input, outputs, value)
+        t = self.assert_copy(input, outputs, value)
 
     def test_last_row(self):
         input = 'Added'
