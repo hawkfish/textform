@@ -23,5 +23,7 @@ class Text(Transform):
             if line:
                 #   Only remove the newline - blanks may be important
                 row[self.output()] = line[:-1] if line[-1] == '\n' else line
+            else:
+                row = None
 
         return row

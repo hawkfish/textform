@@ -19,7 +19,7 @@ class Match(Transform):
     def next(self):
         while True:
             row = super().next()
-            if not row: break
+            if row is None: break
 
             matched = self._regexp.search(row[self.input()])
             if (matched and not self.invert()) or (self.invert() and not matched):
