@@ -1,5 +1,6 @@
 from .common import TransformException
 from .add import Add
+from .capture import Capture
 from .cast import Cast
 from .copy import Copy
 from .divide import Divide

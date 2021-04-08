@@ -19,17 +19,34 @@ class Transform:
             self._outputs = tuple(outputs)
 
         if source and not isinstance(source, Transform):
-            raise TransformException(f"Invalid source for {name} transform")
+            raise TransformException(f"Invalid source for {self._name}")
         self._source = source
 
-        #   Smoke check the schema
+        self._requireInputs()
+
+    def _requireSource(self):
+        if not self._source:
+            raise TransformException(f"Can't {self._name} from missing input.")
+        return self._source
+
+    def _requireInputs(self):
         if self._source:
             schema = self._source.schema()
-            for field in self._inputs:
-                if field not in schema:
-                    raise TransformException(f"Unknown input field '{field}' in {name} transform")
+            for input in self._inputs:
+                if input not in schema:
+                    raise TransformException(f"Unknown input field '{input}' in {self._name}")
+
         elif len(self._inputs):
-            raise TransformException(f"Extra input fields in {name} transform")
+            raise TransformException(f"Unexpected input fields in {self._name}")
+
+        return self._inputs
+
+    def _requireOutputs(self, exceptions=()):
+        schema = self._requireSource().schema()
+        for output in self._outputs:
+            if output in schema and output not in  exceptions:
+                raise TransformException(f"Output field '{output}' in {self._name} overwrites an existing field.")
+        return self._outputs
 
     def name(self): return self._name
     def inputs(self): return self._inputs
