@@ -9,6 +9,7 @@ from .fill import Fill
 from .limit import Limit
 from .match import Match
 from .merge import Merge
+from .select import Select
 from .sequence import Sequence
 from .split import Split
 from .text import Text
