@@ -8,6 +8,7 @@ from .drop import Drop
 from .fill import Fill
 from .limit import Limit
 from .match import Match
+from .merge import Merge
 from .sequence import Sequence
 from .split import Split
 from .transform import Transform
