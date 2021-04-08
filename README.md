@@ -33,14 +33,14 @@ Run 1/5...0.12345
 This file is esssentially a sequence of records grouped by higher attributes. Instead of writing a one-off Python script, I decided to write some simple transforms and build a pipeline, which looked like this:
 
 ```py
-p = Text('Line', sys.stdin)                         # Read a line
+p = Text(sys.stdin, 'Line')                         # Read a line
 p = Add(p, 'Branch', sys.argv[1])                   # Tag the file with the branch name
 p = Match(p, 'Line', r'------', invert=True).       # Remove horizontal lines
-p = Divide(p, 'Line', ('Query', 'Run',), r'Q')      # Separate the query names from the run data
-p = Fill(p, 'Query', '')                            # Fill down the blank query names
+p = Divide(p, 'Line', 'Query', 'Run', r'Q')         # Separate the query names from the run data
+p = Fill(p, 'Query', '00')                          # Fill down the blank query names
+p = Capture(p, 'Query', ('Query',), r'\|\|\s+Q(\w+)\s+\|\|')  # Capture the query number
 # Split the execution mode from the query name
-p = Split(p, 'Query', ('Query', 'Mode',), r'_', ('', 'SERIAL',)) 
-p = Capture(p, 'Query', ('Query',), r'(\d+))        # Capture the query number
+p = Split(p, 'Query', ('Query', 'Mode',), r'_', ('00', 'SERIAL',)) 
 p = Cast(p, 'Query', int)                           # Cast the query number to an integer
 p = Match(p, 'Run', r'\d')                          # Filter to the runs with data
 # Capture the run components
@@ -48,7 +48,7 @@ p = Capture(p, 'Run', ('Run #', 'Run Count', 'Time',), r'(\d+)/(\d+)...(\d+\.\d+
 p = Cast(p, 'Run #', int)                           # Cast the run components
 p = Cast(p, 'Run Count', int)
 p = Cast(p, 'Time', float)
-p = Print(p, sys.stdout)                            # Write the records to stdout as a csv
+p = Write(p, sys.stdout)                            # Write the records to stdout as a csv
 p.pull()
 ```
 
