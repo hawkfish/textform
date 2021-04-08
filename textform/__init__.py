@@ -11,4 +11,5 @@ from .match import Match
 from .merge import Merge
 from .sequence import Sequence
 from .split import Split
+from .text import Text
 from .transform import Transform
