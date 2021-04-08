@@ -5,14 +5,6 @@ class Drop(Transform):
     def __init__(self, source, inputs):
         super().__init__('drop', inputs, (), source)
 
-        if not source:
-            raise TransformException(f"Can't Drop from missing input.")
-
-        schema = source.schema()
-        for input in self._inputs:
-            if input not in schema:
-                raise TransformException(f"Missing field '{input}' in Drop.")
-
     def _delete_inputs(self, d):
         for input in self._inputs:
             del d[input]

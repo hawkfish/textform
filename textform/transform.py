@@ -10,6 +10,9 @@ class Transform:
             self._inputs = (inputs,)
         else:
             self._inputs = tuple(inputs)
+            for input in self._inputs:
+                if not isinstance(input, str):
+                    raise TransformException(f"Input for {self._name} is not a string")
 
         if outputs is None:
             self._outputs = tuple()
@@ -17,6 +20,9 @@ class Transform:
             self._outputs = (outputs,)
         else:
             self._outputs = tuple(outputs)
+            for output in self._outputs:
+                if not isinstance(output, str):
+                    raise TransformException(f"Output for {self._name} is not a string")
 
         if source and not isinstance(source, Transform):
             raise TransformException(f"Invalid source for {self._name}")
@@ -42,7 +48,7 @@ class Transform:
         return self._inputs
 
     def _requireOutputs(self, exceptions=()):
-        schema = self._requireSource().schema()
+        schema = self._requireSource().schema() if self._source else {}
         for output in self._outputs:
             if output in schema and output not in  exceptions:
                 raise TransformException(f"Output field '{output}' in {self._name} overwrites an existing field.")

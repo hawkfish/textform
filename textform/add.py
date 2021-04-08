@@ -11,11 +11,7 @@ class Add(Transform):
         else:
             self._values = (self._values,)
 
-        if source:
-            schema = source.schema()
-            for output in self._outputs:
-                if output in schema:
-                    raise TransformException(f"Add output field '{output}' overwrites an existing field.")
+        self._requireOutputs()
 
         if len(self._values) != len(self._outputs):
             raise TransformException(f"Added value count {len(self._values)} doesn't match the output count "

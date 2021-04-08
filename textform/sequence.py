@@ -3,13 +3,9 @@ from .transform import Transform
 
 class Sequence(Transform):
     def __init__(self, source, output, start=0, step=1):
-        super().__init__('sequence', (), output, source)
+        super().__init__('sequence', (), (output,), source)
 
-        if len(self._outputs) != 1:
-            raise TransformException(f"Wrong number of inputs to {self._name}: {len(self._inputs)}.")
-
-        if self.output() in super().schema():
-            raise TransformException(f"Output field '{output}' in {self._name} overwrites an existing field.")
+        self._requireOutputs();
 
         self._start = start
         self._step = step

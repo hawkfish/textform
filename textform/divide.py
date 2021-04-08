@@ -8,16 +8,8 @@ class Divide(Transform):
     def __init__(self, source, input, passed, failed, pattern, fills=''):
         super().__init__('divide', (input,), (passed, failed,), source)
 
-        if not source:
-            raise TransformException(f"Can't {self._name} from missing input.")
-
-        schema = source.schema()
-        if self.input() not in schema:
-            raise TransformException(f"Missing input field '{self.input()}' in {self._name}.")
-
-        for output in self._outputs:
-            if output in schema and output != input:
-                raise TransformException(f"Output field '{output}' in {self._name} overwrites an existing field.")
+        self._requireSource()
+        self._requireOutputs(self._inputs)
 
         self._regexp = re.compile(pattern)
 

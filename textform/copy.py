@@ -5,16 +5,8 @@ class Copy(Transform):
     def __init__(self, source, input, outputs):
         super().__init__('copy', (input,), outputs, source)
 
-        if not source:
-            raise TransformException(f"Can't {self._name} from missing input.")
-
-        schema = source.schema()
-        if self.input() not in schema:
-            raise TransformException(f"Missing input field '{self.input()}' in {self._name}.")
-
-        for output in self._outputs:
-            if output in schema:
-                raise TransformException(f"Output field '{output}' in {self._name} overwrites an existing field.")
+        self._requireSource()
+        self._requireOutputs()
 
     def input(self):
         return self._inputs[0]
