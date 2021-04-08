@@ -62,12 +62,14 @@ class Transform:
     def layout(self):
         layout = self._source.layout() if self._source else []
 
-        #   Outputs are inserted at the first removed input
-        leftmost = len(layout)
-        if self._inputs:
-            leftmost = min([layout.index(input) for input in self._inputs])
-            layout = list(filter(lambda input: input not in self._inputs, layout))
-        layout[leftmost:leftmost] = list(self.outputs())
+        #   Only update rows if there are outputs and inputs
+        if len(self._outputs):
+            #   Outputs are inserted at the first removed input
+            leftmost = len(layout)
+            if self._inputs:
+                leftmost = min([layout.index(input) for input in self._inputs])
+                layout = list(filter(lambda input: input not in self._inputs, layout))
+            layout[leftmost:leftmost] = list(self.outputs())
 
         return layout
 
@@ -78,3 +80,12 @@ class Transform:
     def next(self):
         if self._source: return self._source.next()
         return {}
+
+    def pull(self):
+        count = 0
+        while True:
+            row = self.next()
+            if row is None: break
+            count += 1
+
+        return count
