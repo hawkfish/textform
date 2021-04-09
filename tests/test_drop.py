@@ -12,7 +12,7 @@ class TestDrop(unittest.TestCase):
         self.assertEqual(tuple(), t.outputs)
 
         expected = list(filter(lambda input: input not in drops, inputs))
-        self.assertEqual(expected, t.layout())
+        self.assertEqual(expected, t.layout)
 
         return t
 
@@ -21,7 +21,7 @@ class TestDrop(unittest.TestCase):
 
         self.assertEqual((input,), t.inputs)
 
-        self.assertEqual({}, t.schema())
+        self.assertEqual({}, t.schema)
         self.assertEqual({}, t.next())
 
     def assert_drop_all_multiple(self, inputs, values):
@@ -29,7 +29,7 @@ class TestDrop(unittest.TestCase):
 
         self.assertEqual(inputs, t.inputs)
 
-        self.assertEqual({}, t.schema())
+        self.assertEqual({}, t.schema)
         self.assertEqual({}, t.next())
 
     def assert_drop_first_multiple(self, inputs, values):
@@ -38,7 +38,7 @@ class TestDrop(unittest.TestCase):
 
         self.assertEqual(drops, t.inputs)
 
-        self.assertEqual({input: {'type': type(values[i+1])} for (i, input) in enumerate(inputs[1:])}, t.schema())
+        self.assertEqual({input: {'type': type(values[i+1])} for (i, input) in enumerate(inputs[1:])}, t.schema)
         self.assertEqual({input: values[i+1] for (i, input) in enumerate(inputs[1:])}, t.next())
 
     def test_drop_string(self):

@@ -12,8 +12,8 @@ class Sequence(Transform):
 
         self._position = self.start
 
-    def schema(self):
-        schema = super().schema()
+    def _schema(self):
+        schema = super()._schema()
         schema[self.output] = {'type': int}
         return schema
 

@@ -16,8 +16,8 @@ class Capture(Transform):
             raise TransformException(f"Group count {self.regexp.groups} doesn't match the output count "
             f"{len(self.outputs)} in {self.name}")
 
-    def schema(self):
-        schema = super().schema()
+    def _schema(self):
+        schema = super()._schema()
         value = schema[self.input]
         del schema[self.input]
         for output in self.outputs:

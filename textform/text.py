@@ -9,8 +9,8 @@ class Text(Transform):
 
         self._text = text
 
-    def schema(self):
-        schema = super().schema()
+    def _schema(self):
+        schema = super()._schema()
         schema[self.output] = {'type': str}
         return schema
 

@@ -17,7 +17,7 @@ class TestMatch(unittest.TestCase):
         self.assertEqual(input, t.input)
         self.assertEqual(pattern, t.regexp.pattern)
 
-        self.assertEqual(s.schema(), t.schema())
+        self.assertEqual(s.schema, t.schema)
 
         actual = 0
         while t.next(): actual += 1

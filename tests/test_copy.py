@@ -19,9 +19,9 @@ class TestCopy(unittest.TestCase):
 
         expected = list(s.outputs)
         expected[2:2] = list(outputs)
-        self.assertEqual(expected, t.layout())
+        self.assertEqual(expected, t.layout)
 
-        schema = t.schema()
+        schema = t.schema
         self.assertEqual(3 + len(outputs), len(schema))
 
         self.assertTrue(left in schema)

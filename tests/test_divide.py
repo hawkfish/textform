@@ -22,7 +22,7 @@ class TestDivide(unittest.TestCase):
         self.assertEqual(pattern, t.regexp.pattern)
         self.assertEqual(('', '',), t.fills)
 
-        schema = t.schema()
+        schema = t.schema
         self.assertEqual(schema[left], schema[right])
         self.assertFalse(input in schema)
 

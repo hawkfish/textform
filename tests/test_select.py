@@ -27,7 +27,7 @@ class TestSelect(unittest.TestCase):
 
         self.assertEqual(predicate, t.predicate)
 
-        self.assertEqual(s.schema(), t.schema())
+        self.assertEqual(s.schema, t.schema)
 
         actual = t.pull()
         self.assertEqual(expected, actual)

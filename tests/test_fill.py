@@ -3,13 +3,14 @@ from context import *
 
 class MockAlternate(txf.Transform):
     def __init__(self, output, value, step=2, offset=0):
+        self._value = str(value)
+
         super().__init__('mock', (), (output,), None)
 
-        self._value = str(value)
         self._step = int(step)
         self._position = int(offset)
 
-    def schema(self):
+    def _schema(self):
         return {self.output: {'type': type(self._value)}}
 
     def next(self):

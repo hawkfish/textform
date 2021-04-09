@@ -14,7 +14,7 @@ class TestLimit(unittest.TestCase):
         self.assertEqual(0, t._position)
         self.assertIsNone(t.source)
 
-        self.assertEqual(t.schema(), {})
+        self.assertEqual(t.schema, {})
 
         for r in range(0,limit):
             self.assertEqual(t.next(), {})

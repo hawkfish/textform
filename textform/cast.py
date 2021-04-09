@@ -3,12 +3,12 @@ from .transform import Transform
 
 class Cast(Transform):
     def __init__(self, source, input, result_type):
-        super().__init__('cast', (input,), (), source)
-
         self.result_type = result_type
 
-    def schema(self):
-        schema = super().schema()
+        super().__init__('cast', (input,), (), source)
+
+    def _schema(self):
+        schema = super()._schema()
         schema[self.input]['type'] = self.result_type
         return schema
 

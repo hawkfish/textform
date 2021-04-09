@@ -21,7 +21,7 @@ class TestAdd(unittest.TestCase):
         self.assertEqual((output,), t.outputs)
         self.assertEqual((value,), t.values)
 
-        self.assertEqual({output: {'type': type(value)} }, t.schema())
+        self.assertEqual({output: {'type': type(value)} }, t.schema)
         self.assertEqual({output: value }, t.next())
 
     def assert_add_multiple(self, outputs, values):
@@ -30,7 +30,7 @@ class TestAdd(unittest.TestCase):
         self.assertEqual(outputs, t.outputs)
         self.assertEqual(values, t.values)
 
-        schema = t.schema()
+        schema = t.schema
         row = t.next()
         for i, output in enumerate(outputs):
             value = values[i]

@@ -18,7 +18,7 @@ class TestMerge(unittest.TestCase):
         self.assertEqual(output, t.output)
         self.assertEqual(glue, t.glue)
 
-        schema = t.schema()
+        schema = t.schema
         self.assertEqual(1, len(schema))
         self.assertTrue(output in schema)
 

@@ -20,7 +20,7 @@ class TestCapture(unittest.TestCase):
         self.assertEqual(input, t.input)
         self.assertEqual(pattern, t.regexp.pattern)
 
-        schema = t.schema()
+        schema = t.schema
         self.assertFalse(input in schema)
         for output in outputs:
             self.assertEqual(schema[outputs[0]], schema[output])

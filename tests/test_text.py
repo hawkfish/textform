@@ -15,7 +15,7 @@ class TestText(unittest.TestCase):
 
         self.assertEqual(output, t.output)
 
-        schema = t.schema()
+        schema = t.schema
         self.assertTrue(output in schema)
         self.assertEqual(str, schema[output]['type'])
 

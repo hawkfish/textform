@@ -7,11 +7,13 @@ class Split(Transform):
     def __init__(self, source, input, outputs, sep, defaults=''):
         super().__init__('split', (input,), outputs, source)
 
+        self._setDefaults(defaults)
+        self.separator = sep
+
         self._requireSource()
         self._requireOutputs(self.inputs)
 
-        self.separator = sep
-
+    def _setDefaults(self, defaults):
         if isinstance(defaults, (list, tuple,)):
             self.defaults = tuple(defaults)
         else:
@@ -25,8 +27,8 @@ class Split(Transform):
             raise TransformException(f"Default count {len(self.defaults)} doesn't match the output count "
             f"{len(self.outputs)} in {self.name}")
 
-    def schema(self):
-        schema = super().schema()
+    def _schema(self):
+        schema = super()._schema()
         value = schema[self.input]
         del schema[self.input]
         for output in self.outputs:

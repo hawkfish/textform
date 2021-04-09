@@ -22,7 +22,7 @@ class TestSplit(unittest.TestCase):
         self.assertEqual(sep, t.separator)
         self.assertEqual(tuple([default for o in outputs]), t.defaults)
 
-        schema = t.schema()
+        schema = t.schema
         for output in outputs:
             self.assertEqual(schema[outputs[0]], schema[output])
         self.assertFalse(input in schema)

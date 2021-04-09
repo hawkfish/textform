@@ -30,14 +30,14 @@ class TestProject(unittest.TestCase):
         layout = []
         layout.extend(inputs)
         layout.append(output)
-        self.assertEqual(layout, t.layout())
+        self.assertEqual(layout, t.layout)
 
         row = t.next()
         self.assertIsNotNone(row)
         self.assertTrue(output in row)
         self.assertEqual(expected, row[output])
 
-        schema = t.schema()
+        schema = t.schema
         for input in inputs: self.assertTrue(input in schema)
         self.assertTrue(output in schema)
         self.assertEqual(type(expected), schema[output]['type'])

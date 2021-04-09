@@ -9,9 +9,8 @@ class Merge(Transform):
 
         self._requireOutputs(self.inputs)
 
-
-    def schema(self):
-        schema = super().schema()
+    def _schema(self):
+        schema = super()._schema()
         metadata = {}
         for input in self.inputs:
             metadata = schema[input]

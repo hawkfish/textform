@@ -8,7 +8,7 @@ class Write(Transform):
         if not source:
             raise TransformException(f"Can't write from missing input.")
 
-        super().__init__('write', source.layout(), (), source)
+        super().__init__('write', source.layout, (), source)
 
         self._writer = csv.DictWriter(outfile, self.inputs)
         self._writer.writeheader()

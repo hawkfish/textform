@@ -1,15 +1,26 @@
+import copy
+
 from .common import TransformException
 
 class Transform:
     def __init__(self, name, inputs=(), outputs=(), source=None):
         self.name = name
 
-        #   Normalise the source
+        self._setSource(source)
+        self._setInputs(inputs)
+        self._setOutputs(outputs)
+
+        self._validateInputs()
+
+        self.schema = self._schema()
+        self.layout = self._layout()
+
+    def _setSource(self, source):
         if source and not isinstance(source, Transform):
             raise TransformException(f"Invalid source for {self.name}")
         self.source = source
 
-        #   Normalise the inputs
+    def _setInputs(self, inputs):
         if inputs is None:
             self.inputs = tuple()
         elif isinstance(inputs, str):
@@ -22,7 +33,7 @@ class Transform:
 
         if len(self.inputs) == 1: self.input = self.inputs[0]
 
-        #   Normalise the outputs
+    def _setOutputs(self, outputs):
         if outputs is None:
             self.outputs = tuple()
         elif isinstance(outputs, str):
@@ -35,16 +46,14 @@ class Transform:
 
         if len(self.outputs) == 1: self.output = self.outputs[0]
 
-        self._requireInputs()
-
     def _requireSource(self):
         if not self.source:
             raise TransformException(f"Can't {self.name} from missing input.")
         return self.source
 
-    def _requireInputs(self):
+    def _validateInputs(self):
         if self.source:
-            schema = self.source.schema()
+            schema = self.source.schema
             for input in self.inputs:
                 if input not in schema:
                     raise TransformException(f"Unknown input field '{input}' in {self.name}")
@@ -55,14 +64,14 @@ class Transform:
         return self.inputs
 
     def _requireOutputs(self, exceptions=()):
-        schema = self._requireSource().schema() if self.source else {}
+        schema = self._requireSource().schema if self.source else {}
         for output in self.outputs:
             if output in schema and output not in  exceptions:
                 raise TransformException(f"Output field '{output}' in {self.name} overwrites an existing field.")
         return self.outputs
 
-    def layout(self):
-        layout = self.source.layout() if self.source else []
+    def _layout(self):
+        layout = copy.copy(self.source.layout) if self.source else []
 
         #   Only update rows if there are outputs and inputs
         if len(self.outputs):
@@ -75,9 +84,8 @@ class Transform:
 
         return layout
 
-    def schema(self):
-        if self.source: return self.source.schema()
-        return {}
+    def _schema(self):
+        return copy.copy(self.source.schema) if self.source else {}
 
     def next(self):
         if self.source: return self.source.next()

@@ -17,8 +17,8 @@ class TestWrite(unittest.TestCase):
         self.assertEqual(tuple(), t.outputs)
         self.assertEqual(s, t.source)
 
-        self.assertEqual(s.schema(), t.schema())
-        self.assertEqual(s.layout(), t.layout())
+        self.assertEqual(s.schema, t.schema)
+        self.assertEqual(s.layout, t.layout)
 
         self.assertEqual(count, t.pull())
 
