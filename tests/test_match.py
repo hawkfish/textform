@@ -9,13 +9,13 @@ class TestMatch(unittest.TestCase):
         s = txf.Cast(s, input, str)
         t = txf.Match(s, input, pattern, invert)
 
-        self.assertEqual('match', t.name(), )
-        self.assertEqual(s, t.source())
-        self.assertEqual((input,), t.inputs())
-        self.assertEqual((), t.outputs())
+        self.assertEqual('match', t.name, )
+        self.assertEqual(s, t.source)
+        self.assertEqual((input,), t.inputs)
+        self.assertEqual((), t.outputs)
 
-        self.assertEqual(input, t.input())
-        self.assertEqual(pattern, t.regexp().pattern)
+        self.assertEqual(input, t.input)
+        self.assertEqual(pattern, t.regexp.pattern)
 
         self.assertEqual(s.schema(), t.schema())
 

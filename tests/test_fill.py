@@ -9,13 +9,11 @@ class MockAlternate(txf.Transform):
         self._step = int(step)
         self._position = int(offset)
 
-    def output(self): return self._outputs[0]
-
     def schema(self):
-        return {self.output(): {'type': type(self._value)}}
+        return {self.output: {'type': type(self._value)}}
 
     def next(self):
-        row = {self.output(): self._value if 0 == (self._position % self._step) else ''}
+        row = {self.output: self._value if 0 == (self._position % self._step) else ''}
         self._position += 1
         return row
 
@@ -28,11 +26,11 @@ class TestFill(unittest.TestCase):
         s = txf.Limit(s, offset + 100 * step)
         t = txf.Fill(s, input, default)
 
-        self.assertEqual('fill', t.name(), )
-        self.assertIsNotNone(t.source())
-        self.assertEqual((input,), t.inputs())
-        self.assertEqual((), t.outputs())
-        self.assertEqual(default, t.default())
+        self.assertEqual('fill', t.name, )
+        self.assertIsNotNone(t.source)
+        self.assertEqual((input,), t.inputs)
+        self.assertEqual((), t.outputs)
+        self.assertEqual(default, t.default)
 
         for r in range(0, offset):
             row = t.next()

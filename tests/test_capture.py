@@ -12,13 +12,13 @@ class TestCapture(unittest.TestCase):
         s = txf.Cast(s, input, str)
         t = txf.Capture(s, input, outputs, pattern)
 
-        self.assertEqual('capture', t.name(), )
-        self.assertEqual(s, t.source())
-        self.assertEqual((input,), t.inputs())
-        self.assertEqual(outputs, t.outputs())
+        self.assertEqual('capture', t.name, )
+        self.assertEqual(s, t.source)
+        self.assertEqual((input,), t.inputs)
+        self.assertEqual(outputs, t.outputs)
 
-        self.assertEqual(input, t.input())
-        self.assertEqual(pattern, t.regexp().pattern)
+        self.assertEqual(input, t.input)
+        self.assertEqual(pattern, t.regexp.pattern)
 
         schema = t.schema()
         self.assertFalse(input in schema)

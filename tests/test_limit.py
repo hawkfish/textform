@@ -6,20 +6,20 @@ class TestLimit(unittest.TestCase):
     def assert_window(self, offset, limit):
         t = txf.Limit(None, limit, offset)
 
-        self.assertEqual('limit', t.name(), )
-        self.assertEqual(tuple(), t.inputs())
-        self.assertEqual(tuple(), t.outputs())
-        self.assertEqual(offset, t.offset(), )
-        self.assertEqual(limit, t.limit(), )
-        self.assertEqual(0, t.position(), )
-        self.assertIsNone(t.source())
+        self.assertEqual('limit', t.name)
+        self.assertEqual(tuple(), t.inputs)
+        self.assertEqual(tuple(), t.outputs)
+        self.assertEqual(offset, t.offset)
+        self.assertEqual(limit, t.limit)
+        self.assertEqual(0, t._position)
+        self.assertIsNone(t.source)
 
         self.assertEqual(t.schema(), {})
 
         for r in range(0,limit):
             self.assertEqual(t.next(), {})
         self.assertIsNone(t.next())
-        self.assertEqual(offset + limit, t.position())
+        self.assertEqual(offset + limit, t._position)
 
     def test_defaults(self):
         self.assert_window(0, 1)

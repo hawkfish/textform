@@ -9,11 +9,11 @@ class TestText(unittest.TestCase):
         output = 'Text'
         t = txf.Text(io.StringIO(text), output)
 
-        self.assertEqual('text', t.name(), )
-        self.assertIsNone(t.source())
-        self.assertEqual(tuple(), t.inputs())
+        self.assertEqual('text', t.name)
+        self.assertIsNone(t.source)
+        self.assertEqual(tuple(), t.inputs)
 
-        self.assertEqual(output, t.output())
+        self.assertEqual(output, t.output)
 
         schema = t.schema()
         self.assertTrue(output in schema)

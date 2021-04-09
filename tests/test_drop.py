@@ -7,9 +7,9 @@ class TestDrop(unittest.TestCase):
         s = txf.Add(None, inputs, values)
         t = txf.Drop(s, drops)
 
-        self.assertEqual('drop', t.name(), )
-        self.assertEqual(s, t.source())
-        self.assertEqual(tuple(), t.outputs())
+        self.assertEqual('drop', t.name)
+        self.assertEqual(s, t.source)
+        self.assertEqual(tuple(), t.outputs)
 
         expected = list(filter(lambda input: input not in drops, inputs))
         self.assertEqual(expected, t.layout())
@@ -19,7 +19,7 @@ class TestDrop(unittest.TestCase):
     def assert_drop_all_one(self, input, value):
         t = self.assert_construct(input, input, value)
 
-        self.assertEqual((input,), t.inputs())
+        self.assertEqual((input,), t.inputs)
 
         self.assertEqual({}, t.schema())
         self.assertEqual({}, t.next())
@@ -27,7 +27,7 @@ class TestDrop(unittest.TestCase):
     def assert_drop_all_multiple(self, inputs, values):
         t = self.assert_construct(inputs, inputs, values)
 
-        self.assertEqual(inputs, t.inputs())
+        self.assertEqual(inputs, t.inputs)
 
         self.assertEqual({}, t.schema())
         self.assertEqual({}, t.next())
@@ -36,7 +36,7 @@ class TestDrop(unittest.TestCase):
         drops = inputs[:1]
         t = self.assert_construct(drops, inputs, values)
 
-        self.assertEqual(drops, t.inputs())
+        self.assertEqual(drops, t.inputs)
 
         self.assertEqual({input: {'type': type(values[i+1])} for (i, input) in enumerate(inputs[1:])}, t.schema())
         self.assertEqual({input: values[i+1] for (i, input) in enumerate(inputs[1:])}, t.next())

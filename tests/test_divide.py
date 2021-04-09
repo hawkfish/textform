@@ -13,14 +13,14 @@ class TestDivide(unittest.TestCase):
         s = txf.Cast(s, input, str)
         t = txf.Divide(s, input, left, right, pattern)
 
-        self.assertEqual('divide', t.name(), )
-        self.assertEqual(s, t.source())
-        self.assertEqual((input,), t.inputs())
-        self.assertEqual((left, right,), t.outputs())
+        self.assertEqual('divide', t.name)
+        self.assertEqual(s, t.source)
+        self.assertEqual((input,), t.inputs)
+        self.assertEqual((left, right,), t.outputs)
 
-        self.assertEqual(input, t.input())
-        self.assertEqual(pattern, t.regexp().pattern)
-        self.assertEqual(('', '',), t.fills())
+        self.assertEqual(input, t.input)
+        self.assertEqual(pattern, t.regexp.pattern)
+        self.assertEqual(('', '',), t.fills)
 
         schema = t.schema()
         self.assertEqual(schema[left], schema[right])

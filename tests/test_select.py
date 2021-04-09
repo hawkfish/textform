@@ -20,12 +20,12 @@ class TestSelect(unittest.TestCase):
         s = txf.Limit(s, 100)
         t = txf.Select(s, input, predicate)
 
-        self.assertEqual('select', t.name(), )
-        self.assertEqual(s, t.source())
-        self.assertEqual((input,), t.inputs())
-        self.assertEqual((), t.outputs())
+        self.assertEqual('select', t.name, )
+        self.assertEqual(s, t.source)
+        self.assertEqual((input,), t.inputs)
+        self.assertEqual((), t.outputs)
 
-        self.assertEqual(predicate, t.predicate())
+        self.assertEqual(predicate, t.predicate)
 
         self.assertEqual(s.schema(), t.schema())
 

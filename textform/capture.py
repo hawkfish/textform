@@ -9,21 +9,18 @@ class Capture(Transform):
         super().__init__('capture', (input,), outputs, source)
 
         self._requireSource()
-        self._requireOutputs(self._inputs)
+        self._requireOutputs(self.inputs)
 
-        self._regexp = re.compile(pattern)
-        if self._regexp.groups != len(self._outputs):
-            raise TransformException(f"Group count {self._regexp.groups} doesn't match the output count "
-            f"{len(self._outputs)} in {self.name()}")
-
-    def input(self): return self._inputs[0]
-    def regexp(self): return self._regexp
+        self.regexp = re.compile(pattern)
+        if self.regexp.groups != len(self.outputs):
+            raise TransformException(f"Group count {self.regexp.groups} doesn't match the output count "
+            f"{len(self.outputs)} in {self.name}")
 
     def schema(self):
         schema = super().schema()
-        value = schema[self.input()]
-        del schema[self.input()]
-        for output in self._outputs:
+        value = schema[self.input]
+        del schema[self.input]
+        for output in self.outputs:
             schema[output] = copy.copy(value)
         return schema
 
@@ -32,12 +29,12 @@ class Capture(Transform):
             row = super().next()
             if row is None: break
 
-            value = row[self.input()]
-            del row[self.input()]
+            value = row[self.input]
+            del row[self.input]
 
-            match = self._regexp.search(value)
+            match = self.regexp.search(value)
             if match:
-                for i, output in enumerate(self._outputs):
+                for i, output in enumerate(self.outputs):
                     row[output] = match.group(i+1)
                 return row
 

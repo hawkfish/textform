@@ -12,12 +12,12 @@ class TestCopy(unittest.TestCase):
         s = txf.Add(None, (left, input, right,), (0, value, 1,))
         t = txf.Copy(s, input, outputs)
 
-        self.assertEqual('copy', t.name(), )
-        self.assertEqual(s, t.source())
-        self.assertEqual(input, t.input())
-        self.assertEqual(outputs, t.outputs())
+        self.assertEqual('copy', t.name, )
+        self.assertEqual(s, t.source)
+        self.assertEqual(input, t.input)
+        self.assertEqual(outputs, t.outputs)
 
-        expected = list(s.outputs())
+        expected = list(s.outputs)
         expected[2:2] = list(outputs)
         self.assertEqual(expected, t.layout())
 

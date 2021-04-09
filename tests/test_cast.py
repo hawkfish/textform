@@ -6,18 +6,18 @@ class MockEmpty(txf.Transform):
 
 class TestCast(unittest.TestCase):
 
-    def assert_cast(self, input, type_, value):
+    def assert_cast(self, input, result_type, value):
         s = txf.Add(None, input, value)
-        t = txf.Cast(s, input, type_)
+        t = txf.Cast(s, input, result_type)
 
-        self.assertEqual('cast', t.name(), )
-        self.assertIsNotNone(t.source())
-        self.assertEqual((input,), t.inputs())
-        self.assertEqual((), t.outputs())
-        self.assertEqual(type_, t.type())
+        self.assertEqual('cast', t.name, )
+        self.assertIsNotNone(t.source)
+        self.assertEqual((input,), t.inputs)
+        self.assertEqual((), t.outputs)
+        self.assertEqual(result_type, t.result_type)
 
-        self.assertEqual(type_, t.schema()[input]['type'])
-        self.assertEqual({input: type_(value) }, t.next())
+        self.assertEqual(result_type, t.schema()[input]['type'])
+        self.assertEqual({input: result_type(value) }, t.next())
 
         return t
 

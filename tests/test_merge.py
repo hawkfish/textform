@@ -10,13 +10,13 @@ class TestMerge(unittest.TestCase):
         s = txf.Add(None, inputs, values)
         t = txf.Merge(s, inputs, output, glue)
 
-        self.assertEqual('merge', t.name())
-        self.assertEqual(s, t.source())
-        self.assertEqual(inputs, t.inputs())
-        self.assertEqual((output,), t.outputs())
+        self.assertEqual('merge', t.name)
+        self.assertEqual(s, t.source)
+        self.assertEqual(inputs, t.inputs)
+        self.assertEqual((output,), t.outputs)
 
-        self.assertEqual(output, t.output())
-        self.assertEqual(glue, t.glue())
+        self.assertEqual(output, t.output)
+        self.assertEqual(glue, t.glue)
 
         schema = t.schema()
         self.assertEqual(1, len(schema))

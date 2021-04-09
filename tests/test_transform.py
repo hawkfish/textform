@@ -6,20 +6,20 @@ class MockSource(txf.Transform):
         super().__init__('mock', (), outputs)
 
     def schema(self):
-        return {output: None for output in self._outputs}
+        return {output: None for output in self.outputs}
 
     def next(self):
-        return {output: None for output in self._outputs}
+        return {output: None for output in self.outputs}
 
 class TestTransform(unittest.TestCase):
 
     def test_defaults(self):
         t = txf.Transform('test')
 
-        self.assertEqual(t.name(), 'test')
-        self.assertEqual(t.inputs(), tuple())
-        self.assertEqual(t.outputs(), tuple())
-        self.assertIsNone(t.source())
+        self.assertEqual(t.name, 'test')
+        self.assertEqual(t.inputs, tuple())
+        self.assertEqual(t.outputs, tuple())
+        self.assertIsNone(t.source)
 
         self.assertEqual(t.schema(), {})
         self.assertEqual(t.next(), {})
@@ -27,10 +27,10 @@ class TestTransform(unittest.TestCase):
     def test_single_fields(self):
         t = txf.Transform('test', None, 'output')
 
-        self.assertEqual(t.name(), 'test')
-        self.assertEqual(t.inputs(), tuple())
-        self.assertEqual(t.outputs(), ('output',))
-        self.assertIsNone(t.source())
+        self.assertEqual(t.name, 'test')
+        self.assertEqual(t.inputs, tuple())
+        self.assertEqual(t.outputs, ('output',))
+        self.assertIsNone(t.source)
 
         self.assertEqual(t.schema(), {})
         self.assertEqual(t.next(), {})
@@ -39,10 +39,10 @@ class TestTransform(unittest.TestCase):
         s = MockSource('line')
         t = txf.Transform('test', 'line', 'output', s)
 
-        self.assertEqual(t.name(), 'test')
-        self.assertEqual(t.inputs(), ('line',))
-        self.assertEqual(t.outputs(), ('output',))
-        self.assertEqual(t.source(), s)
+        self.assertEqual(t.name, 'test')
+        self.assertEqual(t.inputs, ('line',))
+        self.assertEqual(t.outputs, ('output',))
+        self.assertEqual(t.source, s)
 
         self.assertEqual(t.schema(), {'line': None})
         self.assertEqual(t.next(), {'line': None})

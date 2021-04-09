@@ -9,9 +9,7 @@ class Select(Transform):
 
         self._requireSource()
 
-        self._predicate = predicate
-
-    def predicate(self): return self._predicate
+        self.predicate = predicate
 
     def next(self):
         while True:
@@ -19,8 +17,8 @@ class Select(Transform):
             if row is None: break
 
             #   Bind the input values
-            args = tuple([row[input] for input in self._inputs])
-            if self._predicate(*args):
+            args = tuple([row[input] for input in self.inputs])
+            if self.predicate(*args):
                 return row
 
         return None

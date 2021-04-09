@@ -8,45 +8,41 @@ class Split(Transform):
         super().__init__('split', (input,), outputs, source)
 
         self._requireSource()
-        self._requireOutputs(self._inputs)
+        self._requireOutputs(self.inputs)
 
-        self._sep = sep
+        self.separator = sep
 
         if isinstance(defaults, (list, tuple,)):
-            self._defaults = tuple(defaults)
+            self.defaults = tuple(defaults)
         else:
-            self._defaults = tuple([defaults for output in self._outputs])
+            self.defaults = tuple([defaults for output in self.outputs])
 
-        for default in self._defaults:
+        for default in self.defaults:
             if type(default) != str:
-                raise TransformException(f"Default value '{default}' in {self.name()} is not a string")
+                raise TransformException(f"Default value '{default}' in {self.name} is not a string")
 
-        if len(self._defaults) != len(self._outputs):
-            raise TransformException(f"Default count {len(self._defaults)} doesn't match the output count "
-            f"{len(self._outputs)} in {self.name()}")
-
-    def input(self): return self._inputs[0]
-    def separator(self): return self._sep
-    def defaults(self): return self._defaults
+        if len(self.defaults) != len(self.outputs):
+            raise TransformException(f"Default count {len(self.defaults)} doesn't match the output count "
+            f"{len(self.outputs)} in {self.name}")
 
     def schema(self):
         schema = super().schema()
-        value = schema[self.input()]
-        del schema[self.input()]
-        for output in self.outputs():
+        value = schema[self.input]
+        del schema[self.input]
+        for output in self.outputs:
             schema[output] = copy.copy(value)
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            parts = row[self.input()].split(self._sep, len(self._outputs))
-            del row[self.input()]
+            parts = row[self.input].split(self.separator, len(self.outputs))
+            del row[self.input]
 
             for i, part in enumerate(parts):
-                row[self._outputs[i]] = part
+                row[self.outputs[i]] = part
 
-            for i in range(len(parts), len(self._outputs)):
-                row[self._outputs[i]] = self._defaults[i]
+            for i in range(len(parts), len(self.outputs)):
+                row[self.outputs[i]] = self.defaults[i]
 
         return row

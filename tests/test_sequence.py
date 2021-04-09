@@ -6,13 +6,13 @@ class TestSequence(unittest.TestCase):
     def assert_sequence(self, output, start=0, step=1):
         t = txf.Sequence(None, output, start, step)
 
-        self.assertEqual('sequence', t.name(), )
-        self.assertEqual(tuple(), t.inputs())
-        self.assertEqual((output,), t.outputs())
-        self.assertEqual(start, t.start(), )
-        self.assertEqual(step, t.step(), )
-        self.assertEqual(start, t.position(), )
-        self.assertIsNone(t.source())
+        self.assertEqual('sequence', t.name)
+        self.assertEqual(tuple(), t.inputs)
+        self.assertEqual((output,), t.outputs)
+        self.assertEqual(start, t.start)
+        self.assertEqual(step, t.step)
+        self.assertEqual(start, t._position)
+        self.assertIsNone(t.source)
 
         self.assertEqual(int, t.schema()[output]['type'])
 

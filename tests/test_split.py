@@ -13,14 +13,14 @@ class TestSplit(unittest.TestCase):
         s = txf.Cast(s, input, str)
         t = txf.Split(s, input, outputs, sep, default)
 
-        self.assertEqual('split', t.name())
-        self.assertEqual(s, t.source())
-        self.assertEqual((input,), t.inputs())
-        self.assertEqual(outputs, t.outputs())
+        self.assertEqual('split', t.name)
+        self.assertEqual(s, t.source)
+        self.assertEqual((input,), t.inputs)
+        self.assertEqual(outputs, t.outputs)
 
-        self.assertEqual(input, t.input())
-        self.assertEqual(sep, t.separator())
-        self.assertEqual(tuple([default for o in outputs]), t.defaults())
+        self.assertEqual(input, t.input)
+        self.assertEqual(sep, t.separator)
+        self.assertEqual(tuple([default for o in outputs]), t.defaults)
 
         schema = t.schema()
         for output in outputs:

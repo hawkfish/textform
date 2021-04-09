@@ -4,11 +4,10 @@ from .transform import Transform
 import re
 
 class Format(Transform):
-    def __init__(self, source, input, search, replace):
+    def __init__(self, source, input, pattern, replace):
         super().__init__('format', (input,), (), source)
 
-        self.input = self._inputs[0]
-        self.search = re.compile(search)
+        self.search = re.compile(pattern)
         self.replace = replace
 
     def next(self):

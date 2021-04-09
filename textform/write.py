@@ -10,7 +10,7 @@ class Write(Transform):
 
         super().__init__('write', source.layout(), (), source)
 
-        self._writer = csv.DictWriter(outfile, self.inputs())
+        self._writer = csv.DictWriter(outfile, self.inputs)
         self._writer.writeheader()
 
     def next(self):

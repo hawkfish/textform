@@ -5,29 +5,27 @@ class Add(Transform):
     def __init__(self, source, outputs, values):
         super().__init__('add', (), outputs, source)
 
-        self._values = values
-        if isinstance(self._values, (tuple, list)):
-            self._values = tuple(self._values)
+        self.values = values
+        if isinstance(self.values, (tuple, list)):
+            self.values = tuple(self.values)
         else:
-            self._values = (self._values,)
+            self.values = (self.values,)
 
         self._requireOutputs()
 
-        if len(self._values) != len(self._outputs):
-            raise TransformException(f"Added value count {len(self._values)} doesn't match the output count "
-            f"{len(self._outputs)}")
-
-    def values(self): return self._values
+        if len(self.values) != len(self.outputs):
+            raise TransformException(f"Added value count {len(self.values)} doesn't match the output count "
+            f"{len(self.outputs)}")
 
     def schema(self):
         schema = super().schema()
-        for idx, output in enumerate(self._outputs):
-            schema[output] = {'type': type(self._values[idx])}
+        for idx, output in enumerate(self.outputs):
+            schema[output] = {'type': type(self.values[idx])}
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            for idx, output in enumerate(self._outputs):
-                row[output] = self._values[idx]
+            for idx, output in enumerate(self.outputs):
+                row[output] = self.values[idx]
         return row

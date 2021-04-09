@@ -9,11 +9,9 @@ class Text(Transform):
 
         self._text = text
 
-    def output(self): return self._outputs[0]
-
     def schema(self):
         schema = super().schema()
-        schema[self.output()] = {'type': str}
+        schema[self.output] = {'type': str}
         return schema
 
     def next(self):
@@ -22,7 +20,7 @@ class Text(Transform):
             line = self._text.readline()
             if line:
                 #   Only remove the newline - blanks may be important
-                row[self.output()] = line[:-1] if line[-1] == '\n' else line
+                row[self.output] = line[:-1] if line[-1] == '\n' else line
             else:
                 row = None
 

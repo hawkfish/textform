@@ -12,10 +12,10 @@ class TestWrite(unittest.TestCase):
         s = txf.Limit(s, count)
         t = txf.Write(s, outfile)
 
-        self.assertEqual('write', t.name(), )
-        self.assertEqual(('String', 'Row',), t.inputs())
-        self.assertEqual(tuple(), t.outputs())
-        self.assertEqual(s, t.source())
+        self.assertEqual('write', t.name, )
+        self.assertEqual(('String', 'Row',), t.inputs)
+        self.assertEqual(tuple(), t.outputs)
+        self.assertEqual(s, t.source)
 
         self.assertEqual(s.schema(), t.schema())
         self.assertEqual(s.layout(), t.layout())

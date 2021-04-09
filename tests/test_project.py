@@ -19,14 +19,18 @@ class TestProject(unittest.TestCase):
         if len(inputs): s = txf.Add(None, inputs, args)
         t = txf.Project(s, inputs, output, function)
 
-        self.assertEqual('project', t.name(), )
-        self.assertEqual(s, t.source())
-        self.assertEqual(tuple(inputs), t.inputs())
-        self.assertEqual((output,), t.outputs())
+        self.assertEqual('project', t.name)
+        self.assertEqual(s, t.source)
+        self.assertEqual(tuple(inputs), t.inputs)
+        self.assertEqual((output,), t.outputs)
 
-        self.assertEqual(output, t.output())
-        self.assertEqual(function, t.function())
+        self.assertEqual(output, t.output)
+        self.assertEqual(function, t.function)
 
+        layout = []
+        layout.extend(inputs)
+        layout.append(output)
+        self.assertEqual(layout, t.layout())
 
         row = t.next()
         self.assertIsNotNone(row)

@@ -9,17 +9,17 @@ class TestAdd(unittest.TestCase):
     def assert_construct(self, outputs, values):
         t = txf.Add(None, outputs, values)
 
-        self.assertEqual('add', t.name(), )
-        self.assertIsNone(t.source())
-        self.assertEqual(tuple(), t.inputs())
+        self.assertEqual('add', t.name, )
+        self.assertIsNone(t.source)
+        self.assertEqual(tuple(), t.inputs)
 
         return t
 
     def assert_add_one(self, output, value):
         t = self.assert_construct(output, value)
 
-        self.assertEqual((output,), t.outputs())
-        self.assertEqual((value,), t.values())
+        self.assertEqual((output,), t.outputs)
+        self.assertEqual((value,), t.values)
 
         self.assertEqual({output: {'type': type(value)} }, t.schema())
         self.assertEqual({output: value }, t.next())
@@ -27,8 +27,8 @@ class TestAdd(unittest.TestCase):
     def assert_add_multiple(self, outputs, values):
         t = self.assert_construct(outputs, values)
 
-        self.assertEqual(outputs, t.outputs())
-        self.assertEqual(values, t.values())
+        self.assertEqual(outputs, t.outputs)
+        self.assertEqual(values, t.values)
 
         schema = t.schema()
         row = t.next()

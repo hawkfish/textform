@@ -9,43 +9,40 @@ class Divide(Transform):
         super().__init__('divide', (input,), (passed, failed,), source)
 
         self._requireSource()
-        self._requireOutputs(self._inputs)
+        self._requireOutputs(self.inputs)
 
-        self._regexp = re.compile(pattern)
+        self.passed = self.outputs[0]
+        self.failed = self.outputs[1]
+
+        self.regexp = re.compile(pattern)
 
         if isinstance(fills, (list, tuple,)):
-            self._fills = tuple(fills)
+            self.fills = tuple(fills)
         else:
-            self._fills = (fills, fills,)
+            self.fills = (fills, fills,)
 
-        if len(self._fills) != len(self._outputs):
-            raise TransformException(f"Fill count {len(self._fills)} doesn't match the output count "
-            f"{len(self._outputs)} in {self.name()}")
-
-    def input(self): return self._inputs[0]
-    def passed(self): return self._outputs[0]
-    def failed(self): return self._outputs[1]
-    def regexp(self): return self._regexp
-    def fills(self): return self._fills
+        if len(self.fills) != len(self.outputs):
+            raise TransformException(f"Fill count {len(self.fills)} doesn't match the output count "
+            f"{len(self.outputs)} in {self.name}")
 
     def schema(self):
         schema = super().schema()
-        value = schema[self.input()]
-        del schema[self.input()]
-        schema[self.passed()] = value
-        schema[self.failed()] = copy.copy(value)
+        value = schema[self.input]
+        del schema[self.input]
+        schema[self.passed] = value
+        schema[self.failed] = copy.copy(value)
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            value = row[self.input()]
-            del row[self.input()]
-            if self._regexp.search(value):
-                row[self.passed()] = value
-                row[self.failed()] = self._fills[1]
+            value = row[self.input]
+            del row[self.input]
+            if self.regexp.search(value):
+                row[self.passed] = value
+                row[self.failed] = self.fills[1]
             else:
-                row[self.passed()] = self._fills[0]
-                row[self.failed()] = value
+                row[self.passed] = self.fills[0]
+                row[self.failed] = value
 
         return row
