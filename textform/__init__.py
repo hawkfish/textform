@@ -6,6 +6,7 @@ from .copy import Copy
 from .divide import Divide
 from .drop import Drop
 from .fill import Fill
+from .format import Format
 from .limit import Limit
 from .match import Match
 from .merge import Merge
