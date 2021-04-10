@@ -1,20 +1,28 @@
 from .common import TransformException
-from .transform import Transform
+from .format import Format
 
-class Fill(Transform):
+def bind_fill(default):
+
+    filler = default
+
+    def fill(value):
+        if isinstance(value, dict): return value
+
+        nonlocal filler
+
+        result = value
+        if value:
+            filler = result
+        else:
+            result = filler
+
+        return result
+
+    return fill
+
+class Fill(Format):
     def __init__(self, source, input, default=''):
-        super().__init__('fill', (input,), (), source)
+        super().__init__(source, input, bind_fill(default))
 
+        self.name = 'fill'
         self.default = default
-        self._fill = default
-
-    def next(self):
-        row = super().next()
-        if row is not None:
-            value = row[self.input]
-            if value:
-                self._fill = value
-            else:
-                row[self.input] = self._fill
-
-        return row
