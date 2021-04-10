@@ -22,4 +22,5 @@ from .split import Split
 from .text import Text
 from .write import Write
 from .transform import Transform
+from .unfold import Unfold
 from .unnest import Unnest
