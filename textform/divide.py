@@ -4,52 +4,52 @@ from .transform import Transform
 import copy
 import re
 
-def bind_divide(name, pattern, fills):
+def bind_divide(pattern):
+
+    if not isinstance(pattern, str):
+        return pattern
 
     regexp = re.compile(pattern)
 
     def divide(value):
-        nonlocal regexp, fills
+        nonlocal regexp
 
-        if isinstance(value, dict): return [copy.copy(value) for i in range(2)]
-
-        if regexp.search(value):
-            return (value, fills[1],)
-        else:
-            return (fills[0], value,)
+        return True if regexp.search(value) else False
 
     return divide
 
 class Divide(Transform):
     def __init__(self, source, input, passed, failed, pattern, fills=''):
-        name = 'divide'
-        fills = Transform._validateStringTuple(name, fills, 'Fill', 2)
-        self.function = bind_divide(name, pattern, fills)
-
-        super().__init__(name, (input,), (passed, failed,), source)
+        super().__init__('divide', (input,), (passed, failed,), source)
 
         self._requireOutputs(self.inputs)
 
         self.passed = self.outputs[0]
         self.failed = self.outputs[1]
         self.pattern = pattern
-        self.fills = fills
+        self.fills = Transform._validateStringTuple(self.name, fills, 'Fill', 2)
+
+        self.predicate = bind_divide(self.pattern)
 
     def _schema(self):
         schema = super()._schema()
-        metadata = self.function(schema[self.input])
+        metadata = schema[self.input]
         del schema[self.input]
-        for i, output in enumerate(self.outputs):
-            schema[output] = metadata[i]
+        for output in self.outputs:
+            schema[output] = copy.copy(metadata)
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            values = self.function(row[self.input])
+            value = row[self.input]
             del row[self.input]
 
-            for i, output in enumerate(self.outputs):
-                row[output] = values[i]
+            if self.predicate(value):
+                row[self.passed] = value
+                row[self.failed] = self.fills[1]
+            else:
+                row[self.passed] = self.fills[0]
+                row[self.failed] = value
 
         return row
