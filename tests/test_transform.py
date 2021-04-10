@@ -1,15 +1,5 @@
 import unittest
-from context import *
-
-class MockSource(txf.Transform):
-    def __init__(self, outputs):
-        super().__init__('mock', (), outputs)
-
-    def _schema(self):
-        return {output: None for output in self.outputs}
-
-    def next(self):
-        return {output: None for output in self.outputs}
+from helpers import *
 
 class TestTransform(unittest.TestCase):
 

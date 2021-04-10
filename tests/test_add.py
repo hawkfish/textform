@@ -1,8 +1,5 @@
 import unittest
-from context import *
-
-class MockEmpty(txf.Transform):
-    def next(self) : return None
+from helpers import *
 
 class TestAdd(unittest.TestCase):
 
