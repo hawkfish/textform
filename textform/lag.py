@@ -7,7 +7,7 @@ class Lag(Transform):
     def __init__(self, source, input, lag=1, default=''):
         super().__init__('lag', (input,), (), source)
 
-        self.lag = lag
+        self.lag = int(lag)
         self.default = self.schema[input]['type'](default)
 
         self._queue = collections.deque()
