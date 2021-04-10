@@ -39,4 +39,4 @@ class Capture(Split):
         super().__init__(source, input, outputs, separator, defaults)
 
         self.name = name
-        self.regexp = re.compile(pattern)
+        self.pattern = pattern

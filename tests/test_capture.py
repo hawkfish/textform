@@ -18,7 +18,7 @@ class TestCapture(unittest.TestCase):
         self.assertEqual(outputs, t.outputs)
 
         self.assertEqual(input, t.input)
-        self.assertEqual(pattern, t.regexp.pattern)
+        self.assertEqual(pattern, t.pattern)
 
         schema = t.schema
         self.assertFalse(input in schema)
