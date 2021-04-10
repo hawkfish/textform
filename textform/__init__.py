@@ -14,6 +14,7 @@ from .match import Match
 from .merge import Merge
 from .project import Project
 from .read import Read
+from .replace import Replace
 from .select import Select
 from .sequence import Sequence
 from .split import Split
