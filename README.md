@@ -10,6 +10,12 @@ Pipelines are cosntructed from a sequence of _transforms_ that take in a record 
 
 While inspired by the Potter's Wheel transform list, `textform` is designed for practical everyday use. This means it includes transforms for limiting the number of rows, writing intermediate results to files and capturing via regular expressions.
 
+## Audience
+
+How do I know if `textform` is right for me? The simplest use case is where you want to use Python's `DictReader` but the file isn't a `csv`. With `textform` you can write a pipeline that will end up producing the records you would get from `DictReader`.
+
+More complex use cases can be built on top of this kind of record stream. Reshaping, computing values, splitting, dividing, merging, filling in blanks and other kinds of data cleaning and preparation tasks can all be implemented in a reusable fashion with `textform`. A pipeline effectively describes the format of a text file in an executable fashion that can be reused.
+
 ## Example
 
 I created `textform` because I had worked on [a similar research system](https://tc19.tableau.com/learn/sessions/lets-get-physical-preparing-data-text-files) in the past and had two text files produced by the [DuckDB](https://github.com/duckdb/duckdb) performance test suite that I needed to convert into `csv`s:
