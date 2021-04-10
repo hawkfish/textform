@@ -1,24 +1,22 @@
-from .common import TransformException
-from .transform import Transform
+from .select import Select
 
 import re
 
-class Match(Transform):
+def bind_match(pattern, invert):
+
+    regexp = re.compile(pattern)
+    sense = not invert
+
+    def predicate(arg):
+        matched = True if regexp.search(arg) else False
+        return matched == sense
+
+    return predicate
+
+class Match(Select):
     def __init__(self, source, input, pattern, invert=False):
-        super().__init__('match', (input,), (), source)
+        super().__init__(source, (input,), bind_match(pattern, invert))
 
-        self._requireSource()
-
+        self.name = 'match'
         self.regexp = re.compile(pattern)
         self.invert = True if invert else False
-
-    def next(self):
-        while True:
-            row = super().next()
-            if row is None: break
-
-            matched = self.regexp.search(row[self.input])
-            if (matched and not self.invert) or (self.invert and not matched):
-                return row
-
-        return None
