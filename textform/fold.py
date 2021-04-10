@@ -24,7 +24,7 @@ class Fold(Transform):
         self._buffer = [{self.tag: tag} for tag in self.tags]
         self._position = len(self._buffer)
 
-        self._fixed = filter(lambda input: input not in self.inputs, self.source.layout)
+        self.fixed = filter(lambda input: input not in self.inputs, self.source.layout)
 
     def _schema(self):
         schema = super()._schema()
@@ -51,15 +51,15 @@ class Fold(Transform):
 
         return schema
 
-    def _buffered(self):
+    def _unbuffer(self):
         if self._position < len(self._buffer):
-            row = self._buffer[self._position]
+            folded = self._buffer[self._position]
             self._position += 1
-            return row
+            return folded
         return None
 
     def next(self):
-        row = self._buffered()
+        row = self._unbuffer()
         if row is not None: return row
 
         #   Buffer empty, so pivot next row
@@ -67,18 +67,18 @@ class Fold(Transform):
         if row is not None:
             #   Update the folds
             for g, group in enumerate(self._groups):
-                pivot = self.outputs[g+1]
-                for b, buffered in enumerate(self._buffer):
-                    buffered[pivot] = row[group[b]]
+                output = self.outputs[g+1]
+                for f, folded in enumerate(self._buffer):
+                    folded[output] = row[group[f]]
 
             #   Update the fixed values
-            fixed = {f: row[f] for f in self._fixed}
-            for buffered in self._buffer:
-                buffered.update(fixed)
+            fixed = {f: row[f] for f in self.fixed}
+            for folded in self._buffer:
+                folded.update(fixed)
 
             self._position = 0
 
             #   Flush from refilled buffer
-            return self._buffered()
+            return self._unbuffer()
 
         return row
