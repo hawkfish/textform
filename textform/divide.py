@@ -4,46 +4,52 @@ from .transform import Transform
 import copy
 import re
 
+def bind_divide(name, pattern, fills):
+
+    regexp = re.compile(pattern)
+
+    def divide(value):
+        nonlocal regexp, fills
+
+        if isinstance(value, dict): return [copy.copy(value) for i in range(2)]
+
+        if regexp.search(value):
+            return (value, fills[1],)
+        else:
+            return (fills[0], value,)
+
+    return divide
+
 class Divide(Transform):
     def __init__(self, source, input, passed, failed, pattern, fills=''):
-        super().__init__('divide', (input,), (passed, failed,), source)
+        name = 'divide'
+        fills = Transform._validateStringTuple(name, fills, 'Fill', 2)
+        self.function = bind_divide(name, pattern, fills)
 
-        self._requireSource()
+        super().__init__(name, (input,), (passed, failed,), source)
+
         self._requireOutputs(self.inputs)
 
         self.passed = self.outputs[0]
         self.failed = self.outputs[1]
-        self.regexp = re.compile(pattern)
-        self._setFills(fills)
-
-    def _setFills(self, fills):
-        if isinstance(fills, (list, tuple,)):
-            self.fills = tuple(fills)
-        else:
-            self.fills = (fills, fills,)
-
-        if len(self.fills) != len(self.outputs):
-            raise TransformException(f"Fill count {len(self.fills)} doesn't match the output count "
-            f"{len(self.outputs)} in {self.name}")
+        self.pattern = pattern
+        self.fills = fills
 
     def _schema(self):
         schema = super()._schema()
-        metadata = schema[self.input]
+        metadata = self.function(schema[self.input])
         del schema[self.input]
-        schema[self.outputs[0]] = metadata
-        schema[self.outputs[1]] = copy.copy(metadata)
+        for i, output in enumerate(self.outputs):
+            schema[output] = metadata[i]
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            value = row[self.input]
+            values = self.function(row[self.input])
             del row[self.input]
-            if self.regexp.search(value):
-                row[self.passed] = value
-                row[self.failed] = self.fills[1]
-            else:
-                row[self.passed] = self.fills[0]
-                row[self.failed] = value
+
+            for i, output in enumerate(self.outputs):
+                row[output] = values[i]
 
         return row

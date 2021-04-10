@@ -19,7 +19,7 @@ class TestDivide(unittest.TestCase):
         self.assertEqual((left, right,), t.outputs)
 
         self.assertEqual(input, t.input)
-        self.assertEqual(pattern, t.regexp.pattern)
+        self.assertEqual(pattern, t.pattern)
         self.assertEqual(('', '',), t.fills)
 
         schema = t.schema
