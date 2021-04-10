@@ -3,22 +3,22 @@ from .transform import Transform
 
 import copy
 
-def bind_split(separator, defaults):
+def bind_split(separator, outputs, defaults):
 
     if not isinstance(separator, str):
         return separator
 
-    def split(arg):
-        nonlocal separator, defaults
+    def split(value):
+        nonlocal separator, outputs, defaults
 
-        if isinstance(arg, dict):
-            return [copy.copy(arg) for default in defaults]
+        if isinstance(value, dict):
+            return {outputs[i]: copy.copy(value) for i in range(len(outputs))}
 
-        parts = arg.split(separator, len(defaults))
+        parts = value.split(separator, len(defaults))
         while len(parts) < len(defaults):
             parts.append(defaults[len(parts)])
 
-        return parts
+        return {outputs[i]: parts[i] for i in range(len(outputs))}
 
     return split
 
@@ -27,7 +27,7 @@ class Split(Transform):
         name = 'split'
         outputs = Transform._validateStringTuple(name, outputs, 'Output')
         defaults = Transform._validateStringTuple(name, defaults, 'Default', len(outputs))
-        self.function = bind_split(separator, defaults)
+        self.function = bind_split(separator, outputs, defaults)
 
         super().__init__('split', (input,), outputs, source)
 
@@ -38,19 +38,16 @@ class Split(Transform):
 
     def _schema(self):
         schema = super()._schema()
-        metadata = self.function(schema[self.input])
+        updates = self.function(schema[self.input])
         del schema[self.input]
-        for i, output in enumerate(self.outputs):
-            schema[output] = metadata[i]
+        schema.update(updates)
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            parts = self.function(row[self.input])
+            updates = self.function(row[self.input])
             del row[self.input]
-
-            for i, part in enumerate(parts):
-                row[self.outputs[i]] = part
+            row.update(updates)
 
         return row
