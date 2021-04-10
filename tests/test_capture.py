@@ -29,7 +29,7 @@ class TestCapture(unittest.TestCase):
         while True:
             row = t.next()
             if row is None: break
-            actual += 1
+            if row[outputs[1]]: actual += 1
         self.assertEqual(expected, actual)
 
         return t
