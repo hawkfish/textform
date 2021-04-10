@@ -3,6 +3,28 @@ import copy
 from .common import TransformException
 
 class Transform:
+    def _validateStringTuple(name, strings, label, count=None):
+        if strings is None:
+            strings = tuple()
+
+        elif isinstance(strings, str):
+            if count is None:
+                strings = (strings,)
+            else:
+                strings = tuple([strings for i in range(count)])
+
+        else:
+            strings = tuple(strings)
+            for string in strings:
+                if not isinstance(string, str):
+                    raise TransformException(f"{label} '{string}' for {name} is not a string")
+
+        if count is not None and len(strings) != count:
+            raise TransformException(f"{label} count {len(strings)} doesn't match the required count "
+            f"{count} in {name}")
+
+        return strings
+
     def __init__(self, name, inputs=(), outputs=(), source=None):
         self.name = name
 
@@ -21,29 +43,11 @@ class Transform:
         self.source = source
 
     def _setInputs(self, inputs):
-        if inputs is None:
-            self.inputs = tuple()
-        elif isinstance(inputs, str):
-            self.inputs = (inputs,)
-        else:
-            self.inputs = tuple(inputs)
-            for input in self.inputs:
-                if not isinstance(input, str):
-                    raise TransformException(f"Input for {self.name} is not a string")
-
+        self.inputs = Transform._validateStringTuple(self.name, inputs, 'Input')
         if len(self.inputs) == 1: self.input = self.inputs[0]
 
     def _setOutputs(self, outputs):
-        if outputs is None:
-            self.outputs = tuple()
-        elif isinstance(outputs, str):
-            self.outputs = (outputs,)
-        else:
-            self.outputs = tuple(outputs)
-            for output in self.outputs:
-                if not isinstance(output, str):
-                    raise TransformException(f"Output for {self.name} is not a string")
-
+        self.outputs = Transform._validateStringTuple(self.name, outputs, 'Output')
         if len(self.outputs) == 1: self.output = self.outputs[0]
 
     def _requireSource(self):

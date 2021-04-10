@@ -3,48 +3,54 @@ from .transform import Transform
 
 import copy
 
+def bind_split(separator, defaults):
+
+    if not isinstance(separator, str):
+        return separator
+
+    def split(arg):
+        nonlocal separator, defaults
+
+        if isinstance(arg, dict):
+            return [copy.copy(arg) for default in defaults]
+
+        parts = arg.split(separator, len(defaults))
+        while len(parts) < len(defaults):
+            parts.append(defaults[len(parts)])
+
+        return parts
+
+    return split
+
 class Split(Transform):
-    def __init__(self, source, input, outputs, sep, defaults=''):
+    def __init__(self, source, input, outputs, separator, defaults=''):
+        name = 'split'
+        outputs = Transform._validateStringTuple(name, outputs, 'Output')
+        defaults = Transform._validateStringTuple(name, defaults, 'Default', len(outputs))
+        self.function = bind_split(separator, defaults)
+
         super().__init__('split', (input,), outputs, source)
 
-        self._setDefaults(defaults)
-        self.separator = sep
+        self.separator = separator
+        self.defaults = defaults
 
-        self._requireSource()
         self._requireOutputs(self.inputs)
-
-    def _setDefaults(self, defaults):
-        if isinstance(defaults, (list, tuple,)):
-            self.defaults = tuple(defaults)
-        else:
-            self.defaults = tuple([defaults for output in self.outputs])
-
-        for default in self.defaults:
-            if type(default) != str:
-                raise TransformException(f"Default value '{default}' in {self.name} is not a string")
-
-        if len(self.defaults) != len(self.outputs):
-            raise TransformException(f"Default count {len(self.defaults)} doesn't match the output count "
-            f"{len(self.outputs)} in {self.name}")
 
     def _schema(self):
         schema = super()._schema()
-        value = schema[self.input]
+        metadata = self.function(schema[self.input])
         del schema[self.input]
-        for output in self.outputs:
-            schema[output] = copy.copy(value)
+        for i, output in enumerate(self.outputs):
+            schema[output] = metadata[i]
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            parts = row[self.input].split(self.separator, len(self.outputs))
+            parts = self.function(row[self.input])
             del row[self.input]
 
             for i, part in enumerate(parts):
                 row[self.outputs[i]] = part
-
-            for i in range(len(parts), len(self.outputs)):
-                row[self.outputs[i]] = self.defaults[i]
 
         return row
