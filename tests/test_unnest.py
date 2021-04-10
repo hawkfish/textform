@@ -2,15 +2,28 @@ import unittest
 from context import *
 
 import io
+import json
+
+def generate_csv(outputs, lines):
+    return [f'{i},"String {i}"' for i in range(lines)]
+
+def generate_json(outputs, lines):
+    return [json.dumps({outputs[0]: i, outputs[1]: f"String {i}"}) for i in range(lines)]
+
+generate_factory = {
+    'csv': generate_csv,
+    'json': generate_json,
+}
 
 class TestUnnest(unittest.TestCase):
 
-    def assert_unnest(self, lines):
+    def assert_unnest(self, lines, format='csv'):
+        config = {'format': format}
         input = 'Line'
         outputs = ('Row#', 'String',)
-        text = '\n'.join([f'{i},"String {i}"' for i in range(lines)])
+        text = '\n'.join(generate_factory[format](outputs, lines))
         s = txf.Text(io.StringIO(text), input)
-        t = txf.Unnest(s, input, outputs)
+        t = txf.Unnest(s, input, outputs, **config)
 
         self.assertEqual('unnest', t.name)
         self.assertEqual(s, t.source)
@@ -29,17 +42,17 @@ class TestUnnest(unittest.TestCase):
 
         return t
 
-    def test_unnest_zero(self):
+    def test_unnest_csv(self):
         self.assert_unnest(0)
-
-    def test_unnest_one(self):
         self.assert_unnest(1)
-
-    def test_unnest_two(self):
         self.assert_unnest(2)
-
-    def test_unnest_ten(self):
         self.assert_unnest(10)
+
+    def test_unnest_json(self):
+        self.assert_unnest(0, 'json')
+        self.assert_unnest(1, 'json')
+        self.assert_unnest(2, 'json')
+        self.assert_unnest(10, 'json')
 
     def test_overwrite(self):
         text = io.StringIO('Col 1,Col 2\n')
