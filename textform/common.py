@@ -85,7 +85,7 @@ def MakeLineReader(name, format, iterable, fieldnames=None, **config):
     }
 
     if format not in readers:
-        raise TransformException(f"Unknown format '{format}' in {name}")
+        raise TransformException(f"Unknown read format '{format}' in {name}")
 
     try:
         iter(iterable)
@@ -145,7 +145,7 @@ def MakeLineWriter(name, format, outfile, fieldnames=None, **config):
     }
 
     if format not in writers:
-        raise TransformException(f"Unknown {name} format: '{format}'")
+        raise TransformException(f"Unknown write format: '{format}' in  {name}")
 
     try:
         outfile.write
