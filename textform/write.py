@@ -30,9 +30,23 @@ class JSONWriter(object):
     def writefooter(self):
         self._outfile.write(']')
 
+class JSONLinesWriter(object):
+
+    def __init__(self, outfile, fieldnames):
+        self._outfile = outfile
+        self.fieldnames = fieldnames
+
+    def writerow(self, row):
+        self._outfile.write(json.dumps(row))
+        self._outfile.write('\n')
+
+    def writefooter(self):
+        pass
+
 writer_factory = {
     'csv': CSVWriter,
     'json': JSONWriter,
+    'jsonl': JSONLinesWriter,
 }
 
 class Write(Transform):

@@ -17,9 +17,16 @@ def expected_csv(header, count):
 def expected_json(header, count):
     return json.dumps([{header[0]: 'Value', header[1]: r} for r in range(count)])
 
+def expected_jsonl(header, count):
+    eol = '\n'
+    body = eol.join([json.dumps({header[0]: 'Value', header[1]: r}) for r in range(count)])
+    if count: body += eol
+    return body
+
 expected_factory = {
     'csv': expected_csv,
     'json': expected_json,
+    'jsonl': expected_jsonl,
 }
 
 class TestWrite(unittest.TestCase):
@@ -48,10 +55,25 @@ class TestWrite(unittest.TestCase):
     def test_write_csv(self):
         self.assert_write(0)
         self.assert_write(1)
+        self.assert_write(2)
         self.assert_write(19)
 
     def test_write_json(self):
+        self.assert_write(0, 'json')
+        self.assert_write(1, 'json')
         self.assert_write(2, 'json')
+        self.assert_write(5, 'json')
+
+    def test_write_jsonl(self):
+        self.assert_write(0, 'jsonl')
+        self.assert_write(1, 'jsonl')
+        self.assert_write(2, 'jsonl')
+        self.assert_write(7, 'jsonl')
 
     def test_missing_source(self):
         self.assertRaises(txf.TransformException, txf.Write, None, None)
+
+    def test_unknown_format(self):
+        config = {'format': 'invalid'}
+        s = txf.Add(None, 'String', 'Value')
+        self.assertRaises(txf.TransformException, txf.Write, s, None, **config)
