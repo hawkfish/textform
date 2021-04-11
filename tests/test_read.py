@@ -15,12 +15,13 @@ class TestRead(unittest.TestCase):
         self.assertEqual(outputs, t.outputs)
 
         self.assertEqual(list(outputs), t.layout)
-        for output in outputs:
-            self.assertTrue(output in t.schema)
-            self.assertEqual(str, t.schema[output]['type'])
 
         lines = len(text.split('\n')) - int(text[-1] == '\n') - 1 if text else 0
         self.assertEqual(lines, t.pull())
+
+        for output in outputs:
+            self.assertTrue(output in t.schema)
+            self.assertEqual(str if lines else None, t.schema[output]['type'])
 
         return t
 

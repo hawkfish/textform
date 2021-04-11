@@ -1,10 +1,6 @@
-from .common import TransformException
 from .split import Split
 from .transform import Transform
-
-import copy
-import csv
-import json
+from .common import TransformException, MakeLineReader
 
 #   deque doesn't like to be modified while iterating
 class NextAdapter(object):
@@ -29,59 +25,10 @@ class NextAdapter(object):
 
     next = __next__
 
-#   Adapt Python object reading to the CSV API
-class PyReader(object):
-
-    def __init__(self, input, fieldnames, **config):
-        self._input = input
-        self.fieldnames = fieldnames
-
-    def __iter__(self):
-        return self
-
-    def readrow(self):
-        return next(self._input)
-
-    def __next__(self):
-        row = self.readrow()
-
-        result = {field: None for field in self.fieldnames}
-        if isinstance(row, list):
-            result.update({self.fieldnames[f]: row[f] if f < len(row) else None for f in range(len(self.fieldnames))})
-
-        elif isinstance(row, dict):
-            result.update({field: row.get(field, None) for field in self.fieldnames})
-
-        else:
-            result.update({field: row for field in self.fieldnames})
-
-        return result
-
-    next = __next__
-
-#   Adapt JSON reading to the CSV API
-class JSONReader(PyReader):
-
-    def readrow(self):
-        return json.loads(super().readrow())
-
-reader_factory = {
-    'csv': csv.DictReader,
-    'json': JSONReader,
-    'jsonl': JSONReader,
-    'py': PyReader,
-}
-
-def bind_unnest(outputs, **kwargs):
+def bind_unnest(name, outputs, **params):
 
     queue = NextAdapter()
-    format = kwargs.get('format', 'csv')
-    if format not in reader_factory:
-        raise TransformException(f"Unknown format '{format}' for unnest")
-
-    config = copy.copy(kwargs)
-    if 'format' in config: del config['format']
-    reader = reader_factory[format](queue, outputs, **config)
+    reader = MakeLineReader(name, queue, outputs, **params)
 
     def unnest(value):
         nonlocal queue, reader, outputs
@@ -97,6 +44,6 @@ class Unnest(Split):
         name = 'unnest'
         outputs = Transform._validateStringTuple(name, outputs, 'Output')
 
-        super().__init__(source, input, outputs, bind_unnest(outputs, **config))
+        super().__init__(source, input, outputs, bind_unnest(name, outputs, **config))
 
         self.name = name

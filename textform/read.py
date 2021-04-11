@@ -1,29 +1,34 @@
-from .common import TransformException
+from .common import TransformException, MakeLineReader
 from .transform import Transform
 
 import csv
 
 class Read(Transform):
-    def __init__(self, stream, source=None):
-        self._reader = csv.DictReader(stream)
+    def __init__(self, iterable, source=None, **params):
+        name = 'read'
+        self._reader = MakeLineReader(name, iterable, **params)
 
-        super().__init__('read', (), self._reader.fieldnames, source)
+        super().__init__(name, (), self._reader.fieldnames, source)
 
         self._requireOutputs()
+        self._typed = False
 
     def _schema(self):
         schema = super()._schema()
-        for output in self.outputs:
-            schema[output] = {'type': str}
+        schema.update({output: {'type': None} for output in self.outputs})
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            line = next(self._reader, None)
-            if line:
-                row.update(line)
-            else:
+            try:
+                row.update(next(self._reader))
+                if not self._typed:
+                    for output in self.outputs:
+                        self.schema[output] = {'type': type(row[output])}
+                    self._typed = True
+
+            except StopIteration:
                 row = None
 
         return row
