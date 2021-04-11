@@ -13,8 +13,11 @@ class PyReader(object):
         self.fieldnames = fieldnames
         self._buffered = None
         if self.fieldnames is None:
-            self._buffered = self.readrow(self._fp)
-            self.fieldnames = self._buffered.keys()
+            try:
+                self._buffered = self.readrow()
+                self.fieldnames = self._buffered.keys()
+            except StopIteration:
+                self.fieldnames = config.get('default_fieldnames', ())
 
     def __iter__(self):
         return self
@@ -104,10 +107,10 @@ class JSONWriter(object):
     def __init__(self, outfile, fieldnames, **config):
         self._outfile = outfile
         self.fieldnames = fieldnames
+        self._sep = ''
 
     def writeheader(self):
         self._outfile.write('[')
-        self._sep = ''
 
     def writerow(self, row):
         self._outfile.write(self._sep)
@@ -150,3 +153,7 @@ def MakeLineWriter(name, format, outfile, fieldnames=None, **config):
         raise TransformException(f"Output for {name} is not writable")
 
     return writers[format](outfile, fieldnames, **config)
+
+def MakeFieldWriter(name, format, outfile, fieldnames=None, **config):
+    xlate = {'json': 'jsonl'}
+    return MakeLineWriter(name, xlate.get(format, format), outfile, fieldnames, **config)

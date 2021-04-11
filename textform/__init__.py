@@ -14,6 +14,7 @@ from .limit import Limit
 from .lookup import Lookup
 from .match import Match
 from .merge import Merge
+from .nest import Nest
 from .project import Project
 from .read import Read
 from .replace import Replace

@@ -30,12 +30,12 @@ schemas = {
 class TestUnnest(unittest.TestCase):
 
     def assert_unnest(self, lines, format='csv'):
-        config = {'format': format}
+        config = {}
         input = 'Line'
         outputs = ('Row#', 'String',)
         text = generate_factory[format](outputs, lines)
         s = txf.Text(text, input)
-        t = txf.Unnest(s, input, outputs, **config)
+        t = txf.Unnest(s, input, outputs, format, **config)
 
         self.assertEqual('unnest', t.name)
         self.assertEqual(s, t.source)
