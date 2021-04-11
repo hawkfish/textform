@@ -5,14 +5,11 @@ import copy
 
 def bind_split(separator, outputs, defaults):
 
-    if not isinstance(separator, str):
+    if callable(separator):
         return separator
 
     def split(value):
         nonlocal separator, outputs, defaults
-
-        if isinstance(value, dict):
-            return {outputs[i]: copy.copy(value) for i in range(len(outputs))}
 
         parts = value.split(separator, len(defaults))
         while len(parts) < len(defaults):
@@ -36,11 +33,13 @@ class Split(Transform):
 
         self._requireOutputs(self.inputs)
 
+        #   Dynamic typing
+        self._typed = False
+
     def _schema(self):
         schema = super()._schema()
-        updates = self.function(schema[self.input])
         del schema[self.input]
-        schema.update(updates)
+        schema.update({output: {'type': None} for output in self.outputs})
         return schema
 
     def next(self):
@@ -49,5 +48,8 @@ class Split(Transform):
             updates = self.function(row[self.input])
             del row[self.input]
             row.update(updates)
+            if not self._typed:
+                self.schema.update({k: {'type': type(updates[k])} for k in updates})
+                self._typed = True
 
         return row

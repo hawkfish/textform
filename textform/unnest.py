@@ -38,7 +38,19 @@ class JSONReader(object):
     def __next__(self):
         row = json.loads(next(self._input))
 
-        return {field: row.get(field, None) for field in self.fieldnames}
+        result = {field: None for field in self.fieldnames}
+        if isinstance(row, list):
+            result.update({self.fieldnames[f]: row[f] if f < len(row) else None for f in range(len(self.fieldnames))})
+
+        elif isinstance(row, dict):
+            result.update({field: row.get(field, None) for field in self.fieldnames})
+
+        else:
+            result.update({field: row for field in self.fieldnames})
+
+        return result
+
+    next = __next__
 
 readerFactory = {
     'csv': csv.DictReader,
@@ -58,9 +70,6 @@ def bind_unnest(outputs, **kwargs):
 
     def unnest(value):
         nonlocal queue, reader, outputs
-
-        if isinstance(value, dict):
-            return {output: copy.copy(value) for output in outputs}
 
         queue.append(value)
 

@@ -16,9 +16,6 @@ def bind_capture(name, pattern, outputs, defaults):
     def capture(value):
         nonlocal regexp, outputs, defaults
 
-        if isinstance(value, dict):
-            return {output: copy.copy(value) for output in outputs}
-
         match = regexp.search(value)
         if match:
             return {output: match.group(i+1) or defaults[i] for i, output in enumerate(outputs)}
@@ -41,3 +38,7 @@ class Capture(Split):
 
         self.name = name
         self.pattern = pattern
+
+        #   The types are all strings
+        self.schema.update({output: {'type': str} for output in self.outputs})
+        self._typed = True

@@ -15,6 +15,11 @@ generate_factory = {
     'json': generate_json,
 }
 
+schemas = {
+    'csv': (str, str,),
+    'json': (int, str,),
+}
+
 class TestUnnest(unittest.TestCase):
 
     def assert_unnest(self, lines, format='csv'):
@@ -34,11 +39,12 @@ class TestUnnest(unittest.TestCase):
 
         self.assertEqual(list(outputs), t.layout)
 
-        for output in outputs:
-            self.assertTrue(output in t.schema)
-            self.assertEqual(str, t.schema[output]['type'])
-
         self.assertEqual(lines, t.pull())
+
+        expected = schemas[format]
+        for i, output in enumerate (outputs):
+            self.assertTrue(output in t.schema)
+            self.assertEqual(expected[i] if lines else None, t.schema[output]['type'])
 
         return t
 
