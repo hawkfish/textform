@@ -11,6 +11,7 @@ from .format import Format
 from .lag import Lag, Lead
 from .lift import Lift
 from .limit import Limit
+from .lookup import Lookup
 from .match import Match
 from .merge import Merge
 from .project import Project
