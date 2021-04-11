@@ -10,23 +10,27 @@ import json
 class NextAdapter(object):
 
     def __init__(self):
-        self.buffered = None
+        self.buffer = None
+        self.buffered = False
 
     def __iter__(self):
         return self
 
     def append(self, value):
-        self.buffered = str(value)
+        self.buffer = value
+        self.buffered = True
 
     def __next__(self):
-        result = self.buffered
-        self.buffered = None
+        if not self.buffered: raise StopIteration("Unnest NextAdapter")
+
+        result = self.buffer
+        self.buffered = False
         return result
 
     next = __next__
 
-#   Adapt JSON reading to the CSV API
-class JSONReader(object):
+#   Adapt Python object reading to the CSV API
+class PyReader(object):
 
     def __init__(self, input, fieldnames, **config):
         self._input = input
@@ -35,8 +39,11 @@ class JSONReader(object):
     def __iter__(self):
         return self
 
+    def readrow(self):
+        return next(self._input)
+
     def __next__(self):
-        row = json.loads(next(self._input))
+        row = self.readrow()
 
         result = {field: None for field in self.fieldnames}
         if isinstance(row, list):
@@ -52,21 +59,29 @@ class JSONReader(object):
 
     next = __next__
 
-readerFactory = {
+#   Adapt JSON reading to the CSV API
+class JSONReader(PyReader):
+
+    def readrow(self):
+        return json.loads(super().readrow())
+
+reader_factory = {
     'csv': csv.DictReader,
     'json': JSONReader,
+    'jsonl': JSONReader,
+    'py': PyReader,
 }
 
 def bind_unnest(outputs, **kwargs):
 
     queue = NextAdapter()
     format = kwargs.get('format', 'csv')
-    if format not in readerFactory:
+    if format not in reader_factory:
         raise TransformException(f"Unknown format '{format}' for unnest")
 
     config = copy.copy(kwargs)
     if 'format' in config: del config['format']
-    reader = readerFactory[format](queue, outputs, **config)
+    reader = reader_factory[format](queue, outputs, **config)
 
     def unnest(value):
         nonlocal queue, reader, outputs

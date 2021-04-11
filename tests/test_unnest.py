@@ -5,19 +5,26 @@ import io
 import json
 
 def generate_csv(outputs, lines):
-    return [f'{i},"String {i}"' for i in range(lines)]
+    return io.StringIO('\n'.join([f'{i},"String {i}"' for i in range(lines)]))
 
 def generate_json(outputs, lines):
-    return [json.dumps({outputs[0]: i, outputs[1]: f"String {i}"}) for i in range(lines)]
+    return io.StringIO('\n'.join([json.dumps({outputs[0]: i, outputs[1]: f"String {i}"}) for i in range(lines)]))
+
+def generate_py(outputs, lines):
+    return iter([{outputs[0]: i, outputs[1]: f"String {i}"} for i in range(lines)])
 
 generate_factory = {
     'csv': generate_csv,
     'json': generate_json,
+    'jsonl': generate_json,
+    'py': generate_py,
 }
 
 schemas = {
     'csv': (str, str,),
     'json': (int, str,),
+    'jsonl': (int, str,),
+    'py': (int, str,),
 }
 
 class TestUnnest(unittest.TestCase):
@@ -26,8 +33,8 @@ class TestUnnest(unittest.TestCase):
         config = {'format': format}
         input = 'Line'
         outputs = ('Row#', 'String',)
-        text = '\n'.join(generate_factory[format](outputs, lines))
-        s = txf.Text(io.StringIO(text), input)
+        text = generate_factory[format](outputs, lines)
+        s = txf.Text(text, input)
         t = txf.Unnest(s, input, outputs, **config)
 
         self.assertEqual('unnest', t.name)
@@ -42,7 +49,7 @@ class TestUnnest(unittest.TestCase):
         self.assertEqual(lines, t.pull())
 
         expected = schemas[format]
-        for i, output in enumerate (outputs):
+        for i, output in enumerate(outputs):
             self.assertTrue(output in t.schema)
             self.assertEqual(expected[i] if lines else None, t.schema[output]['type'])
 
@@ -52,13 +59,19 @@ class TestUnnest(unittest.TestCase):
         self.assert_unnest(0)
         self.assert_unnest(1)
         self.assert_unnest(2)
-        self.assert_unnest(10)
+        self.assert_unnest(5)
 
     def test_unnest_json(self):
         self.assert_unnest(0, 'json')
         self.assert_unnest(1, 'json')
         self.assert_unnest(2, 'json')
-        self.assert_unnest(10, 'json')
+        self.assert_unnest(19, 'json')
+
+    def test_unnest_py(self):
+        self.assert_unnest(0, 'py')
+        self.assert_unnest(1, 'py')
+        self.assert_unnest(2, 'py')
+        self.assert_unnest(7, 'py')
 
     def test_overwrite(self):
         text = io.StringIO('Col 1,Col 2\n')

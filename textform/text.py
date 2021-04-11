@@ -8,20 +8,25 @@ class Text(Transform):
         self._requireOutputs()
 
         self._text = text
+        self._typed = False
 
     def _schema(self):
         schema = super()._schema()
-        schema[self.output] = {'type': str}
+        schema[self.output] = {'type': None}
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            line = self._text.readline()
-            if line:
-                #   Only remove the newline - blanks may be important
-                row[self.output] = line[:-1] if line[-1] == '\n' else line
-            else:
+            try:
+                line = next(self._text)
+                if not self._typed:
+                    self.schema[self.output] = {'type': type(line)}
+                    self._typed = True
+
+                row[self.output] = line
+
+            except StopIteration:
                 row = None
 
         return row

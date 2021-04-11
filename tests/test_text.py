@@ -17,15 +17,11 @@ class TestText(unittest.TestCase):
 
         schema = t.schema
         self.assertTrue(output in schema)
-        self.assertEqual(str, schema[output]['type'])
 
         expected = len(text.split('\n')) - int(text[-1] == '\n') if text else 0
+        self.assertEqual(expected, t.pull())
 
-        actual = 0
-        while t.next():
-            actual += 1
-
-        self.assertEqual(expected, actual)
+        self.assertEqual(str if expected else None, schema[output]['type'])
 
         return t
 
