@@ -1,4 +1,3 @@
-import copy
 import csv
 import json
 
@@ -72,7 +71,7 @@ class TextReader(object):
 
     next = __next__
 
-def MakeLineReader(name, iterable, fieldnames=None, **params):
+def MakeLineReader(name, format, iterable, fieldnames=None, **config):
 
     readers = {
         'csv': csv.DictReader,
@@ -82,17 +81,13 @@ def MakeLineReader(name, iterable, fieldnames=None, **params):
         'text': TextReader,
     }
 
+    if format not in readers:
+        raise TransformException(f"Unknown format '{format}' in {name}")
+
     try:
         iter(iterable)
     except:
         raise TransformException(f"Input to {name} is not iterable")
-
-    format = params.get('format', 'csv')
-    if format not in readers:
-        raise TransformException(f"Unknown format '{format}' in {name}")
-
-    config = copy.copy(params)
-    if 'format' in config: del config['format']
 
     return readers[format](iterable, fieldnames, **config)
 

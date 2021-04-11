@@ -25,10 +25,10 @@ class NextAdapter(object):
 
     next = __next__
 
-def bind_unnest(name, outputs, **params):
+def bind_unnest(name, format, outputs, **config):
 
     queue = NextAdapter()
-    reader = MakeLineReader(name, queue, outputs, **params)
+    reader = MakeLineReader(name, format, queue, outputs, **config)
 
     def unnest(value):
         nonlocal queue, reader, outputs
@@ -40,10 +40,10 @@ def bind_unnest(name, outputs, **params):
     return unnest
 
 class Unnest(Split):
-    def __init__(self, source, input, outputs, **config):
+    def __init__(self, source, input, outputs, format='csv', **config):
         name = 'unnest'
         outputs = Transform._validateStringTuple(name, outputs, 'Output')
 
-        super().__init__(source, input, outputs, bind_unnest(name, outputs, **config))
+        super().__init__(source, input, outputs, bind_unnest(name, format, outputs, **config))
 
         self.name = name
