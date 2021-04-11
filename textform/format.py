@@ -9,13 +9,18 @@ class Format(Transform):
 
         super().__init__('format', (input,), (), source)
 
+        self._typed = False
+
     def _schema(self):
         schema = super()._schema()
-        schema[self.input] = self.function(schema[self.input])
+        schema[self.input] = {'type': None}
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
             row[self.input] = self.function(row[self.input])
+            if not self._typed:
+                self.schema[self.input] = {'type': type(row[self.input])}
+                self._typed = True
         return row

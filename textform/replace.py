@@ -1,6 +1,7 @@
 from .common import TransformException
 from .format import Format
 
+import copy
 import re
 
 def bind_replace(pattern, expansion):
@@ -8,8 +9,6 @@ def bind_replace(pattern, expansion):
     search = re.compile(pattern)
 
     def replace(arg):
-        if 'type' in arg: return arg
-
         match = search.search(arg)
         if match:
             return match.expand(expansion)
@@ -25,3 +24,7 @@ class Replace(Format):
         self.name = 'replace'
         self.search = re.compile(pattern)
         self.replace = replace
+
+        #   We know the type
+        self.schema[self.input] = copy.copy(self.source.schema[self.input])
+        self._typed = True
