@@ -54,6 +54,24 @@ class JSONReader(PyReader):
     def readnext(self):
         return json.loads(super().readnext())
 
+class TextReader(object):
+
+    def __init__(self, iterable, fieldnames=None, **config):
+        self._iterable = iterable
+
+        self.fieldnames = fieldnames
+        if not self.fieldnames:
+            self.fieldnames = config['fieldnames']
+        self.fieldnames = self.fieldnames[:1]
+
+    def __iter__(self):
+        return self;
+
+    def __next__(self):
+        return {self.fieldnames[0]: next(self._iterable)}
+
+    next = __next__
+
 def MakeLineReader(name, iterable, fieldnames=None, **params):
 
     readers = {
@@ -61,6 +79,7 @@ def MakeLineReader(name, iterable, fieldnames=None, **params):
         'json': JSONReader,
         'jsonl': JSONReader,
         'py': PyReader,
+        'text': TextReader,
     }
 
     try:
