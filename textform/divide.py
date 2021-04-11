@@ -6,7 +6,7 @@ import re
 
 def bind_divide(pattern):
 
-    if not isinstance(pattern, str):
+    if callable(pattern):
         return pattern
 
     regexp = re.compile(pattern)

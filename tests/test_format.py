@@ -2,8 +2,6 @@ import unittest
 from context import *
 
 def square(arg):
-    if isinstance(arg, dict): return arg
-
     return arg * arg
 
 class TestFormat(unittest.TestCase):
