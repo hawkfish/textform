@@ -91,3 +91,62 @@ def MakeLineReader(name, format, iterable, fieldnames=None, **config):
 
     return readers[format](iterable, fieldnames, **config)
 
+class CSVWriter(csv.DictWriter):
+
+    def __init__(self, outfile, fieldnames, **config):
+        super().__init__(outfile, fieldnames)
+
+    def writefooter(self):
+        pass
+
+class JSONWriter(object):
+
+    def __init__(self, outfile, fieldnames, **config):
+        self._outfile = outfile
+        self.fieldnames = fieldnames
+
+    def writeheader(self):
+        self._outfile.write('[')
+        self._sep = ''
+
+    def writerow(self, row):
+        self._outfile.write(self._sep)
+        self._sep = ', '
+        json.dump(row, self._outfile)
+
+    def writefooter(self):
+        self._outfile.write(']')
+
+class JSONLinesWriter(object):
+
+    def __init__(self, outfile, fieldnames, **config):
+        self._outfile = outfile
+        self.fieldnames = fieldnames
+
+    def writeheader(self):
+        pass
+
+    def writerow(self, row):
+        self._outfile.write(json.dumps(row))
+        self._outfile.write('\n')
+
+    def writefooter(self):
+        pass
+
+def MakeLineWriter(name, format, outfile, fieldnames=None, **config):
+
+    writers = {
+        'csv': CSVWriter,
+        'json': JSONWriter,
+        'jsonl': JSONLinesWriter,
+    }
+
+    if format not in writers:
+        raise TransformException(f"Unknown {name} format: '{format}'")
+
+    try:
+        outfile.write
+    except:
+        raise TransformException(f"Output for {name} is not writable")
+
+    return writers[format](outfile, fieldnames, **config)
