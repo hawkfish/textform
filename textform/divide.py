@@ -50,7 +50,6 @@ class Divide(Transform):
                 row[self.passed] = self.fills[0]
                 row[self.failed] = value
 
-            if not self._typed:
-                self._updateSchemaTypes(row, self.outputs)
+            self._updateSchemaTypes(row, self.outputs)
 
         return row

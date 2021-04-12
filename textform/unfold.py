@@ -52,7 +52,6 @@ class Unfold(Transform):
             if row is None: row = {fixed: folded[fixed] for fixed in self.fixed}
             row.update({self._groups[f][g]: folded[self.folds[f]] for f in range(len(self.folds))})
 
-        if not self._typed:
-            self._updateSchemaTypes(row, self.outputs)
+        self._updateSchemaTypes(row, self.outputs)
 
         return row

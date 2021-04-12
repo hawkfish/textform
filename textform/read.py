@@ -23,8 +23,7 @@ class Read(Transform):
         if row is not None:
             try:
                 row.update(next(self._reader))
-                if not self._typed:
-                    self._updateSchemaTypes(row, self.outputs)
+                self._updateSchemaTypes(row, self.outputs)
 
             except StopIteration:
                 row = None

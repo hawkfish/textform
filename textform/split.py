@@ -47,7 +47,6 @@ class Split(Transform):
             updates = self.function(row[self.input])
             del row[self.input]
             row.update(updates)
-            if not self._typed:
-                self._updateSchemaTypes(row, self.outputs)
+            self._updateSchemaTypes(row, self.outputs)
 
         return row

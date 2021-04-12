@@ -24,9 +24,7 @@ class Merge(Transform):
 
     def _schema(self):
         schema = super()._schema()
-        dtype = None
         for input in self.inputs:
-            dtype = Transform._getSchemaType(schema, input)
             del schema[input]
         Transform._addSchemaType(schema, self.output)
         return schema

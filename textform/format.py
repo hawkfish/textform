@@ -18,6 +18,6 @@ class Format(Transform):
         row = super().next()
         if row is not None:
             row[self.input] = self.function(row[self.input])
-            if not self._typed:
-                self._updateSchemaTypes(row, [self.input])
+            self._updateSchemaTypes(row, [self.input])
+
         return row

@@ -57,8 +57,7 @@ class Fold(Transform):
             folded = self._buffer[self._position]
             self._position += 1
 
-            if not self._typed:
-                self._updateSchemaTypes(folded, self.outputs)
+            self._updateSchemaTypes(folded, self.outputs)
 
             return folded
 

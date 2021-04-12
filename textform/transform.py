@@ -114,9 +114,6 @@ class Transform:
     def _addSchemaType(schema, field, ftype = None):
         schema[field] = {'type': ftype}
 
-    def addSchemaType(self, field, ftype = None):
-        Transform._addSchemaType(self.schema, field, ftype)
-
     def _isFullyTyped(self):
         return sum(1 if self.getSchemaType(col) is None else 0 for col in self.schema) == 0
 

@@ -11,6 +11,6 @@ class Cast(Format):
 
     def _schema(self):
         schema = super()._schema()
-        #   We know the result type, and it replaces the old one
-        Transform._addSchemaType(schema, self.input, self.result_type)
+        #   We know the result type
+        Transform._updateSchemaType(schema, self.input, self.result_type)
         return schema
