@@ -19,11 +19,17 @@ class TestFormat(unittest.TestCase):
         self.assertEqual(input, t.input)
         self.assertEqual(function, t.function)
 
+        self.assertTrue(input in t.schema)
+        self.assertIsNone(t.getSchemaType(input))
+
         self.assertEqual({input: expected}, t.next())
+
+        self.assertTrue(input in t.schema)
+        self.assertEqual(type(expected), t.getSchemaType(input))
 
         return t
 
-    def test_format_date(self):
+    def test_format_lambda(self):
         self.assert_format(2, square, 4)
 
     def test_root(self):
