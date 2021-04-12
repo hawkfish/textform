@@ -43,3 +43,7 @@ class TestLookup(unittest.TestCase):
     def test_missing(self):
         s = txf.Add(None, 'Target', 1)
         self.assertRaises(txf.TransformException, txf.Lookup, s, 'Missing', {}, '')
+
+    def test_mismatch(self):
+        s = txf.Add(None, 'Target', 1)
+        self.assertRaises(txf.TransformException, txf.Lookup, s, 'Target', {'String': 'str'}, 5)

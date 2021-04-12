@@ -14,9 +14,10 @@ def bind_lookup(table, default):
 class Lookup(Format):
     def __init__(self, source, input, table, default):
 
+        name = 'lookup'
         for key in table:
             if type(table[key]) != type(default):
-                raise TransformException(f"Type mismatch in {self.name} between the table and the default")
+                raise TransformException(f"Type mismatch in {name} between the table and the default")
 
         self.table = table
         self.default = default
