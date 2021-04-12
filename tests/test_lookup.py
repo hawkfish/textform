@@ -20,7 +20,8 @@ class TestLookup(unittest.TestCase):
         self.assertEqual(table, t.table)
         self.assertEqual(default, t.default)
 
-        self.assertEqual(type(default), t.schema[input]['type'])
+        self.assertTrue(input in t.schema)
+        self.assertEqual(type(default), t.getSchemaType(input))
         self.assertEqual({input: table.get(value, default)}, t.next())
 
         return t
