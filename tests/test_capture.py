@@ -23,7 +23,7 @@ class TestCapture(unittest.TestCase):
         schema = t.schema
         self.assertFalse(input in schema)
         for output in outputs:
-            self.assertEqual(schema[outputs[0]], schema[output])
+            self.assertEqual(s.schema[input], schema[output])
 
         actual = 0
         while True:
