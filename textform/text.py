@@ -6,3 +6,6 @@ class Text(Read):
         super().__init__(iterable, source, format='text', **config)
 
         self.name = 'text'
+
+        #   We know the output is text
+        self.updateSchemaType(output, str)
