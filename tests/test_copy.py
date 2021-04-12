@@ -18,22 +18,23 @@ class TestCopy(unittest.TestCase):
         expected[2:2] = list(outputs)
         self.assertEqual(expected, t.layout)
 
-        schema = t.schema
-        self.assertEqual(3 + len(outputs), len(schema))
+        self.assertEqual(3 + len(outputs), len(t.schema))
 
-        self.assertTrue(left in schema)
-        self.assertEqual(int, schema[left]['type'])
+        self.assertTrue(left in t.schema)
+        self.assertEqual(int, t.getSchemaType(left))
 
-        self.assertTrue(right in schema)
-        self.assertEqual(int, schema[right]['type'])
+        self.assertTrue(right in t.schema)
+        self.assertEqual(int, t.getSchemaType(right))
 
-        self.assertTrue(input in schema)
-        self.assertEqual(type(value), schema[input]['type'])
+        self.assertTrue(input in t.schema)
+        self.assertEqual(type(value), t.getSchemaType(input))
+
+        for output in outputs:
+            self.assertTrue(output in t.schema)
+            self.assertEqual(t.getSchemaType(input), t.getSchemaType(output))
 
         row = t.next()
         for output in outputs:
-            self.assertTrue(output in schema)
-            self.assertEqual(schema[input]['type'], schema[output]['type'])
             self.assertEqual(row[input], row[output])
 
         return t
