@@ -22,9 +22,9 @@ class TestDivide(unittest.TestCase):
         self.assertEqual(pattern, t.pattern)
         self.assertEqual(('', '',), t.fills)
 
-        schema = t.schema
-        self.assertEqual(schema[left], schema[right])
-        self.assertFalse(input in schema)
+        self.assertEqual(t.schema[left], t.schema[right])
+        self.assertFalse(input in t.schema)
+        self.assertEqual(s.schema[input], t.schema[right])
 
         actual = 0
         while True:
