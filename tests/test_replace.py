@@ -1,9 +1,6 @@
 import unittest
 from context import *
 
-class MockEmpty(txf.Transform):
-    def next(self) : return None
-
 class TestReplace(unittest.TestCase):
 
     def assert_replace(self, value, pattern, replace, expected):
@@ -19,6 +16,8 @@ class TestReplace(unittest.TestCase):
         self.assertEqual(input, t.input)
         self.assertEqual(pattern, t.search.pattern)
         self.assertEqual(replace, t.replace)
+
+        self.assertEqual(type(expected), t.getSchemaType(input))
 
         self.assertEqual({input: expected}, t.next())
 

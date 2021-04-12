@@ -25,3 +25,9 @@ class Replace(Format):
         self.name = 'replace'
         self.search = re.compile(pattern)
         self.replace = replace
+
+    def _schema(self):
+        schema = super()._schema()
+        #   The result type is string
+        Transform._updateSchemaType(schema, self.input, str)
+        return schema
