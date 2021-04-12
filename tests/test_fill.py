@@ -16,6 +16,8 @@ class TestFill(unittest.TestCase):
         self.assertEqual((), t.outputs)
         self.assertEqual(default, t.default)
 
+        self.assertEqual(s.schema, t.schema)
+
         for r in range(0, offset):
             row = t.next()
             self.assertIsNotNone(row)

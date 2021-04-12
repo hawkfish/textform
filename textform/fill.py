@@ -31,4 +31,7 @@ class Fill(Format):
         self.name = name
         self.default = default
 
+        #   The output is the same as the input
+        self.schema[input] = source.schema[input]
+
 FillDown = Fill
