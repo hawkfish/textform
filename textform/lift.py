@@ -7,8 +7,8 @@ class Lift(Transform):
     def __init__(self, source, input, default='', blank=''):
         super().__init__('lift', (input,), (), source)
 
-        self.default = self.schema[input]['type'](default)
-        self.blank = self.schema[input]['type'](blank)
+        self.default = default
+        self.blank = blank
 
         self._queue = collections.deque()
         self._lift = None

@@ -8,7 +8,7 @@ class MockSource(txf.Transform):
         super().__init__('mock', (), outputs)
 
     def _schema(self):
-        return {output: None for output in self.outputs}
+        return {output: {'type': None} for output in self.outputs}
 
     def next(self):
         return {output: None for output in self.outputs}

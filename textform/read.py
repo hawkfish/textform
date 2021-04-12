@@ -11,11 +11,11 @@ class Read(Transform):
         super().__init__(name, (), self._reader.fieldnames, source)
 
         self._validateOutputs()
-        self._typed = False
 
     def _schema(self):
         schema = super()._schema()
-        schema.update({output: {'type': None} for output in self.outputs})
+        for output in self.outputs:
+            Transform._addSchemaType(schema, output)
         return schema
 
     def next(self):
@@ -24,9 +24,7 @@ class Read(Transform):
             try:
                 row.update(next(self._reader))
                 if not self._typed:
-                    for output in self.outputs:
-                        self.schema[output] = {'type': type(row[output])}
-                    self._typed = True
+                    self._updateSchemaTypes(row, self.outputs)
 
             except StopIteration:
                 row = None

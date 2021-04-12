@@ -23,7 +23,8 @@ class Add(Transform):
                                      f"{len(self.outputs)}")
 
         schema = super()._schema()
-        schema.update({output: {'type': type(self.values[i])} for i, output in enumerate(self.outputs)})
+        for i, output in enumerate(self.outputs):
+            Transform._addSchemaType(schema, output, type(self.values[i]))
         return schema
 
     def next(self):

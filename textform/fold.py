@@ -29,9 +29,10 @@ class Fold(Transform):
     def _schema(self):
         schema = super()._schema()
 
-        folds = self.outputs[1:]
-        if not len(folds):
+        if len(self.outputs) < 2:
             raise TransformException(f"Not enough outputs to {self.name} ({len(self.outputs)})")
+        tag = self.outputs[0]
+        folds = self.outputs[1:]
 
         if len(self.inputs) % len(folds):
             raise TransformException(f"Ragged input count {len(self.inputs)} in {self.name}")
@@ -42,11 +43,11 @@ class Fold(Transform):
 
         groups = [self.inputs[i:i+group_size] for i in range(0, len(self.inputs), group_size)]
         metadata = {folds[g]: schema[group[0]] for g, group in enumerate(groups)}
-        metadata[self.outputs[0]] = {'type': str}
 
         for input in self.inputs:
             del schema[input]
 
+        Transform._addSchemaType(schema, tag, str)
         schema.update(metadata)
 
         return schema
@@ -55,7 +56,12 @@ class Fold(Transform):
         if self._position < len(self._buffer):
             folded = self._buffer[self._position]
             self._position += 1
+
+            if not self._typed:
+                self._updateSchemaTypes(folded, self.outputs)
+
             return folded
+
         return None
 
     def next(self):

@@ -10,8 +10,7 @@ class Copy(Transform):
 
     def _fan_out(self, d):
         if d is not None:
-            for output in self.outputs:
-                d[output] = d[self.input]
+            d.update({output: d[self.input] for output in self.outputs})
         return d
 
     def _layout(self):

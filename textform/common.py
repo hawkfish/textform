@@ -15,9 +15,9 @@ class PyReader(object):
         if self.fieldnames is None:
             try:
                 self._buffered = self.readrow()
-                self.fieldnames = self._buffered.keys()
+                self.fieldnames = tuple(self._buffered.keys())
             except StopIteration:
-                self.fieldnames = config.get('default_fieldnames', ())
+                self.fieldnames = tuple(config.get('default_fieldnames', ()))
 
     def __iter__(self):
         return self

@@ -34,7 +34,7 @@ class TestTransform(unittest.TestCase):
         self.assertEqual(t.outputs, ('output',))
         self.assertEqual(t.source, s)
 
-        self.assertEqual(t.schema, {'line': None})
+        self.assertEqual(t.schema, {'line': {'type': None}})
         self.assertEqual(t.next(), {'line': None})
 
     def test_layout_replace_all(self):

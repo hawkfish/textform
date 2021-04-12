@@ -1,7 +1,6 @@
 from .common import TransformException
 from .transform import Transform
 
-import copy
 import re
 
 def bind_divide(pattern):
@@ -27,7 +26,7 @@ class Divide(Transform):
         self.passed = self.outputs[0]
         self.failed = self.outputs[1]
         self.pattern = pattern
-        self.fills = Transform._validateStringTuple(self.name, fills, 'Fill', 2)
+        self.fills = Transform._validateTupleParameter(self.name, fills, 'Fill', 2)
 
         self.predicate = bind_divide(self.pattern)
 
@@ -35,8 +34,7 @@ class Divide(Transform):
         schema = super()._schema()
         metadata = schema[self.input]
         del schema[self.input]
-        for output in self.outputs:
-            schema[output] = copy.copy(metadata)
+        schema.update({output: metadata for output in self.outputs})
         return schema
 
     def next(self):
@@ -51,5 +49,8 @@ class Divide(Transform):
             else:
                 row[self.passed] = self.fills[0]
                 row[self.failed] = value
+
+            if not self._typed:
+                self._updateSchemaTypes(row, self.outputs)
 
         return row

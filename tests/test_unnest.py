@@ -56,7 +56,7 @@ class TestUnnest(unittest.TestCase):
 
         for i, output in enumerate(outputs):
             self.assertTrue(output in t.schema)
-            self.assertEqual(schemas[format][i] if lines else None, t.schema[output]['type'])
+            self.assertEqual(schemas[format][i] if lines else None, t.schema[output]['type'], output)
 
         return t
 

@@ -3,27 +3,36 @@ import copy
 from .common import TransformException
 
 class Transform:
-    def _validateStringTuple(name, strings, label, count=None):
-        if strings is None:
-            strings = tuple()
+    def _validateTupleParameter(name, values, label, count=None):
+        if values is None:
+            values = tuple()
 
-        elif isinstance(strings, str):
-            if count is None:
-                strings = (strings,)
-            else:
-                strings = tuple([strings for i in range(count)])
+        elif isinstance(values, (list, tuple,)):
+            values = tuple(values)
+
+        elif count is None:
+            values = (values,)
 
         else:
-            strings = tuple(strings)
-            for string in strings:
-                if not isinstance(string, str):
-                    raise TransformException(f"{label} '{string}' for {name} is not a string")
+            values = tuple([values for i in range(count)])
 
-        if count is not None and len(strings) != count:
-            raise TransformException(f"{label} count {len(strings)} doesn't match the required count "
+        if count is not None and len(values) != count:
+            raise TransformException(f"{label} count {len(values)} doesn't match the required count "
                                      f"{count} in {name}")
 
-        return strings
+        return values
+
+    def _validateTypedTuple(name, values, label, vtype, count=None):
+        values = Transform._validateTupleParameter(name, values, label, count)
+
+        for value in values:
+            if not isinstance(value, vtype):
+                raise TransformException(f"{label} '{value}' for {name} is not a {vtype.__name__}")
+
+        return values
+
+    def _validateStringTuple(name, strings, label, count=None):
+        return Transform._validateTypedTuple(name, strings, label, str, count)
 
     def __init__(self, name, inputs=(), outputs=(), source=None):
         self.name = name
@@ -35,6 +44,8 @@ class Transform:
         self._validateInputs()
 
         self.schema = self._schema()
+        self._typed = self._isFullyTyped()
+
         self.layout = self._layout()
 
     def _setSource(self, source):
@@ -87,6 +98,33 @@ class Transform:
             layout[leftmost:leftmost] = list(self.outputs)
 
         return layout
+
+    def _getSchemaType(schema, field):
+        return schema[field]['type']
+
+    def getSchemaType(self, field):
+        return Transform._getSchemaType(self.schema, field)
+
+    def _updateSchemaType(schema, field, ftype = None):
+        schema[field].update({'type': ftype})
+
+    def updateSchemaType(self, field, ftype = None):
+        Transform._updateSchemaType(self.schema, field, ftype)
+
+    def _addSchemaType(schema, field, ftype = None):
+        schema[field] = {'type': ftype}
+
+    def addSchemaType(self, field, ftype = None):
+        Transform._addSchemaType(self.schema, field, ftype)
+
+    def _isFullyTyped(self):
+        return sum(1 if self.getSchemaType(col) is None else 0 for col in self.schema) == 0
+
+    def _updateSchemaTypes(self, row, fields):
+        if not self._typed:
+            for field in fields:
+                self.updateSchemaType(field, type(row[field]))
+            self._typed = self._isFullyTyped()
 
     def _schema(self):
         return copy.copy(self.source.schema) if self.source else {}

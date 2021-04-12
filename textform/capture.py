@@ -11,7 +11,7 @@ def bind_capture(name, pattern, outputs, defaults):
 
     if regexp.groups != len(outputs):
         raise TransformException(f"Group count {regexp.groups} doesn't match the output count "
-        f"{len(defaults)} in {name}")
+                                 f"{len(defaults)} in {name}")
 
     def capture(value):
         nonlocal regexp, outputs, defaults
@@ -39,6 +39,12 @@ class Capture(Split):
         self.name = name
         self.pattern = pattern
 
-        #   The types are all strings
-        self.schema.update({output: {'type': str} for output in self.outputs})
-        self._typed = True
+    def _schema(self):
+        schema = super()._schema()
+
+        #   The output types are all strings
+        for output in self.outputs:
+            Transform._updateSchemaType(schema, output, str)
+
+        return schema
+

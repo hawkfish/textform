@@ -1,5 +1,6 @@
 from .common import TransformException
 from .format import Format
+from .transform import Transform
 
 import copy
 import re
@@ -24,7 +25,3 @@ class Replace(Format):
         self.name = 'replace'
         self.search = re.compile(pattern)
         self.replace = replace
-
-        #   We know the type
-        self.schema[self.input] = copy.copy(self.source.schema[self.input])
-        self._typed = True

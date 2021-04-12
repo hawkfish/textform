@@ -22,13 +22,13 @@ def bind_fill(default, blank):
 
 class Fill(Format):
     def __init__(self, source, input, default='', blank=''):
+        name = 'fill'
+        if type(default) != type(blank):
+            raise TransformException(f"Types of default and blank don't match in {name}")
+
         super().__init__(source, input, bind_fill(default, blank))
 
-        self.name = 'fill'
+        self.name = name
         self.default = default
-
-        #   The type doesn't change
-        self.schema[self.input] = copy.copy(self.source.schema[self.input])
-        self._typed = True
 
 FillDown = Fill

@@ -22,15 +22,13 @@ class Merge(Transform):
 
         self._validateOutputs(self.inputs)
 
-        self._typed = False
-
     def _schema(self):
         schema = super()._schema()
-        metadata = {}
+        dtype = None
         for input in self.inputs:
-            metadata = schema[input]
+            dtype = Transform._getSchemaType(schema, input)
             del schema[input]
-        schema[self.output] = metadata
+        Transform._addSchemaType(schema, self.output)
         return schema
 
     def next(self):
@@ -40,8 +38,7 @@ class Merge(Transform):
             for input in self.inputs:
                 del row[input]
             row[self.output] = value
-            if not self._typed:
-                self.schema[self.output] = {'type': type(value)}
-                self._typed = True
+
+            self._updateSchemaTypes(row, self.outputs)
 
         return row

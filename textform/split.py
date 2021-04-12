@@ -33,13 +33,12 @@ class Split(Transform):
 
         self._validateOutputs(self.inputs)
 
-        #   Dynamic typing
-        self._typed = False
-
     def _schema(self):
         schema = super()._schema()
+        shared = schema[self.input]
         del schema[self.input]
-        schema.update({output: {'type': None} for output in self.outputs})
+        for output in self.outputs:
+            Transform._addSchemaType(schema, output)
         return schema
 
     def next(self):
@@ -49,7 +48,6 @@ class Split(Transform):
             del row[self.input]
             row.update(updates)
             if not self._typed:
-                self.schema.update({k: {'type': type(updates[k])} for k in updates})
-                self._typed = True
+                self._updateSchemaTypes(row, self.outputs)
 
         return row

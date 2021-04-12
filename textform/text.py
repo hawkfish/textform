@@ -1,4 +1,3 @@
-from .common import TransformException
 from .read import Read
 
 class Text(Read):

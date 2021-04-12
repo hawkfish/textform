@@ -5,9 +5,9 @@ import re
 
 class Project(Transform):
     def __init__(self, source, inputs, output, function):
-        self.function = function
-
         super().__init__('project', inputs, (output,), source)
+
+        self.function = function
 
     def _layout(self):
         #   Project doesn't drop the inputs
@@ -22,11 +22,7 @@ class Project(Transform):
 
     def _schema(self):
         schema = super()._schema()
-        argv = tuple([schema[input] for input in self.inputs])
-        metadata = self.function(*argv)
-        #   Hack for nullary arguments
-        if len(argv) == 0: metadata = {'type': type(metadata)}
-        schema[self.output] = metadata
+        Transform._addSchemaType(schema, self.output)
         return schema
 
     def next(self):
@@ -37,6 +33,7 @@ class Project(Transform):
             #   Bind the input values
             argv = tuple([row[input] for input in self.inputs])
             row[self.output] = self.function(*argv)
+            self._updateSchemaTypes(row, self.outputs)
 
             return row
 
