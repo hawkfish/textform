@@ -31,7 +31,7 @@ class Split(Transform):
         self.separator = separator
         self.defaults = defaults
 
-        self._requireOutputs(self.inputs)
+        self._validateOutputs(self.inputs)
 
         #   Dynamic typing
         self._typed = False

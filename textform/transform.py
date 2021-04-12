@@ -21,7 +21,7 @@ class Transform:
 
         if count is not None and len(strings) != count:
             raise TransformException(f"{label} count {len(strings)} doesn't match the required count "
-            f"{count} in {name}")
+                                     f"{count} in {name}")
 
         return strings
 
@@ -67,7 +67,7 @@ class Transform:
 
         return self.inputs
 
-    def _requireOutputs(self, exceptions=()):
+    def _validateOutputs(self, exceptions=()):
         schema = self._requireSource().schema if self.source else {}
         for output in self.outputs:
             if output in schema and output not in exceptions:

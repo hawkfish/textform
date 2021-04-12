@@ -5,7 +5,7 @@ class Unfold(Transform):
     def __init__(self, source, inputs, outputs):
         super().__init__('unfold', inputs, outputs, source)
 
-        self._requireOutputs()
+        self._validateOutputs()
 
         self.tag = self.inputs[0]
         self.folds = self.inputs[1:]

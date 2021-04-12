@@ -5,7 +5,7 @@ class Sequence(Transform):
     def __init__(self, source, output, start=0, step=1):
         super().__init__('sequence', (), (output,), source)
 
-        self._requireOutputs();
+        self._validateOutputs();
 
         self.start = start
         self.step = step

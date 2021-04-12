@@ -6,7 +6,7 @@ class Copy(Transform):
         super().__init__('copy', (input,), outputs, source)
 
         self._requireSource()
-        self._requireOutputs()
+        self._validateOutputs()
 
     def _fan_out(self, d):
         if d is not None:

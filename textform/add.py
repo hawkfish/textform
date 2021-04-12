@@ -7,7 +7,7 @@ class Add(Transform):
 
         super().__init__('add', (), outputs, source)
 
-        self._requireOutputs()
+        self._validateOutputs()
 
     def _setValues(self, values):
         self.values = values
@@ -19,17 +19,15 @@ class Add(Transform):
 
     def _schema(self):
         if len(self.values) != len(self.outputs):
-            raise TransformException(f"value count {len(self.values)} in {self.name} doesn't match the output count "
-            f"{len(self.outputs)}")
+            raise TransformException(f"Value count {len(self.values)} in {self.name} doesn't match the output count "
+                                     f"{len(self.outputs)}")
 
         schema = super()._schema()
-        for idx, output in enumerate(self.outputs):
-            schema[output] = {'type': type(self.values[idx])}
+        schema.update({output: {'type': type(self.values[i])} for i, output in enumerate(self.outputs)})
         return schema
 
     def next(self):
         row = super().next()
         if row is not None:
-            for idx, output in enumerate(self.outputs):
-                row[output] = self.values[idx]
+            row.update({output: self.values[i] for i, output in enumerate(self.outputs)})
         return row

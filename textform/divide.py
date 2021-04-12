@@ -22,7 +22,7 @@ class Divide(Transform):
     def __init__(self, source, input, passed, failed, pattern, fills=''):
         super().__init__('divide', (input,), (passed, failed,), source)
 
-        self._requireOutputs(self.inputs)
+        self._validateOutputs(self.inputs)
 
         self.passed = self.outputs[0]
         self.failed = self.outputs[1]

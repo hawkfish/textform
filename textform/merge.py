@@ -20,7 +20,7 @@ class Merge(Transform):
         self.glue = glue
         self.merger = bind_merge(glue)
 
-        self._requireOutputs(self.inputs)
+        self._validateOutputs(self.inputs)
 
         self._typed = False
 

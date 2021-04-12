@@ -10,7 +10,7 @@ class Read(Transform):
 
         super().__init__(name, (), self._reader.fieldnames, source)
 
-        self._requireOutputs()
+        self._validateOutputs()
         self._typed = False
 
     def _schema(self):
