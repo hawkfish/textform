@@ -13,7 +13,7 @@ class TestCast(unittest.TestCase):
         self.assertEqual((), t.outputs)
         self.assertEqual(result_type, t.result_type)
 
-        self.assertEqual(result_type, t.schema[input]['type'])
+        self.assertEqual(result_type, t.getSchemaType(input))
         self.assertEqual({input: result_type(value) }, t.next())
 
         return t
