@@ -22,10 +22,10 @@ class TestSplit(unittest.TestCase):
         self.assertEqual(sep, t.separator)
         self.assertEqual(tuple([default for o in outputs]), t.defaults)
 
-        schema = t.schema
         for output in outputs:
-            self.assertEqual(schema[outputs[0]], schema[output])
-        self.assertFalse(input in schema)
+            self.assertTrue(output in t.schema)
+            self.assertIsNone(t.getSchemaType(output))
+        self.assertFalse(input in t.schema)
 
         actuals = [0 for output in outputs]
         while True:
@@ -36,6 +36,11 @@ class TestSplit(unittest.TestCase):
                     actuals[i] += 1
 
         self.assertEqual(expecteds, actuals)
+
+        for output in outputs:
+            self.assertTrue(output in t.schema)
+            self.assertEqual(s.schema[input], t.schema[output])
+        self.assertFalse(input in t.schema)
 
         return t
 
