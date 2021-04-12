@@ -14,7 +14,7 @@ class TestSequence(unittest.TestCase):
         self.assertEqual(start, t._position)
         self.assertIsNone(t.source)
 
-        self.assertEqual(int, t.schema[output]['type'])
+        self.assertEqual(int, t.getSchemaType(output))
 
         if step:
             for expected in range(start, start+7*step, step):
