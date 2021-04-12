@@ -30,7 +30,7 @@ class TestUnfold(unittest.TestCase):
 
         self.assertFalse(t.tag in t.schema)
         for f, fold in enumerate(t.folds):
-            self.assertTrue(fold not in t.schema)
+            self.assertFalse(fold in t.schema)
             for output in t.outputs[f*ngroups:(f+1)*ngroups]:
                 self.assertTrue(output in t.schema)
                 self.assertEqual(s.schema[fold], t.schema[output])
