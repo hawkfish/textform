@@ -18,6 +18,8 @@ class TestLift(unittest.TestCase):
         self.assertEqual(tuple(), t.outputs)
         self.assertEqual(default, t.default)
 
+        self.assertEqual(s.schema, t.schema)
+
         #   The first non-blank is at (step - offset) % step
         #   All the other non-blanks are step away from that
         #   We will hit the defaults when the next non-blank
