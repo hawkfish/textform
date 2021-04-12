@@ -27,6 +27,13 @@ class TestFold(unittest.TestCase):
         self.assertEqual(outputs[0], t.tag)
         self.assertEqual(tuple(outputs[1:]), t.folds)
 
+        self.assertTrue(t.tag in t.schema)
+        self.assertEqual(str, t.getSchemaType(t.tag))
+        for f, fold in enumerate(t.folds):
+            self.assertTrue(fold in t.schema)
+            for input in t.inputs[f*ngroups:(f+1)*ngroups]:
+                self.assertEqual(s.schema[input], t.schema[fold])
+
         actual = 0
         while True:
             row = t.next()
