@@ -19,6 +19,9 @@ class TestLag(unittest.TestCase):
         self.assertEqual(lag, t.lag)
         self.assertEqual(default, t.default)
 
+        self.assertTrue(input in t.schema)
+        self.assertEqual(int, t.getSchemaType(input))
+
         if lag >= 0:
             for r in range(lag):
                 row = t.next()
