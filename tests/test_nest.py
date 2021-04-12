@@ -46,13 +46,16 @@ class TestNest(unittest.TestCase):
 
         self.assertEqual([output,], t.layout)
 
+        self.assertTrue(output in t.schema)
+        self.assertIsNone(t.getSchemaType(output))
+
         expected = expected_factory[format](inputs, lines)
         for e in expected:
             self.assertEqual(e, t.next()[output])
-        self.assertIsNone(t.next())
+            self.assertTrue(output in t.schema)
+            self.assertEqual(schemas[format], t.getSchemaType(output))
 
-        self.assertTrue(output in t.schema)
-        self.assertEqual(schemas[format] if lines else None, t.schema[output]['type'])
+        self.assertIsNone(t.next())
 
         return t
 
