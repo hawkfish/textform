@@ -28,6 +28,13 @@ class TestUnfold(unittest.TestCase):
         self.assertEqual(folded[0], t.tag)
         self.assertEqual(tuple(folded[1:]), t.folds)
 
+        self.assertFalse(t.tag in t.schema)
+        for f, fold in enumerate(t.folds):
+            self.assertTrue(fold not in t.schema)
+            for output in t.outputs[f*ngroups:(f+1)*ngroups]:
+                self.assertTrue(output in t.schema)
+                self.assertEqual(s.schema[fold], t.schema[output])
+
         #   Only unfold a single row
         row = t.next()
         self.assertIsNotNone(row)

@@ -32,6 +32,7 @@ class TestFold(unittest.TestCase):
         for f, fold in enumerate(t.folds):
             self.assertTrue(fold in t.schema)
             for input in t.inputs[f*ngroups:(f+1)*ngroups]:
+                self.assertFalse(input in t.schema)
                 self.assertEqual(s.schema[input], t.schema[fold])
 
         actual = 0
