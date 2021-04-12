@@ -3,36 +3,29 @@ from helpers import *
 
 class TestAdd(unittest.TestCase):
 
-    def assert_construct(self, outputs, values):
+    def assert_add(self, outputs, values):
         t = txf.Add(None, outputs, values)
 
         self.assertEqual('add', t.name, )
         self.assertIsNone(t.source)
         self.assertEqual(tuple(), t.inputs)
 
-        return t
-
-    def assert_add_one(self, output, value):
-        t = self.assert_construct(output, value)
-
-        self.assertEqual((output,), t.outputs)
-        self.assertEqual((value,), t.values)
-
-        self.assertEqual({output: {'type': type(value)} }, t.schema)
-        self.assertEqual({output: value }, t.next())
-
-    def assert_add_multiple(self, outputs, values):
-        t = self.assert_construct(outputs, values)
-
         self.assertEqual(outputs, t.outputs)
         self.assertEqual(values, t.values)
 
         schema = t.schema
-        row = t.next()
         for i, output in enumerate(outputs):
-            value = values[i]
-            self.assertEqual({'type': type(value)}, schema[output])
-            self.assertEqual(value, row[output])
+            self.assertEqual({'type': type(values[i])}, schema[output])
+
+        row = t.next()
+        self.assertIsNotNone(row)
+        for i, output in enumerate(outputs):
+            self.assertEqual(values[i], row[output])
+
+        return t
+
+    def assert_add_one(self, output, value):
+        return self.assert_add((output,), (value,))
 
     def test_add_string(self):
         self.assert_add_one('Added', 'String')
@@ -43,17 +36,17 @@ class TestAdd(unittest.TestCase):
     def test_add_strings(self):
         outputs = ('Add 1', 'Add 2',)
         values = ('Thing 1', 'Thing 2',)
-        t = self.assert_add_multiple(outputs, values)
+        t = self.assert_add(outputs, values)
 
     def test_add_ints(self):
         outputs = ('Add 1', 'Add 2',)
         values = (1, 2,)
-        t = self.assert_add_multiple(outputs, values)
+        t = self.assert_add(outputs, values)
 
     def test_add_mixed(self):
         outputs = ('Add 1', 'Add 2',)
         values = ('Thing 1', 2,)
-        t = self.assert_add_multiple(outputs, values)
+        t = self.assert_add(outputs, values)
 
     def test_last_row(self):
         t = txf.Add(MockEmpty('empty'), 'Added', 1)
@@ -64,5 +57,5 @@ class TestAdd(unittest.TestCase):
         self.assertRaises(txf.TransformException, txf.Add, None, ('Added',), (1, 2,))
 
     def test_overwrite(self):
-        s = self.assert_construct('Overwrite', 1)
+        s = self.assert_add_one('Overwrite', 1)
         self.assertRaises(txf.TransformException, txf.Add, s, 'Overwrite', 2)

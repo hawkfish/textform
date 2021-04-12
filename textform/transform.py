@@ -79,7 +79,7 @@ class Transform:
         return self.inputs
 
     def _validateOutputs(self, exceptions=()):
-        schema = self._requireSource().schema if self.source else {}
+        schema = self.source.schema if self.source else {}
         for output in self.outputs:
             if output in schema and output not in exceptions:
                 raise TransformException(f"Output field '{output}' in {self.name} overwrites an existing field.")
