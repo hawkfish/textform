@@ -97,7 +97,7 @@ def MakeLineReader(name, format, iterable, fieldnames=None, **config):
 class CSVWriter(csv.DictWriter):
 
     def __init__(self, outfile, fieldnames, **config):
-        super().__init__(outfile, fieldnames)
+        super().__init__(outfile, fieldnames, lineterminator="\n")
 
     def writefooter(self):
         pass
@@ -136,12 +136,28 @@ class JSONLinesWriter(object):
     def writefooter(self):
         pass
 
+class PyWriter(object):
+
+    def __init__(self, outfile, fieldnames, **config):
+        self._outfile = outfile
+        self.fieldnames = fieldnames
+
+    def writeheader(self):
+        pass
+
+    def writerow(self, row):
+        self._outfile.write(row)
+
+    def writefooter(self):
+        pass
+
 def MakeLineWriter(name, format, outfile, fieldnames=None, **config):
 
     writers = {
         'csv': CSVWriter,
         'json': JSONWriter,
         'jsonl': JSONLinesWriter,
+        'py': PyWriter,
     }
 
     if format not in writers:

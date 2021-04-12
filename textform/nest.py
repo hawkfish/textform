@@ -24,7 +24,8 @@ class WriteAdapter(object):
 
         result = self.buffer
         self.buffered = False
-        return result[:-1]
+
+        return result[:-1] if isinstance(result, str) else result
 
     next = __next__
 

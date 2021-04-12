@@ -42,5 +42,6 @@ class Merge(Transform):
             row[self.output] = value
             if not self._typed:
                 self.schema[self.output] = {'type': type(value)}
+                self._typed = True
 
         return row
