@@ -18,14 +18,18 @@ class TestMerge(unittest.TestCase):
         self.assertEqual(output, t.output)
         self.assertEqual(glue, t.glue)
 
-        schema = t.schema
-        self.assertEqual(1, len(schema))
-        self.assertTrue(output in schema)
+        self.assertEqual(1, len(t.schema))
+        self.assertTrue(output in t.schema)
+        self.assertIsNone(t.getSchemaType(output))
 
         row = t.next()
         self.assertEqual(1, len(row))
         self.assertTrue(output in row)
         self.assertEqual(glue.join(values), row[output])
+
+        self.assertEqual(1, len(t.schema))
+        self.assertTrue(output in t.schema)
+        self.assertEqual(type(row[output]), t.getSchemaType(output))
 
         return t
 
