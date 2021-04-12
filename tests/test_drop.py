@@ -38,7 +38,8 @@ class TestDrop(unittest.TestCase):
 
         self.assertEqual(drops, t.inputs)
 
-        self.assertEqual({input: {'type': type(values[i+1])} for (i, input) in enumerate(inputs[1:])}, t.schema)
+        for i, input in enumerate(inputs[1:]):
+            self.assertEqual(type(values[i+1]), t.getSchemaType(input), input)
         self.assertEqual({input: values[i+1] for (i, input) in enumerate(inputs[1:])}, t.next())
 
     def test_drop_string(self):

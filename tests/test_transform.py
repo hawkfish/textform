@@ -29,13 +29,13 @@ class TestTransform(unittest.TestCase):
         s = MockSource('line')
         t = txf.Transform('test', 'line', 'output', s)
 
-        self.assertEqual(t.name, 'test')
-        self.assertEqual(t.inputs, ('line',))
-        self.assertEqual(t.outputs, ('output',))
-        self.assertEqual(t.source, s)
+        self.assertEqual('test', t.name)
+        self.assertEqual(('line',), t.inputs)
+        self.assertEqual(('output',), t.outputs)
+        self.assertEqual(s, t.source)
 
-        self.assertEqual(t.schema, {'line': {'type': None}})
-        self.assertEqual(t.next(), {'line': None})
+        self.assertIsNone(t.getSchemaType('line'))
+        self.assertEqual({t.inputs[0]: None}, t.next())
 
     def test_layout_replace_all(self):
         s = MockSource('line')

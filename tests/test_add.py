@@ -13,14 +13,13 @@ class TestAdd(unittest.TestCase):
         self.assertEqual(outputs, t.outputs)
         self.assertEqual(values, t.values)
 
-        schema = t.schema
         for i, output in enumerate(outputs):
-            self.assertEqual({'type': type(values[i])}, schema[output])
+            self.assertEqual(type(values[i]), t.getSchemaType(output), output)
 
         row = t.next()
         self.assertIsNotNone(row)
         for i, output in enumerate(outputs):
-            self.assertEqual(values[i], row[output])
+            self.assertEqual(values[i], row[output], output)
 
         return t
 

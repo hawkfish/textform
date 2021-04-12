@@ -5,9 +5,6 @@ def nullary():
     return 'Nullary'
 
 def unary(*argv):
-    if 'type' in argv[0]:
-        return {'type': str}
-
     return argv[0]
 
 class TestProject(unittest.TestCase):

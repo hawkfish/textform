@@ -8,7 +8,10 @@ class MockSource(txf.Transform):
         super().__init__('mock', (), outputs)
 
     def _schema(self):
-        return {output: {'type': None} for output in self.outputs}
+        schema = super()._schema()
+        for output in self.outputs:
+            txf.Transform._addSchemaType(schema, output)
+        return schema
 
     def next(self):
         return {output: None for output in self.outputs}
@@ -23,7 +26,9 @@ class MockAlternate(txf.Transform):
         self._position = int(offset)
 
     def _schema(self):
-        return {self.output: {'type': type(self._value)}}
+        schema = super()._schema()
+        txf.Transform._addSchemaType(schema, self.output, type(self._value))
+        return schema
 
     def next(self):
         row = {self.output: self._value if 0 == (self._position % self._step) else ''}
