@@ -63,7 +63,7 @@ class TextReader(object):
 
         self.fieldnames = fieldnames
         if not self.fieldnames:
-            self.fieldnames = config['fieldnames']
+            self.fieldnames = tuple(config.get('default_fieldnames', ()))
         self.fieldnames = self.fieldnames[:1]
 
     def __iter__(self):
@@ -88,7 +88,7 @@ def MakeLineReader(name, format, iterable, fieldnames=None, **config):
         raise TransformException(f"Unknown read format '{format}' in {name}")
 
     try:
-        iter(iterable)
+        iterable = iter(iterable)
     except:
         raise TransformException(f"Input to {name} is not iterable")
 

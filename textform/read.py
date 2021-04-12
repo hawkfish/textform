@@ -6,7 +6,7 @@ import csv
 class Read(Transform):
     def __init__(self, iterable, source=None, format='csv', **config):
         name = 'read'
-        self._reader = MakeLineReader(name, format, iterable, **config)
+        self._reader = MakeLineReader(name, format, iterable, None, **config)
 
         super().__init__(name, (), self._reader.fieldnames, source)
 
