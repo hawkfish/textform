@@ -1,4 +1,4 @@
-from .common import TransformException, MakeLineReader
+from .common import TransformException, ReaderFactory
 from .transform import Transform
 
 import csv
@@ -6,7 +6,7 @@ import csv
 class Read(Transform):
     def __init__(self, iterable, source=None, format='csv', **config):
         name = 'read'
-        self._reader = MakeLineReader(name, format, iterable, None, **config)
+        self._reader = ReaderFactory(name, format, iterable, None, **config)
 
         super().__init__(name, (), self._reader.fieldnames, source)
 

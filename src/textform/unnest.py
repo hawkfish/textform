@@ -1,6 +1,6 @@
 from .split import Split
 from .transform import Transform
-from .common import TransformException, MakeLineReader
+from .common import TransformException, UnnesterFactory
 
 #   deque doesn't like to be modified while iterating
 class NextAdapter(object):
@@ -28,7 +28,7 @@ class NextAdapter(object):
 def bind_unnest(name, format, outputs, **config):
 
     queue = NextAdapter()
-    reader = MakeLineReader(name, format, queue, outputs, **config)
+    reader = UnnesterFactory(name, format, queue, outputs, **config)
 
     def unnest(value):
         nonlocal queue, reader, outputs

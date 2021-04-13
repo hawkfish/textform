@@ -1,6 +1,6 @@
 from .merge import Merge
 from .transform import Transform
-from .common import TransformException, MakeFieldWriter
+from .common import TransformException, NesterFactory
 
 #   deque doesn't like to be modified while iterating
 class WriteAdapter(object):
@@ -34,7 +34,7 @@ def bind_nest(name, format, inputs, **config):
     if format == 'jsonl': format = 'json'
 
     queue = WriteAdapter()
-    writer = MakeFieldWriter(name, format, queue, inputs, **config)
+    writer = NesterFactory(name, format, queue, inputs, **config)
 
     def unnest(value):
         nonlocal inputs, queue, writer

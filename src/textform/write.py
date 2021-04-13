@@ -1,4 +1,4 @@
-from .common import TransformException, MakeLineWriter
+from .common import TransformException, WriterFactory
 from .transform import Transform
 
 class Write(Transform):
@@ -7,7 +7,7 @@ class Write(Transform):
 
         self._requireSource()
 
-        self._writer = MakeLineWriter(self.name, format, outfile, self.fieldnames)
+        self._writer = WriterFactory(self.name, format, outfile, self.fieldnames)
         self._writer.writeheader()
 
     def readrow(self):
