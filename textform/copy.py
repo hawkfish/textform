@@ -13,14 +13,14 @@ class Copy(Transform):
             d.update({output: d[self.input] for output in self.outputs})
         return d
 
-    def _layout(self):
+    def _fieldnames(self):
         #   Copy doesn't drop the inputs
-        layout = self.source._layout()
+        fieldnames = self.source._fieldnames()
         #   Output is inserted after the last input
-        rightmost = layout.index(self.input) + 1
-        layout[rightmost:rightmost] = list(self.outputs)
+        rightmost = fieldnames.index(self.input) + 1
+        fieldnames[rightmost:rightmost] = list(self.outputs)
 
-        return layout
+        return fieldnames
 
     def _schema(self):
         return self._fan_out(super()._schema())

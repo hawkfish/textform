@@ -45,7 +45,7 @@ class TestWrite(unittest.TestCase):
         self.assertEqual(s, t.source)
 
         self.assertEqual(s.schema, t.schema)
-        self.assertEqual(s.layout, t.layout)
+        self.assertEqual(s.fieldnames, t.fieldnames)
 
         self.assertEqual(count, t.pump())
 

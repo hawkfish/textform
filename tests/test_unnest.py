@@ -44,7 +44,7 @@ class TestUnnest(unittest.TestCase):
 
         self.assertEqual(input, t.input)
 
-        self.assertEqual(list(outputs), t.layout)
+        self.assertEqual(list(outputs), t.fieldnames)
 
         for i, output in enumerate(outputs):
             self.assertTrue(output in t.schema, output)

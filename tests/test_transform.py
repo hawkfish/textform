@@ -39,18 +39,18 @@ class TestTransform(unittest.TestCase):
 
     def test_layout_replace_all(self):
         s = MockSource('line')
-        t = txf.Transform('layout', 'line', 'output', s)
+        t = txf.Transform('fieldnames', 'line', 'output', s)
 
-        self.assertEqual(['output',], t.layout)
+        self.assertEqual(['output',], t.fieldnames)
 
     def test_layout_replace_first(self):
         s = MockSource(('F1', 'F2',))
-        t = txf.Transform('layout', 'F1', 'R1', s)
+        t = txf.Transform('fieldnames', 'F1', 'R1', s)
 
-        self.assertEqual(['R1', 'F2',], t.layout)
+        self.assertEqual(['R1', 'F2',], t.fieldnames)
 
     def test_layout_replace_last(self):
         s = MockSource(('F1', 'F2',))
-        t = txf.Transform('layout', 'F2', 'R2', s)
+        t = txf.Transform('fieldnames', 'F2', 'R2', s)
 
-        self.assertEqual(['F1', 'R2',], t.layout)
+        self.assertEqual(['F1', 'R2',], t.fieldnames)

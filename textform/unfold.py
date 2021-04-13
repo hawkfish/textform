@@ -13,7 +13,7 @@ class Unfold(Transform):
         group_size = len(self.outputs) // len(self.folds)
         self._groups = [self.outputs[i:i+group_size] for i in range(0, len(self.outputs), group_size)]
 
-        self.fixed = filter(lambda input: input not in self.inputs, self.source.layout)
+        self.fixed = filter(lambda input: input not in self.inputs, self.source.fieldnames)
 
     def _schema(self):
         schema = super()._schema()

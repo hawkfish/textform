@@ -24,10 +24,10 @@ class TestProject(unittest.TestCase):
         self.assertEqual(output, t.output)
         self.assertEqual(function, t.function)
 
-        layout = []
-        layout.extend(inputs)
-        layout.append(output)
-        self.assertEqual(layout, t.layout)
+        fieldnames = []
+        fieldnames.extend(inputs)
+        fieldnames.append(output)
+        self.assertEqual(fieldnames, t.fieldnames)
 
         for input in inputs:
             self.assertTrue(input in t.schema)

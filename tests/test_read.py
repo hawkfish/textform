@@ -56,7 +56,7 @@ class TestRead(unittest.TestCase):
         self.assertEqual(tuple(), t.inputs)
         self.assertEqual(outputs, t.outputs)
 
-        self.assertEqual(list(outputs), t.layout)
+        self.assertEqual(list(outputs), t.fieldnames)
 
         for output in outputs:
             self.assertTrue(output in t.schema)

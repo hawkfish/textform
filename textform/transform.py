@@ -46,7 +46,7 @@ class Transform:
         self.schema = self._schema()
         self._typed = self._isFullyTyped()
 
-        self.layout = self._layout()
+        self.fieldnames = self._fieldnames()
 
     def _setSource(self, source):
         if source and not isinstance(source, Transform):
@@ -85,19 +85,19 @@ class Transform:
                 raise TransformException(f"Output field '{output}' in {self.name} overwrites an existing field.")
         return self.outputs
 
-    def _layout(self):
-        layout = copy.copy(self.source.layout) if self.source else []
+    def _fieldnames(self):
+        fieldnames = copy.copy(self.source.fieldnames) if self.source else []
 
         #   Only update rows if there are outputs and inputs
         if len(self.outputs):
             #   Outputs are inserted at the first removed input
-            leftmost = len(layout)
+            leftmost = len(fieldnames)
             if self.inputs:
-                leftmost = min([layout.index(input) for input in self.inputs])
-                layout = list(filter(lambda input: input not in self.inputs, layout))
-            layout[leftmost:leftmost] = list(self.outputs)
+                leftmost = min([fieldnames.index(input) for input in self.inputs])
+                fieldnames = list(filter(lambda input: input not in self.inputs, fieldnames))
+            fieldnames[leftmost:leftmost] = list(self.outputs)
 
-        return layout
+        return fieldnames
 
     def _getSchemaType(schema, field):
         return schema[field]['type']

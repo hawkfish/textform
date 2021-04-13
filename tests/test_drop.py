@@ -12,7 +12,7 @@ class TestDrop(unittest.TestCase):
         self.assertEqual(tuple(), t.outputs)
 
         expected = list(filter(lambda input: input not in drops, inputs))
-        self.assertEqual(expected, t.layout)
+        self.assertEqual(expected, t.fieldnames)
 
         return t
 

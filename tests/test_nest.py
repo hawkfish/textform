@@ -44,7 +44,7 @@ class TestNest(unittest.TestCase):
 
         self.assertEqual(output, t.output)
 
-        self.assertEqual([output,], t.layout)
+        self.assertEqual([output,], t.fieldnames)
 
         self.assertTrue(output in t.schema)
         self.assertIsNone(t.getSchemaType(output))

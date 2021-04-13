@@ -9,16 +9,16 @@ class Project(Transform):
 
         self.function = function
 
-    def _layout(self):
+    def _fieldnames(self):
         #   Project doesn't drop the inputs
-        layout = self.source._layout() if self.source else []
+        fieldnames = self.source._fieldnames() if self.source else []
         #   Output is inserted after the last input
-        rightmost = len(layout)
+        rightmost = len(fieldnames)
         if len(self.inputs):
-            rightmost = max([layout.index(input) for input in self.inputs]) + 1
-        layout[rightmost:rightmost] = [self.output]
+            rightmost = max([fieldnames.index(input) for input in self.inputs]) + 1
+        fieldnames[rightmost:rightmost] = [self.output]
 
-        return layout
+        return fieldnames
 
     def _schema(self):
         schema = super()._schema()
