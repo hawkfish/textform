@@ -9,6 +9,8 @@ The ``Cast`` transform casts the values in a column to a Python type. Its argume
 * *defaults* If the *pattern* does not match, the first output will contain the original string and the remaining outputs will be filled with the value(s) 
   in *defaults*. If *defaults* is not a single value, it must be the same size as the number of *outputs*.
 
+``Cast`` is a special case of ``Format``.
+
 Examples:
 ^^^^^^^^^
 
