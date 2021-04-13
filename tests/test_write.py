@@ -23,10 +23,24 @@ def expected_jsonl(header, count):
     if count: body += eol
     return body
 
+def expected_md(fieldnames, count):
+    sep = '|'
+    def md_row(values):
+        return '{}{}{}'.format(sep, sep.join(values), sep)
+    expected = [md_row(fieldnames), md_row(['---',] * len(fieldnames)),]
+    expected.extend([md_row(['Value', str(r)]) for r in range(count)])
+
+    eol = '\n'
+    expected = eol.join(expected)
+    expected += eol
+
+    return expected
+
 expected_factory = {
     'csv': expected_csv,
     'json': expected_json,
     'jsonl': expected_jsonl,
+    'md': expected_md,
 }
 
 class TestWrite(unittest.TestCase):
@@ -69,6 +83,12 @@ class TestWrite(unittest.TestCase):
         self.assert_write(1, 'jsonl')
         self.assert_write(2, 'jsonl')
         self.assert_write(7, 'jsonl')
+
+    def test_write_md(self):
+        self.assert_write(0, 'md')
+        self.assert_write(1, 'md')
+        self.assert_write(2, 'md')
+        self.assert_write(11, 'md')
 
     def test_missing_source(self):
         self.assertRaises(txf.TransformException, txf.Write, None, None)

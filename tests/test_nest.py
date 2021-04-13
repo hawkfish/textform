@@ -12,10 +12,23 @@ def expected_json(inputs, lines):
 def expected_py(inputs, lines):
     return [{inputs[0]: i, inputs[1]: f"String {i}"} for i in range(lines)]
 
+def expected_md(fieldnames, count):
+    sep = '|'
+    def md_row(values):
+        return '{}{}{}'.format(sep, sep.join(values), sep)
+    expected = [md_row(['Value', str(r)]) for r in range(count)]
+
+    eol = '\n'
+    expected = eol.join(expected)
+    expected += eol
+
+    return expected
+
 expected_factory = {
     'csv': expected_csv,
     'json': expected_json,
     'jsonl': expected_json,
+    'md': expected_md,
     'py': expected_py,
 }
 
@@ -23,6 +36,7 @@ schemas = {
     'csv': str,
     'json': str,
     'jsonl': str,
+    'md': str,
     'py': dict,
 }
 
@@ -71,7 +85,13 @@ class TestNest(unittest.TestCase):
         self.assert_nest(2, 'jsonl')
         self.assert_nest(19, 'jsonl')
 
-    def test_nest_json(self):
+    def test_nest_md(self):
+        self.assert_nest(0, 'py')
+        self.assert_nest(1, 'py')
+        self.assert_nest(2, 'py')
+        self.assert_nest(11, 'py')
+
+    def test_nest_py(self):
         self.assert_nest(0, 'py')
         self.assert_nest(1, 'py')
         self.assert_nest(2, 'py')

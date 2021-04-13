@@ -1,6 +1,7 @@
 from . import csv
 from . import json
 from . import jsonl
+from . import md
 from . import py
 from . import text
 from ..common import TransformException
@@ -57,6 +58,7 @@ def WriterFactory(name, format, outfile, fieldnames=None, **config):
         'csv': csv.Writer,
         'json': json.Writer,
         'jsonl': jsonl.Writer,
+        'md': md.Writer,
         'py': py.Writer,
     }
 
@@ -68,6 +70,7 @@ def NesterFactory(name, format, outfile, fieldnames=None, **config):
         'csv': csv.Nester,
         'json': json.Nester,
         'jsonl': jsonl.Nester,
+        'md': jsonl.Nester,
         'py': py.Nester,
     }
 
