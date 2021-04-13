@@ -1,7 +1,7 @@
 from context import *
 
 class MockEmpty(txf.Transform):
-    def next(self) : return None
+    def readrow(self): raise StopIteration('MockEmpty')
 
 class MockSource(txf.Transform):
     def __init__(self, outputs):
@@ -13,7 +13,7 @@ class MockSource(txf.Transform):
             txf.Transform._addSchemaType(schema, output)
         return schema
 
-    def next(self):
+    def readrow(self):
         return {output: None for output in self.outputs}
 
 class MockAlternate(txf.Transform):
@@ -30,7 +30,7 @@ class MockAlternate(txf.Transform):
         txf.Transform._addSchemaType(schema, self.output, type(self._value))
         return schema
 
-    def next(self):
+    def readrow(self):
         row = {self.output: self._value if 0 == (self._position % self._step) else ''}
         self._position += 1
         return row

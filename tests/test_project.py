@@ -35,8 +35,7 @@ class TestProject(unittest.TestCase):
         self.assertTrue(output in t.schema)
         self.assertIsNone(t.getSchemaType(output))
 
-        row = t.next()
-        self.assertIsNotNone(row)
+        row = t.readrow()
         self.assertTrue(output in row)
         self.assertEqual(expected, row[output])
 

@@ -51,12 +51,11 @@ class TestUnnest(unittest.TestCase):
             self.assertIsNone(t.getSchemaType(output), output)
 
         for expected in generate_py(outputs, lines):
-            row = t.next()
-            self.assertIsNotNone(row)
+            row = t.readrow()
             for i, output in enumerate(outputs):
                 cast = schemas[format][i]
                 self.assertEqual(cast(expected[output]), row[output], output)
-        self.assertIsNone(t.next())
+        self.assertRaises(StopIteration, t.readrow)
 
         for i, output in enumerate(outputs):
             self.assertTrue(output in t.schema, output)

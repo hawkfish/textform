@@ -25,16 +25,12 @@ class Project(Transform):
         Transform._addSchemaType(schema, self.output)
         return schema
 
-    def next(self):
-        while True:
-            row = super().next()
-            if row is None: break
+    def readrow(self):
+        row = super().readrow()
 
-            #   Bind the input values
-            argv = tuple([row[input] for input in self.inputs])
-            row[self.output] = self.function(*argv)
-            self._updateSchemaTypes(row, self.outputs)
+        #   Bind the input values
+        argv = tuple([row[input] for input in self.inputs])
+        row[self.output] = self.function(*argv)
+        self._updateSchemaTypes(row, self.outputs)
 
-            return row
-
-        return None
+        return row

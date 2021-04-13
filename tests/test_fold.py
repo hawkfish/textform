@@ -36,10 +36,7 @@ class TestFold(unittest.TestCase):
                 self.assertEqual(s.schema[input], t.schema[fold])
 
         actual = 0
-        while True:
-            row = t.next()
-            if row is None: break
-
+        for row in t:
             #   Check the keys
             for k, key in enumerate(keys):
                 self.assertTrue(key in row)

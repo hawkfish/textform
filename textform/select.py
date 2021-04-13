@@ -11,14 +11,13 @@ class Select(Transform):
 
         self.predicate = predicate
 
-    def next(self):
+    def readrow(self):
         while True:
-            row = super().next()
-            if row is None: break
+            row = super().readrow()
 
             #   Bind the input values
             args = tuple([row[input] for input in self.inputs])
             if self.predicate(*args):
                 return row
 
-        return None
+        raise StopIteration(self.name)

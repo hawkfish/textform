@@ -19,9 +19,8 @@ class TestMatch(unittest.TestCase):
 
         self.assertEqual(s.schema, t.schema)
 
-        actual = 0
-        while t.next(): actual += 1
-        self.assertEqual(expected, actual)
+        self.assertEqual(expected, t.pump())
+
         return t
 
     def test_match_none(self):

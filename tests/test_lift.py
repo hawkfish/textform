@@ -22,24 +22,22 @@ class TestLift(unittest.TestCase):
 
         #   The first non-blank is at (step - offset) % step
         #   All the other non-blanks are step away from that
-        #   We will hit the defaults when the next non-blank
+        #   We will hit the defaults when the readrow non-blank
         #   is past limit.
         firstnonblank = (step - offset) % step
         nonblanks = (limit - firstnonblank - 1) // step
         lastnonblank = nonblanks * step + firstnonblank if nonblanks > 0 else -1
         for r in range(0, lastnonblank + 1):
-            row = t.next()
-            self.assertIsNotNone(row)
+            row = t.readrow()
             self.assertTrue(input in row)
             self.assertEqual(value, row[input], r)
 
         for r in range(0, limit - lastnonblank - 1):
-            row = t.next()
-            self.assertIsNotNone(row)
+            row = t.readrow()
             self.assertTrue(input in row)
             self.assertEqual(default, row[input], lastnonblank + 1 + r)
 
-        self.assertIsNone(t.next())
+        self.assertRaises(StopIteration, t.readrow)
 
         return t
 

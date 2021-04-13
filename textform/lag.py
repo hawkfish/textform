@@ -14,16 +14,15 @@ class Lag(Transform):
         if self.lag > 0:
             for i in range(self.lag):
                 self._queue.append(self.default)
+        self._stopped = None
 
-    def next(self):
+    def readrow(self):
         if self.lag > 0:
             #   Make sure the buffer is full of default values
             while len(self._queue) < self.lag:
                 self._queue.append(self.default)
 
-            row = super().next()
-            if row is None:
-                return row
+            row = super().readrow()
 
             self._queue.append(row[self.input])
             row[self.input] = self._queue.popleft()
@@ -35,22 +34,27 @@ class Lag(Transform):
             lead = -self.lag
 
             #   Make sure the buffer is full of older rows
-            while len(self._queue) < lead:
-                self._queue.append(super().next())
+            value = self.default
+            while len(self._queue) <= lead and not self._stopped:
+                try:
+                    row = super().readrow()
+                    value = row[self.input]
+                    self._queue.append(row)
 
-            row = super().next()
-            value = row[self.input] if row is not None else self.default
-            self._queue.append(row)
+                except StopIteration as stopped:
+                    self._stopped = stopped
+
+            if not len(self._queue):
+                raise self._stopped
 
             row = self._queue.popleft()
-            if row is not None:
-                row[self.input] = value
+            row[self.input] = value
 
             return row
 
         else:
             #   Zero lags are a NOP
-            return super().next()
+            return super().readrow()
 
 class Lead(Lag):
     def __init__(self, source, input, lead=1, default=''):

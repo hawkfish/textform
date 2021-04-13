@@ -41,12 +41,11 @@ class Split(Transform):
             Transform._addSchemaType(schema, output)
         return schema
 
-    def next(self):
-        row = super().next()
-        if row is not None:
-            updates = self.function(row[self.input])
-            del row[self.input]
-            row.update(updates)
-            self._updateSchemaTypes(row, self.outputs)
+    def readrow(self):
+        row = super().readrow()
+        updates = self.function(row[self.input])
+        del row[self.input]
+        row.update(updates)
+        self._updateSchemaTypes(row, self.outputs)
 
         return row

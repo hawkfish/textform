@@ -12,7 +12,7 @@ class TestTransform(unittest.TestCase):
         self.assertIsNone(t.source)
 
         self.assertEqual(t.schema, {})
-        self.assertEqual(t.next(), {})
+        self.assertEqual(t.readrow(), {})
 
     def test_single_fields(self):
         t = txf.Transform('test', None, 'output')
@@ -23,7 +23,7 @@ class TestTransform(unittest.TestCase):
         self.assertIsNone(t.source)
 
         self.assertEqual(t.schema, {})
-        self.assertEqual(t.next(), {})
+        self.assertEqual(t.readrow(), {})
 
     def test_source(self):
         s = MockSource('line')
@@ -35,7 +35,7 @@ class TestTransform(unittest.TestCase):
         self.assertEqual(s, t.source)
 
         self.assertIsNone(t.getSchemaType('line'))
-        self.assertEqual({t.inputs[0]: None}, t.next())
+        self.assertEqual({t.inputs[0]: None}, t.readrow())
 
     def test_layout_replace_all(self):
         s = MockSource('line')

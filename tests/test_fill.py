@@ -19,18 +19,16 @@ class TestFill(unittest.TestCase):
         self.assertEqual(s.schema, t.schema)
 
         for r in range(0, offset):
-            row = t.next()
-            self.assertIsNotNone(row)
+            row = t.readrow()
             self.assertTrue(input in row)
             self.assertEqual(default, row[input])
 
         for r in range(0, 100 * step):
-            row = t.next()
-            self.assertIsNotNone(row)
+            row = t.readrow()
             self.assertTrue(input in row)
             self.assertEqual(value, row[input])
 
-        self.assertIsNone(t.next())
+        self.assertRaises(StopIteration, t.readrow)
 
         return t
 

@@ -12,28 +12,34 @@ class Lift(Transform):
 
         self._queue = collections.deque()
         self._lift = None
+        self._stopped = None
 
-    def next(self):
+    def readrow(self):
         #   If the queue has rows, pull one out
         #   and copy the lifted value in
         if len(self._queue):
             row = self._queue.popleft()
-            if row is not None:
-                row[self.input] = self._lift
+            row[self.input] = self._lift
             return row
 
-        #   Scan to the next lifted value
+        #   Are we finished?
+        if self._stopped:
+            raise self._stopped
+
+        #   Scan to the readrow lifted value
         self._lift = self.blank
         while self._lift == self.blank:
-            row = super().next()
-            self._queue.append(row)
-            if row is None:
-                self._lift = self.default
-                break
-            else:
+            try:
+                row = super().readrow()
                 self._lift = row[self.input]
+                self._queue.append(row)
+
+            except StopIteration as stopped:
+                self._lift = self.default
+                self._stopped = stopped
+                break
 
         #   Recurse once
-        return self.next()
+        return self.readrow()
 
 FillUp = Lift

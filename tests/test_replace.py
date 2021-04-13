@@ -19,7 +19,7 @@ class TestReplace(unittest.TestCase):
 
         self.assertEqual(type(expected), t.getSchemaType(input))
 
-        self.assertEqual({input: expected}, t.next())
+        self.assertEqual({input: expected}, t.readrow())
 
         return t
 

@@ -22,7 +22,7 @@ class TestMerge(unittest.TestCase):
         self.assertTrue(output in t.schema)
         self.assertIsNone(t.getSchemaType(output))
 
-        row = t.next()
+        row = t.readrow()
         self.assertEqual(1, len(row))
         self.assertTrue(output in row)
         self.assertEqual(glue.join(values), row[output])

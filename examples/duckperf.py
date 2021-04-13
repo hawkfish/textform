@@ -20,7 +20,7 @@ def main():
     p = Cast(p, 'Run Count', int)
     p = Cast(p, 'Time', float)
     p = Write(p, sys.stdout)
-    print(p.pull(), file=sys.stderr)
+    print(p.pump(), file=sys.stderr)
 
 if __name__ == '__main__':
     main()

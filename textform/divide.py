@@ -37,19 +37,18 @@ class Divide(Transform):
         schema.update({output: metadata for output in self.outputs})
         return schema
 
-    def next(self):
-        row = super().next()
-        if row is not None:
-            value = row[self.input]
-            del row[self.input]
+    def readrow(self):
+        row = super().readrow()
+        value = row[self.input]
+        del row[self.input]
 
-            if self.predicate(value):
-                row[self.passed] = value
-                row[self.failed] = self.fills[1]
-            else:
-                row[self.passed] = self.fills[0]
-                row[self.failed] = value
+        if self.predicate(value):
+            row[self.passed] = value
+            row[self.failed] = self.fills[1]
+        else:
+            row[self.passed] = self.fills[0]
+            row[self.failed] = value
 
-            self._updateSchemaTypes(row, self.outputs)
+        self._updateSchemaTypes(row, self.outputs)
 
         return row

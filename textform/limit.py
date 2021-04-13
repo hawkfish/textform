@@ -13,13 +13,13 @@ class Limit(Transform):
 
         self._position = 0
 
-    def next(self):
+    def readrow(self):
         if self._position >= self.offset + self.limit:
-            return None
+            raise StopIteration(self.name)
 
         while self._position < self.offset:
             self._position += 1
-            super().next()
+            super().readrow()
 
         self._position += 1
-        return super().next()
+        return super().readrow()

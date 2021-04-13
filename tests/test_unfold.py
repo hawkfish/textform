@@ -36,8 +36,7 @@ class TestUnfold(unittest.TestCase):
                 self.assertEqual(s.schema[fold], t.schema[output])
 
         #   Only unfold a single row
-        row = t.next()
-        self.assertIsNotNone(row)
+        row = t.readrow()
 
         #   Check the keys
         for k, key in enumerate(keys):

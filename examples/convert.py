@@ -26,7 +26,7 @@ def main():
 
     p = Read(sys.stdin, None, config.in_format)
     p = Write(p, sys.stdout, config.out_format)
-    print(p.pull(), file=sys.stderr)
+    print(p.pump(), file=sys.stderr)
 
 if __name__ == '__main__':
     main()

@@ -25,5 +25,5 @@ class Copy(Transform):
     def _schema(self):
         return self._fan_out(super()._schema())
 
-    def next(self):
-        return self._fan_out(super().next())
+    def readrow(self):
+        return self._fan_out(super().readrow())

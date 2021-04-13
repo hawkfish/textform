@@ -62,7 +62,7 @@ class TestRead(unittest.TestCase):
             self.assertTrue(output in t.schema)
             self.assertIsNone(t.getSchemaType(output))
 
-        self.assertEqual(lines, t.pull())
+        self.assertEqual(lines, t.pump())
 
         for i, output in enumerate(outputs):
             self.assertTrue(output in t.schema)

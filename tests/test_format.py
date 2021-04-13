@@ -22,7 +22,7 @@ class TestFormat(unittest.TestCase):
         self.assertTrue(input in t.schema)
         self.assertIsNone(t.getSchemaType(input))
 
-        self.assertEqual({input: expected}, t.next())
+        self.assertEqual({input: expected}, t.readrow())
 
         self.assertTrue(input in t.schema)
         self.assertEqual(type(expected), t.getSchemaType(input))

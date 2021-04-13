@@ -18,10 +18,10 @@ class TestSequence(unittest.TestCase):
 
         if step:
             for expected in range(start, start+7*step, step):
-                self.assertEqual({output: expected}, t.next())
+                self.assertEqual({output: expected}, t.readrow())
         else:
             for i in range(0,7):
-                self.assertEqual({output: start}, t.next())
+                self.assertEqual({output: start}, t.readrow())
 
     def test_defaults(self):
         self.assert_sequence('RowNum')

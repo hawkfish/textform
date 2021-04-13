@@ -61,29 +61,27 @@ class Fold(Transform):
 
             return folded
 
-        return None
+        raise StopIteration(self.name)
 
-    def next(self):
-        row = self._unbuffer()
-        if row is not None: return row
-
-        #   Buffer empty, so pivot next row
-        row = super().next()
-        if row is not None:
-            #   Update the folds
-            for g, group in enumerate(self._groups):
-                output = self.outputs[g+1]
-                for f, folded in enumerate(self._buffer):
-                    folded[output] = row[group[f]]
-
-            #   Update the fixed values
-            fixed = {f: row[f] for f in self.fixed}
-            for folded in self._buffer:
-                folded.update(fixed)
-
-            self._position = 0
-
-            #   Flush from refilled buffer
+    def readrow(self):
+        if self._position < len(self._buffer):
             return self._unbuffer()
 
-        return row
+        #   Buffer empty, so pivot next row
+        row = super().readrow()
+
+        #   Update the folds
+        for g, group in enumerate(self._groups):
+            output = self.outputs[g+1]
+            for f, folded in enumerate(self._buffer):
+                folded[output] = row[group[f]]
+
+        #   Update the fixed values
+        fixed = {f: row[f] for f in self.fixed}
+        for folded in self._buffer:
+            folded.update(fixed)
+
+        self._position = 0
+
+        #   Flush from refilled buffer
+        return self._unbuffer()

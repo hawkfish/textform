@@ -22,7 +22,7 @@ class TestDrop(unittest.TestCase):
         self.assertEqual((input,), t.inputs)
 
         self.assertEqual({}, t.schema)
-        self.assertEqual({}, t.next())
+        self.assertEqual({}, t.readrow())
 
     def assert_drop_all_multiple(self, inputs, values):
         t = self.assert_construct(inputs, inputs, values)
@@ -30,7 +30,7 @@ class TestDrop(unittest.TestCase):
         self.assertEqual(inputs, t.inputs)
 
         self.assertEqual({}, t.schema)
-        self.assertEqual({}, t.next())
+        self.assertEqual({}, t.readrow())
 
     def assert_drop_first_multiple(self, inputs, values):
         drops = inputs[:1]
@@ -40,7 +40,7 @@ class TestDrop(unittest.TestCase):
 
         for i, input in enumerate(inputs[1:]):
             self.assertEqual(type(values[i+1]), t.getSchemaType(input), input)
-        self.assertEqual({input: values[i+1] for (i, input) in enumerate(inputs[1:])}, t.next())
+        self.assertEqual({input: values[i+1] for (i, input) in enumerate(inputs[1:])}, t.readrow())
 
     def test_drop_string(self):
         self.assert_drop_all_one('Added', 'String')

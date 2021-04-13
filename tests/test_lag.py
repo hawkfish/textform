@@ -24,31 +24,27 @@ class TestLag(unittest.TestCase):
 
         if lag >= 0:
             for r in range(lag):
-                row = t.next()
-                self.assertIsNotNone(row)
+                row = t.readrow()
                 self.assertTrue(input in row)
                 self.assertEqual(default, row[input])
 
             for r in range(lag, limit):
-                row = t.next()
-                self.assertIsNotNone(row)
+                row = t.readrow()
                 self.assertTrue(input in row)
                 self.assertEqual(r - lag, row[input])
 
         else:
             for r in range(0, limit+lag):
-                row = t.next()
-                self.assertIsNotNone(row)
+                row = t.readrow()
                 self.assertTrue(input in row)
                 self.assertEqual(r - lag, row[input])
 
             for r in range(-lag):
-                row = t.next()
-                self.assertIsNotNone(row)
+                row = t.readrow()
                 self.assertTrue(input in row)
                 self.assertEqual(default, row[input])
 
-        self.assertIsNone(t.next())
+        self.assertRaises(StopIteration, t.readrow)
 
         return t
 

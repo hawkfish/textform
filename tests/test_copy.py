@@ -33,7 +33,7 @@ class TestCopy(unittest.TestCase):
             self.assertTrue(output in t.schema)
             self.assertEqual(t.getSchemaType(input), t.getSchemaType(output))
 
-        row = t.next()
+        row = t.readrow()
         for output in outputs:
             self.assertEqual(row[input], row[output])
 
@@ -64,7 +64,7 @@ class TestCopy(unittest.TestCase):
         input = 'Added'
         t = txf.Add(MockEmpty('empty'), input, '10')
         t = txf.Copy(t, input, 'Clone')
-        self.assertIsNone(t.next())
+        self.assertRaises(StopIteration, t.readrow)
 
     def test_root(self):
         self.assertRaises(txf.TransformException, txf.Copy, None, 'Added', 'Clone')

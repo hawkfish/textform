@@ -16,9 +16,9 @@ class TestLimit(unittest.TestCase):
 
         self.assertEqual(t.schema, {})
 
-        for r in range(0,limit):
-            self.assertEqual(t.next(), {})
-        self.assertIsNone(t.next())
+        for row in t:
+            self.assertEqual(row, {})
+        self.assertRaises(StopIteration, t.readrow)
         self.assertEqual(offset + limit, t._position)
 
     def test_defaults(self):

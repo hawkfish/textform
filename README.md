@@ -46,7 +46,7 @@ p = Divide(p, 'Line', 'Query', 'Run', r'Q')         # Separate the query names f
 p = Fill(p, 'Query', '00')                          # Fill down the blank query names
 p = Capture(p, 'Query', ('Query',), r'\|\|\s+Q(\w+)\s+\|\|')  # Capture the query number
 # Split the execution mode from the query name
-p = Split(p, 'Query', ('Query', 'Mode',), r'_', ('00', 'SERIAL',)) 
+p = Split(p, 'Query', ('Query', 'Mode',), r'_', ('00', 'SERIAL',))
 p = Cast(p, 'Query', int)                           # Cast the query number to an integer
 p = Match(p, 'Run', r'\d')                          # Filter to the runs with data
 # Capture the run components
@@ -55,7 +55,7 @@ p = Cast(p, 'Run #', int)                           # Cast the run components
 p = Cast(p, 'Run Count', int)
 p = Cast(p, 'Time', float)
 p = Write(p, sys.stdout)                            # Write the records to stdout as a csv
-p.pull()
+p.pump()
 ```
 
 We can now invoke the pipeline script as:

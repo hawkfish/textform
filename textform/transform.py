@@ -126,15 +126,21 @@ class Transform:
     def _schema(self):
         return copy.copy(self.source.schema) if self.source else {}
 
-    def next(self):
-        if self.source: return self.source.next()
+    def readrow(self):
+        if self.source: return self.source.readrow()
         return {}
 
-    def pull(self):
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        return self.readrow()
+
+    next = __next__
+
+    def pump(self):
         count = 0
-        while True:
-            row = self.next()
-            if row is None: break
+        for row in self:
             count += 1
 
         return count

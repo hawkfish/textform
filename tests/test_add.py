@@ -16,7 +16,7 @@ class TestAdd(unittest.TestCase):
         for i, output in enumerate(outputs):
             self.assertEqual(type(values[i]), t.getSchemaType(output), output)
 
-        row = t.next()
+        row = t.readrow()
         self.assertIsNotNone(row)
         for i, output in enumerate(outputs):
             self.assertEqual(values[i], row[output], output)
@@ -49,7 +49,7 @@ class TestAdd(unittest.TestCase):
 
     def test_last_row(self):
         t = txf.Add(MockEmpty('empty'), 'Added', 1)
-        self.assertIsNone(t.next())
+        self.assertRaises(StopIteration, t.readrow)
 
     def test_mismatch(self):
         self.assertRaises(txf.TransformException, txf.Add, None, ('Add 1', 'Add 2',), (2,))

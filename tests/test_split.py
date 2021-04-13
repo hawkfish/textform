@@ -28,9 +28,7 @@ class TestSplit(unittest.TestCase):
         self.assertFalse(input in t.schema)
 
         actuals = [0 for output in outputs]
-        while True:
-            row = t.next()
-            if row is None: break
+        for row in t:
             for i, output in enumerate(outputs):
                 if default == row[output]:
                     actuals[i] += 1

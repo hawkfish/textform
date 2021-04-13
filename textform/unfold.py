@@ -39,15 +39,14 @@ class Unfold(Transform):
 
         return schema
 
-    def next(self):
+    def readrow(self):
         #   Build the row, skipping a ragged end
         #   To do this in full generality would require
         #   buffering rows keyed by the fixed values
         #   and emitting a row whenever it is complete
         row = None
         for g in range(len(self._groups[0])):
-            folded = super().next()
-            if folded is None: break
+            folded = super().readrow()
 
             if row is None: row = {fixed: folded[fixed] for fixed in self.fixed}
             row.update({self._groups[f][g]: folded[self.folds[f]] for f in range(len(self.folds))})

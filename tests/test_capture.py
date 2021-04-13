@@ -26,9 +26,7 @@ class TestCapture(unittest.TestCase):
             self.assertEqual(s.schema[input], schema[output])
 
         actual = 0
-        while True:
-            row = t.next()
-            if row is None: break
+        for row in t:
             if row[outputs[1]]: actual += 1
         self.assertEqual(expected, actual)
 

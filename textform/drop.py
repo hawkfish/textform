@@ -18,5 +18,5 @@ class Drop(Transform):
     def _schema(self):
         return self._delete_inputs(super()._schema())
 
-    def next(self):
-        return self._delete_inputs(super().next())
+    def readrow(self):
+        return self._delete_inputs(super().readrow())

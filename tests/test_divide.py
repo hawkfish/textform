@@ -27,9 +27,7 @@ class TestDivide(unittest.TestCase):
         self.assertEqual(s.schema[input], t.schema[right])
 
         actual = 0
-        while True:
-            row = t.next()
-            if row is None: break
+        for row in t:
             if row[left]: actual += 1
         self.assertEqual(expected, actual)
 

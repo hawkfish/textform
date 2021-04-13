@@ -17,8 +17,8 @@ class Sequence(Transform):
         Transform._addSchemaType(schema, self.output, type(self.start))
         return schema
 
-    def next(self):
-        row = super().next()
+    def readrow(self):
+        row = super().readrow()
         row[self.output] = self._position
         self._position += self.step
         return row

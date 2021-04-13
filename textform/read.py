@@ -18,14 +18,8 @@ class Read(Transform):
             Transform._addSchemaType(schema, output)
         return schema
 
-    def next(self):
-        row = super().next()
-        if row is not None:
-            try:
-                row.update(next(self._reader))
-                self._updateSchemaTypes(row, self.outputs)
-
-            except StopIteration:
-                row = None
-
+    def readrow(self):
+        row = super().readrow()
+        row.update(next(self._reader))
+        self._updateSchemaTypes(row, self.outputs)
         return row

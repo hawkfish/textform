@@ -14,7 +14,7 @@ class TestCast(unittest.TestCase):
         self.assertEqual(result_type, t.result_type)
 
         self.assertEqual(result_type, t.getSchemaType(input))
-        self.assertEqual({input: result_type(value) }, t.next())
+        self.assertEqual({input: result_type(value) }, t.readrow())
 
         return t
 
@@ -28,7 +28,7 @@ class TestCast(unittest.TestCase):
         input = 'Added'
         t = txf.Add(MockEmpty('empty'), input, '10')
         t = txf.Cast(t, input, int)
-        self.assertIsNone(t.next())
+        self.assertRaises(StopIteration, t.readrow)
 
     def test_root(self):
         self.assertRaises(txf.TransformException, txf.Cast, None, 'Target', str)

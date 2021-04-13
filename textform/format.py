@@ -14,10 +14,9 @@ class Format(Transform):
         Transform._addSchemaType(schema, self.input)
         return schema
 
-    def next(self):
-        row = super().next()
-        if row is not None:
-            row[self.input] = self.function(row[self.input])
-            self._updateSchemaTypes(row, [self.input])
+    def readrow(self):
+        row = super().readrow()
+        row[self.input] = self.function(row[self.input])
+        self._updateSchemaTypes(row, [self.input])
 
         return row

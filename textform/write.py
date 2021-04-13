@@ -10,11 +10,12 @@ class Write(Transform):
         self._writer = MakeLineWriter(self.name, format, outfile, self.layout)
         self._writer.writeheader()
 
-    def next(self):
-        row = super().next()
-        if row is not None:
+    def readrow(self):
+        try:
+            row = super().readrow()
             self._writer.writerow(row)
-        else:
-            self._writer.writefooter()
+            return row
 
-        return row
+        except StopIteration:
+            self._writer.writefooter()
+            raise

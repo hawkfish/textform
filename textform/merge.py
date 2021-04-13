@@ -29,14 +29,13 @@ class Merge(Transform):
         Transform._addSchemaType(schema, self.output)
         return schema
 
-    def next(self):
-        row = super().next()
-        if row is not None:
-            value = self.merger([row[input] for input in self.inputs])
-            for input in self.inputs:
-                del row[input]
-            row[self.output] = value
+    def readrow(self):
+        row = super().readrow()
+        value = self.merger([row[input] for input in self.inputs])
+        for input in self.inputs:
+            del row[input]
+        row[self.output] = value
 
-            self._updateSchemaTypes(row, self.outputs)
+        self._updateSchemaTypes(row, self.outputs)
 
         return row

@@ -29,7 +29,7 @@ class TestSelect(unittest.TestCase):
 
         self.assertEqual(s.schema, t.schema)
 
-        actual = t.pull()
+        actual = t.pump()
         self.assertEqual(expected, actual)
 
         return t

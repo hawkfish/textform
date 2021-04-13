@@ -27,8 +27,7 @@ class Add(Transform):
             Transform._addSchemaType(schema, output, type(self.values[i]))
         return schema
 
-    def next(self):
-        row = super().next()
-        if row is not None:
-            row.update({output: self.values[i] for i, output in enumerate(self.outputs)})
+    def readrow(self):
+        row = super().readrow()
+        row.update({output: self.values[i] for i, output in enumerate(self.outputs)})
         return row

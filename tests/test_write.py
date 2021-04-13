@@ -47,7 +47,7 @@ class TestWrite(unittest.TestCase):
         self.assertEqual(s.schema, t.schema)
         self.assertEqual(s.layout, t.layout)
 
-        self.assertEqual(count, t.pull())
+        self.assertEqual(count, t.pump())
 
         expected = expected_factory[format](t.inputs, count)
         self.assertEqual(expected, outfile.getvalue())
