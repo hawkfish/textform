@@ -5,6 +5,7 @@ The ``Project`` transform computes (projects) a new column using an arbitrary fu
 
 * *pipeline* The input pipeline (required).
 * *inputs* The columns to combine. They will *not* be dropped from the output.
+* *output* The column containing the computed result.
 * *function* A *callable* implementing the function.
   It will be given the values of *inputs* as positional arguments **in the given order**.
 
