@@ -11,6 +11,8 @@ The ``Capture`` transform replaces a string column with the capture groups from 
 * *defaults* If the *pattern* does not match, the first output will contain the original string and the remaining outputs will be filled with the value(s) 
   in *defaults*. If *defaults* is not a single value, it must be the same size as the number of *outputs*.
 
+``Capture`` is a special case of ``Split``.
+
 Examples:
 ^^^^^^^^^
 
