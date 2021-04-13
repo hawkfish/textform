@@ -1,8 +1,7 @@
-import csv
-import re
+import os.path
 import sys
 
-sys.path.append('..')
+sys.path.append(os.path.join('..', 'src'))
 from textform import *
 
 def main():

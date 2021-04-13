@@ -23,6 +23,7 @@ def ReaderFactory(name, format, iterable, fieldnames=None, **config):
         'csv': csv.Reader,
         'json': json.Reader,
         'jsonl': jsonl.Reader,
+        'md': md.Reader,
         'py': py.Reader,
         'text': text.Reader,
     }
@@ -35,6 +36,7 @@ def UnnesterFactory(name, format, iterable, fieldnames=None, **config):
         'csv': csv.Unnester,
         'json': json.Unnester,
         'jsonl': jsonl.Unnester,
+        'md': md.Unnester,
         'py': py.Unnester,
         'text': text.Unnester,
     }

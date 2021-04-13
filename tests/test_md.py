@@ -5,7 +5,7 @@ import io
 
 class TestMarkDown(unittest.TestCase):
 
-    def assert_writeheader(self, fieldnames, lines):
+    def assert_header(self, fieldnames, lines):
         expected = '\n'.join(lines) + '\n'
         outfile = io.StringIO()
         w = txf.formats.md.Writer(outfile, fieldnames)
@@ -14,22 +14,26 @@ class TestMarkDown(unittest.TestCase):
         actual = outfile.getvalue()
         self.assertEqual(expected, actual)
 
-    def test_writeheader_one(self):
+        outfile.seek(0)
+        r = txf.formats.md.Reader(outfile)
+        self.assertEqual(fieldnames, r.fieldnames)
+
+    def test_header_one(self):
         fieldnames = ('Header1',)
         lines = ('|Header1|', '|---|',)
-        self.assert_writeheader(fieldnames, lines)
+        self.assert_header(fieldnames, lines)
 
-    def test_writeheader_three(self):
+    def test_header_three(self):
         fieldnames = ('Header1', 'Header2', 'Header3',)
         lines = (r'|Header1|Header2|Header3|', '|---|---|---|',)
-        self.assert_writeheader(fieldnames, lines)
+        self.assert_header(fieldnames, lines)
 
-    def test_writeheader_vbars(self):
+    def test_header_vbars(self):
         fieldnames = ('Header | 1', 'Header | 2', 'Header | 3',)
         lines = (r'|Header \| 1|Header \| 2|Header \| 3|', '|---|---|---|',)
-        self.assert_writeheader(fieldnames, lines)
+        self.assert_header(fieldnames, lines)
 
-    def assert_writerow(self, fieldnames, row, expected):
+    def assert_row(self, fieldnames, row, expected):
         outfile = io.StringIO()
         w = txf.formats.md.Writer(outfile, fieldnames)
         w.writerow(row)
@@ -37,20 +41,27 @@ class TestMarkDown(unittest.TestCase):
         actual = outfile.getvalue()
         self.assertEqual(expected + '\n', actual)
 
-    def test_writerow_one(self):
+        outfile.seek(0)
+        r = txf.formats.md.Reader(outfile, fieldnames)
+        expected = {field: str(row[field]) for field in fieldnames}
+        actual = next(r)
+        self.assertEqual(expected, actual)
+
+    def test_row_one(self):
         fieldnames = ('F1',)
         row = {'F1': 1}
 
-        self.assert_writerow(fieldnames, row, r'|1|')
+        self.assert_row(fieldnames, row, r'|1|')
 
-    def test_writerow_three(self):
+    def test_row_three(self):
         fieldnames = ('Header1', 'Header2', 'Header3',)
         row = {'Header1': 'String', 'Header2': 5, 'Header3' : 4.25,}
 
-        self.assert_writerow(fieldnames, row, r'|String|5|4.25|')
+        self.assert_row(fieldnames, row, r'|String|5|4.25|')
 
-    def test_writerow_vbars(self):
+    def test_row_vbars(self):
         fieldnames = ('Header1', 'Header2', 'Header3',)
         row = {'Header1': '|String|', 'Header2': 5, 'Header3' : 4.25,}
 
-        self.assert_writerow(fieldnames, row, r'|\|String\||5|4.25|')
+        self.assert_row(fieldnames, row, r'|\|String\||5|4.25|')
+

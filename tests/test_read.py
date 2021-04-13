@@ -18,12 +18,18 @@ def generate_py(outputs, lines):
 def generate_text(outputs, lines):
     return io.StringIO('\n'.join([f"Line {i}" for i in range(lines)]))
 
+def generate_md(outputs, lines):
+    strings = ['|Row#|String|', '|---|---|',]
+    strings.extend([f'|{i}|String {i}|' for i in range(lines)])
+    return io.StringIO('\n'.join(strings))
+
 generate_factory = {
     'csv': generate_csv,
     'json': generate_jsonl,
     'jsonl': generate_jsonl,
     'py': generate_py,
     'text': generate_text,
+    'md': generate_md,
 }
 
 schemas = {
@@ -32,6 +38,7 @@ schemas = {
     'jsonl': (int, str,),
     'py': (int, str,),
     'text': (str,),
+    'md': (str, str,),
 }
 
 output_cols = {
@@ -92,7 +99,14 @@ class TestRead(unittest.TestCase):
         self.assert_read(0, 'text')
         self.assert_read(1, 'text')
         self.assert_read(2, 'text')
-        self.assert_read(11, 'text')
+        self.assert_read(13, 'text')
+
+
+    def test_read_md(self):
+        self.assert_read(0, 'md')
+        self.assert_read(1, 'md')
+        self.assert_read(2, 'md')
+        self.assert_read(11, 'md')
 
     def test_overwrite(self):
         text = io.StringIO('Overwrite\n')

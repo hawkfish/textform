@@ -1,17 +1,18 @@
 import argparse
+import os.path
 import sys
 
-sys.path.append('..')
+sys.path.append(os.path.join('..', 'src'))
 from textform import *
 
 def informat_arg_type(format):
-    if format not in ('csv', 'json', 'jsonl', 'text',):
+    if format not in ('csv', 'json', 'jsonl', 'md', 'text',):
         raise argparse.ArgumentTypeError(f"Argument '{format}' is not an input format.")
 
     return format
 
 def outformat_arg_type(format):
-    if format not in ('csv', 'json', 'jsonl',):
+    if format not in ('csv', 'json', 'jsonl', 'md',):
         raise argparse.ArgumentTypeError(f"Argument '{format}' is not an output format.")
 
     return format
