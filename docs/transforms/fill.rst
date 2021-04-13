@@ -1,7 +1,7 @@
 Fill
 ====
 
-The ``Fill`` (or ``FillDown``) transform fills in missing values by usingthe most recent value for the column. Its arguments are:
+The ``Fill`` (or ``FillDown``) transform fills in missing values by using the most recent value for the column. Its arguments are:
 
 * *pipeline* The input pipeline (required).
 * *input* The name of the column to apply the *predicate* to. It will be dropped from the output, so use ``Copy`` to preserve it.
