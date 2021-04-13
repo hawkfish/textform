@@ -1,5 +1,5 @@
 Cast
-=======
+====
 
 The ``Cast`` transform casts the values in a column to a Python type. Its arguments are:
 
