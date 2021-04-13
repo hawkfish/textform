@@ -13,5 +13,6 @@ Examples:
 ^^^^^^^^^
 
 .. code-block:: python
+
    Cast(p, 'Year', int)
    Cast(p, 'Timestamp', datetime.datetime)
