@@ -1,4 +1,5 @@
-from .common import TransformException, ReaderFactory
+from .common import TransformException
+from .formats import ReaderFactory
 from .transform import Transform
 
 import csv

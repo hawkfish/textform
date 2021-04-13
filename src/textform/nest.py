@@ -1,6 +1,7 @@
 from .merge import Merge
 from .transform import Transform
-from .common import TransformException, NesterFactory
+from .common import TransformException
+from .formats import NesterFactory
 
 #   deque doesn't like to be modified while iterating
 class WriteAdapter(object):

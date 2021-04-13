@@ -1,6 +1,7 @@
 from .split import Split
 from .transform import Transform
-from .common import TransformException, UnnesterFactory
+from .common import TransformException
+from .formats import UnnesterFactory
 
 #   deque doesn't like to be modified while iterating
 class NextAdapter(object):
