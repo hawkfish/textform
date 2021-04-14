@@ -1,7 +1,7 @@
 Write
 =====
 
-The ``Write`` transform writes the stream out using a particular format. 
+The ``Write`` transform writes records to a stream using a specified format.
 It has no impact on the stream except to write the records as they come in.
 Its arguments are:
 
@@ -26,6 +26,6 @@ Examples:
 ^^^^^^^^^
 
 .. code-block:: python
-  
+
    Write(p, sys.stdout)
    Write(p, sys.stderr, 'jsonl')

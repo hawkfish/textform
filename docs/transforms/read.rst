@@ -1,7 +1,7 @@
 Read
 =====
 
-The ``Read`` transform pulls records from an input iterable using a particular format. Its arguments are:
+The ``Read`` transform pulls records from an ``iterable`` using a particular format. Its arguments are:
 
 * *iterable* The input. Each row will be generated from the result ``next(iterable)``.
 * *pipeline* An optional input pipeline. New rows will be merged with the output of this pipeline.
@@ -25,6 +25,6 @@ Examples:
 ^^^^^^^^^
 
 .. code-block:: python
-  
+
    Read(p, sys.stdin 'csv')
    Read(p, records, 'py')

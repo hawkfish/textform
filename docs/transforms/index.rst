@@ -7,11 +7,14 @@ Transforms
 ==========
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Transforms:
-   :glob:
 
-   *
+   input_family
+   filter_family
+   split_family
+   format_family
+   reshape_family
 
 
 
