@@ -4,10 +4,10 @@ Format
 The ``Format`` transform reformats the values of a column. Its arguments are:
 
 * *pipeline* The input pipeline (required).
-* *input* The name of the string column to apply the *pattern* to. It will be replaced, so use ``Copy`` to preserve the original.
-* *function* A Python *callable* that formats the column.
+* *input* The name of the string column to apply the *function* to. It will be replaced, so use ``Copy`` to preserve the original.
+* *function* A Python ``callable`` that returns the reformatted value.
 
-``Format`` differs from ``Cast`` because the resulttype has to be inferred at runtime.
+``Format`` differs from ``Cast`` because the result type has to be inferred at runtime.
 
 Examples:
 ^^^^^^^^^

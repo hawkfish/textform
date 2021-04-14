@@ -1,5 +1,5 @@
 Unnest
-=====
+======
 
 The ``Unnest`` transform extracts one level of a nested record. Its arguments are:
 
@@ -15,17 +15,17 @@ Formats:
 ^^^^^^^^
 Supported unnesting formats are:
 
-* ``csv`` Comma-separated values. The header will be read to provide the column names.
+* ``csv`` Comma-separated values. The *outputs* will be used to provide the column names.
 * ``json`` JavaScript Object Notation records in array format (``[{..},...]``)
 * ``jsonl`` JavaScript Object Notation Line format (``{...}\n{...}\n...``)
 * ``md`` GitHub Markdown tables with headers
 * ``py`` Python *dict* stream
-* ``text`` Treats the column as a record with a single key taken from ``config['default_fieldnames']``.
+* ``text`` Treats the column as a record with a single key taken from the *outputs*.
 
 Examples:
 ^^^^^^^^^
 
 .. code-block:: python
-  
+
    Unnest(p, 'CSV', ('F1', 'F2',), 'csv')
    Unnest(p, 'Dict', ('Sales 1992', 'Sales 1993',), 'py')
