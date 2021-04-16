@@ -1,42 +1,32 @@
 from .split import Split
 from .transform import Transform
 from .common import TransformException
-from .formats import UnnesterFactory
-
-#   deque doesn't like to be modified while iterating
-class NextAdapter(object):
-
-    def __init__(self):
-        self.buffer = None
-        self.buffered = False
-
-    def __iter__(self):
-        return self
-
-    def append(self, value):
-        self.buffer = value
-        self.buffered = True
-
-    def __next__(self):
-        if not self.buffered: raise StopIteration("Unnest NextAdapter")
-
-        result = self.buffer
-        self.buffered = False
-        return result
-
-    next = __next__
+from .formats import ReaderFactory, ReaderIterator
 
 def bind_unnest(name, format, outputs, **config):
 
-    queue = NextAdapter()
-    reader = UnnesterFactory(name, format, queue, outputs, **config)
+    queue = ReaderIterator()
+    reader = ReaderFactory(name, format, queue, **config)
 
     def unnest(value):
         nonlocal queue, reader, outputs
 
+        if value is None: raise Exception
         queue.append(value)
 
-        return next(reader)
+        result = {output: None for output in outputs}
+
+        values = next(reader)
+        if isinstance(values, dict):
+            result.update(values)
+
+        elif isinstance(values, (list, tuple,)):
+            result.update(dict(zip(outputs, values)))
+
+        else:
+            result = {output: values for output in outputs}
+
+        return result
 
     return unnest
 

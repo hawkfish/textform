@@ -1,50 +1,20 @@
 from .merge import Merge
 from .transform import Transform
 from .common import TransformException
-from .formats import NesterFactory
-
-#   deque doesn't like to be modified while iterating
-class WriteAdapter(object):
-
-    def __init__(self):
-        self.buffer = None
-        self.buffered = False
-
-    def __iter__(self):
-        return self
-
-    def write(self, value):
-        if not self.buffered:
-            self.buffer = value
-            self.buffered = True
-        else:
-            self.buffer += value
-
-    def __next__(self):
-        if not self.buffered: raise StopIteration("Unnest NextAdapter")
-
-        result = self.buffer
-        self.buffered = False
-
-        return result[:-1] if isinstance(result, str) else result
-
-    next = __next__
+from .formats import WriterIterator, WriterFactory
 
 def bind_nest(name, format, inputs, **config):
 
-    if format == 'jsonl': format = 'json'
+    queue = WriterIterator()
+    writer = WriterFactory(name, format, queue, inputs, **config)
 
-    queue = WriteAdapter()
-    writer = NesterFactory(name, format, queue, inputs, **config)
-
-    def unnest(value):
+    def nest(values):
         nonlocal inputs, queue, writer
-
-        writer.writerow({input: value[i] for i, input in enumerate(inputs)})
+        writer.writerow(values)
 
         return next(queue)
 
-    return unnest
+    return nest
 
 class Nest(Merge):
     def __init__(self, source, inputs, output, format='csv', **config):

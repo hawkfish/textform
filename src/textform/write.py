@@ -1,5 +1,5 @@
 from .common import TransformException
-from .formats import WriterFactory
+from .formats import DictWriterFactory
 from .transform import Transform
 
 class Write(Transform):
@@ -8,7 +8,7 @@ class Write(Transform):
 
         self._requireSource()
 
-        self._writer = WriterFactory(self.name, format, outfile, self.fieldnames)
+        self._writer = DictWriterFactory(self.name, format, outfile, self.fieldnames)
         self._writer.writeheader()
 
     def readrow(self):

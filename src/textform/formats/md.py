@@ -1,5 +1,9 @@
 '''Adapt Markdown table reading to the CSV API'''
 
+from . import py
+
+import re
+
 def escape(field, sep='|', esc='\\'):
     field = str(field)
     return (esc+sep).join(field.split(sep))
@@ -31,51 +35,51 @@ def split_escaped(field, sep='|', esc='\\'):
     return parts
 
 class Reader(object):
-    def __init__(self, iterable, fieldnames=None, **config):
+
+    def __init__(self, iterable, **config):
         self._iterable = iterable
 
-        if fieldnames is None:
-            self.fieldnames = tuple(self.readparts())
-            self.readparts()
-        else:
-            self.fieldnames = fieldnames
+        self._pat = re.compile(f"[^-]")
 
-    def __iter__(self):
-        return self
-
-    def readparts(self):
-        #   Strip blanks on either side
-        return split_escaped(next(self._iterable))[1:-1]
-
-    def readrow(self):
-        parts = self.readparts()
-        return {field: parts[f] for f, field in enumerate(self.fieldnames)}
+    def isdata(self, values):
+        return max([1 if self._pat.search(value) else 0 for value in values])
 
     def __next__(self):
-        return self.readrow()
+        values = split_escaped(next(self._iterable))[1:-1]
+        while not self.isdata(values):
+            values = split_escaped(next(self._iterable))[1:-1]
+
+        return values
 
     next = __next__
+
+class DictReader(py.DictInput):
+
+    def __init__(self, iterable, fieldnames=None, **config):
+        super().__init__(Reader(iterable), fieldnames, **config)
 
 class Writer(object):
 
     def __init__(self, outfile, fieldnames, **config):
         self._outfile = outfile
-        self.fieldnames = fieldnames
 
-    def _writeline(self, values):
+    def writerow(self, values):
         self._outfile.write('|')
         self._outfile.write(join_escaped(values))
         self._outfile.write('|\n')
 
+class DictWriter(object):
+
+    def __init__(self, outfile, fieldnames, **config):
+        self.writer = Writer(outfile, fieldnames)
+        self.fieldnames = fieldnames
+
     def writeheader(self):
-        self._writeline(self.fieldnames)
-        self._writeline(['---' for field in self.fieldnames])
+        self.writer.writerow(self.fieldnames)
+        self.writer.writerow(['---' for field in self.fieldnames])
 
     def writerow(self, row):
-        self._writeline([row[field] for field in self.fieldnames])
+        self.writer.writerow([row[field] for field in self.fieldnames])
 
     def writefooter(self):
         pass
-
-Nester = Writer
-Unnester = Reader

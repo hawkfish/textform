@@ -8,14 +8,14 @@ class TestMarkDown(unittest.TestCase):
     def assert_header(self, fieldnames, lines):
         expected = '\n'.join(lines) + '\n'
         outfile = io.StringIO()
-        w = txf.formats.md.Writer(outfile, fieldnames)
+        w = txf.formats.md.DictWriter(outfile, fieldnames)
         w.writeheader()
 
         actual = outfile.getvalue()
         self.assertEqual(expected, actual)
 
         outfile.seek(0)
-        r = txf.formats.md.Reader(outfile)
+        r = txf.formats.md.DictReader(outfile)
         self.assertEqual(fieldnames, r.fieldnames)
 
     def test_header_one(self):
@@ -35,14 +35,14 @@ class TestMarkDown(unittest.TestCase):
 
     def assert_row(self, fieldnames, row, expected):
         outfile = io.StringIO()
-        w = txf.formats.md.Writer(outfile, fieldnames)
+        w = txf.formats.md.DictWriter(outfile, fieldnames)
         w.writerow(row)
 
         actual = outfile.getvalue()
         self.assertEqual(expected + '\n', actual)
 
         outfile.seek(0)
-        r = txf.formats.md.Reader(outfile, fieldnames)
+        r = txf.formats.md.DictReader(outfile, fieldnames)
         expected = {field: str(row[field]) for field in fieldnames}
         actual = next(r)
         self.assertEqual(expected, actual)

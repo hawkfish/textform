@@ -10,18 +10,17 @@ def generate_csv(outputs, lines):
 def generate_json(outputs, lines):
     return io.StringIO('\n'.join([json.dumps({outputs[0]: i, outputs[1]: f"String {i}"}) for i in range(lines)]))
 
-def generate_py(outputs, lines):
-    return iter([{outputs[0]: i, outputs[1]: f"String {i}"} for i in range(lines)])
-
 def generate_md(outputs, lines):
     return io.StringIO('\n'.join([f'|{i}|String {i}|' for i in range(lines)]))
+
+def generate_py(outputs, lines):
+    return iter([{outputs[0]: i, outputs[1]: f"String {i}"} for i in range(lines)])
 
 generate_factory = {
     'csv': generate_csv,
     'json': generate_json,
     'jsonl': generate_json,
     'md': generate_md,
-    'py': generate_py,
 }
 
 schemas = {
@@ -29,7 +28,6 @@ schemas = {
     'json': (int, str,),
     'jsonl': (int, str,),
     'md': (str, str,),
-    'py': (int, str,),
 }
 
 class TestUnnest(unittest.TestCase):
@@ -85,12 +83,6 @@ class TestUnnest(unittest.TestCase):
         self.assert_unnest(1, 'md')
         self.assert_unnest(2, 'md')
         self.assert_unnest(11, 'md')
-
-    def test_unnest_py(self):
-        self.assert_unnest(0, 'py')
-        self.assert_unnest(1, 'py')
-        self.assert_unnest(2, 'py')
-        self.assert_unnest(7, 'py')
 
     def test_overwrite(self):
         text = io.StringIO('Col 1,Col 2\n')

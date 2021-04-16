@@ -2,24 +2,24 @@ from . import jsonl
 import json
 
 Reader = jsonl.Reader
+DictReader = jsonl.DictReader
+Writer = jsonl.Writer
 
-class Writer(object):
+class DictWriter(object):
 
     def __init__(self, outfile, fieldnames, **config):
-        self._outfile = outfile
+        self.writer = Writer(outfile, fieldnames)
         self.fieldnames = fieldnames
         self._sep = ''
 
     def writeheader(self):
-        self._outfile.write('[')
+        self.writer.write('[')
 
     def writerow(self, row):
-        self._outfile.write(self._sep)
+        self.writer.write(self._sep)
+        self.writer.writerow([row[field] for field in self.fieldnames])
         self._sep = ', '
-        json.dump(row, self._outfile)
 
     def writefooter(self):
-        self._outfile.write(']')
+        self.writer.write(']')
 
-Nester = jsonl.Writer
-Unnester = Reader

@@ -1,5 +1,5 @@
 from .common import TransformException
-from .formats import ReaderFactory
+from .formats import DictReaderFactory
 from .transform import Transform
 
 import csv
@@ -7,7 +7,7 @@ import csv
 class Read(Transform):
     def __init__(self, iterable, source=None, format='csv', **config):
         name = 'read'
-        self._reader = ReaderFactory(name, format, iterable, None, **config)
+        self._reader = DictReaderFactory(name, format, iterable, None, **config)
 
         super().__init__(name, (), self._reader.fieldnames, source)
 
@@ -21,6 +21,7 @@ class Read(Transform):
 
     def readrow(self):
         row = super().readrow()
-        row.update(next(self._reader))
+        r = next(self._reader)
+        row.update(r)
         self._updateSchemaTypes(row, self.outputs)
         return row

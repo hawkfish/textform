@@ -6,74 +6,128 @@ from . import py
 from . import text
 from ..common import TransformException
 
-def InputFormatFactory(name, format, formats, iterable, fieldnames=None, **config):
+#   deque doesn't like to be modified while iterating
+class ReaderIterator(object):
+
+    def __init__(self):
+        self.buffer = None
+        self.buffered = False
+
+    def __iter__(self):
+        return self
+
+    def append(self, value):
+        self.buffer = value
+        self.buffered = True
+
+    def __next__(self):
+        if not self.buffered: raise StopIteration("ReaderIterator")
+
+        result = self.buffer
+        self.buffered = False
+        return result
+
+    next = __next__
+
+def ValidateInputFormat(name, format, formats, iterable):
     if format not in formats:
-        raise TransformException(f"Unknown read format '{format}' in {name}")
+        raise TransformException(f"Unknown {name} '{format}'")
 
     try:
         iterable = iter(iterable)
+
     except:
         raise TransformException(f"Input to {name} is not iterable")
 
-    return formats[format](iterable, fieldnames, **config)
+def ReaderFactory(name, format, iterable, **config):
 
-def ReaderFactory(name, format, iterable, fieldnames=None, **config):
-
-    readers = {
+    formats = {
         'csv': csv.Reader,
         'json': json.Reader,
         'jsonl': jsonl.Reader,
         'md': md.Reader,
-        'py': py.Reader,
         'text': text.Reader,
     }
 
-    return InputFormatFactory(name, format, readers, iterable, fieldnames, **config)
+    ValidateInputFormat(name, format, formats, iterable)
 
-def UnnesterFactory(name, format, iterable, fieldnames=None, **config):
+    return formats[format](iterable, **config)
 
-    unnesters = {
-        'csv': csv.Unnester,
-        'json': json.Unnester,
-        'jsonl': jsonl.Unnester,
-        'md': md.Unnester,
-        'py': py.Unnester,
-        'text': text.Unnester,
+def DictReaderFactory(name, format, iterable, fieldnames, **config):
+
+    formats = {
+        'csv': csv.DictReader,
+        'json': json.DictReader,
+        'jsonl': jsonl.DictReader,
+        'md': md.DictReader,
+        'py': py.DictReader,
+        'text': text.DictReader,
     }
 
-    return InputFormatFactory(name, format, unnesters, iterable, fieldnames, **config)
+    return formats[format](iterable, fieldnames, **config)
 
-def OutputFormatFactory(name, format, formats, outfile, fieldnames=None, **config):
+class WriterIterator(object):
+
+    def __init__(self):
+        self.buffer = None
+        self.buffered = False
+
+    def __iter__(self):
+        return self
+
+    def write(self, value):
+        if not self.buffered:
+            self.buffer = value
+            self.buffered = True
+        else:
+            self.buffer += value
+
+    def __next__(self):
+        if not self.buffered:
+            raise StopIteration("WriterIterator")
+
+        result = self.buffer
+        self.buffered = False
+
+        return result
+
+    next = __next__
+
+def ValidateOutputFormat(name, format, formats, outfile):
     if format not in formats:
-        raise TransformException(f"Unknown write format: '{format}' in  {name}")
+        raise TransformException(f"Unknown {name} format: '{format}'")
 
     try:
         outfile.write
     except:
         raise TransformException(f"Output for {name} is not writable")
 
-    return formats[format](outfile, fieldnames, **config)
+def WriterFactory(name, format, outfile, fieldnames, **config):
 
-def WriterFactory(name, format, outfile, fieldnames=None, **config):
-
-    writers = {
+    formats = {
         'csv': csv.Writer,
         'json': json.Writer,
         'jsonl': jsonl.Writer,
         'md': md.Writer,
         'py': py.Writer,
+        'text': text.Writer,
     }
 
-    return OutputFormatFactory(name, format, writers, outfile, fieldnames, **config)
+    ValidateOutputFormat(name, format, formats, outfile)
 
-def NesterFactory(name, format, outfile, fieldnames=None, **config):
+    return formats[format](outfile, fieldnames, **config)
 
-    nesters = {
-        'csv': csv.Nester,
-        'json': json.Nester,
-        'jsonl': jsonl.Nester,
-        'md': jsonl.Nester,
-        'py': py.Nester,
+def DictWriterFactory(name, format, outfile, fieldnames, **config):
+
+    formats = {
+        'csv': csv.DictWriter,
+        'json': json.DictWriter,
+        'jsonl': jsonl.DictWriter,
+        'md': md.DictWriter,
+        'py': py.DictWriter,
+        'text': text.DictWriter,
     }
 
-    return OutputFormatFactory(name, format, nesters, outfile, fieldnames, **config)
+    ValidateOutputFormat(name, format, formats, outfile)
+
+    return formats[format](outfile, fieldnames, **config)

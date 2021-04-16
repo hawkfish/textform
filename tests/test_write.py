@@ -46,14 +46,14 @@ expected_factory = {
 class TestWrite(unittest.TestCase):
 
     def assert_write(self, count, format='csv'):
-        config = {'format': format}
+        config = {}
         outfile = io.StringIO(newline=None)
         s = txf.Add(None, 'String', 'Value')
         s = txf.Sequence(s, 'Row')
         s = txf.Limit(s, count)
-        t = txf.Write(s, outfile, **config)
+        t = txf.Write(s, outfile, format, **config)
 
-        self.assertEqual('write', t.name, )
+        self.assertEqual('write', t.name)
         self.assertEqual(('String', 'Row',), t.inputs)
         self.assertEqual(tuple(), t.outputs)
         self.assertEqual(s, t.source)

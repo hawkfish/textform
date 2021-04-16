@@ -99,4 +99,4 @@ class TestNest(unittest.TestCase):
 
     def test_overwrite(self):
         s = txf.Add(None, ('Target', 'Overwrite',), ('String', 1,))
-        self.assertRaises(txf.TransformException, txf.Nest, s, 'Target', ('First', 'Overwrite',))
+        self.assertRaises(txf.TransformException, txf.Nest, s, ('First', 'Overwrite',), 'Target')

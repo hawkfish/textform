@@ -12,9 +12,6 @@ def generate_csv(outputs, lines):
 def generate_jsonl(outputs, lines):
     return io.StringIO('\n'.join([json.dumps({outputs[0]: i, outputs[1]: f"String {i}"}) for i in range(lines)]))
 
-def generate_py(outputs, lines):
-    return [{outputs[0]: i, outputs[1]: f"String {i}"} for i in range(lines)]
-
 def generate_text(outputs, lines):
     return io.StringIO('\n'.join([f"Line {i}" for i in range(lines)]))
 
@@ -27,7 +24,6 @@ generate_factory = {
     'csv': generate_csv,
     'json': generate_jsonl,
     'jsonl': generate_jsonl,
-    'py': generate_py,
     'text': generate_text,
     'md': generate_md,
 }
@@ -36,7 +32,6 @@ schemas = {
     'csv': (str, str,),
     'json': (int, str,),
     'jsonl': (int, str,),
-    'py': (int, str,),
     'text': (str,),
     'md': (str, str,),
 }
@@ -56,7 +51,7 @@ class TestRead(unittest.TestCase):
         outputs = output_cols.get(format, ('Row#', 'String',))
         config = configs.get(format, {'default_fieldnames': ('Row#', 'String',)})
         text = generate_factory[format](outputs, lines)
-        t = txf.Read(text, None, format, **config)
+        t = txf.Read(iter(text), None, format, **config)
 
         self.assertEqual('read', t.name)
         self.assertIsNone(t.source)
@@ -88,12 +83,6 @@ class TestRead(unittest.TestCase):
         self.assert_read(1, 'json')
         self.assert_read(2, 'json')
         self.assert_read(19, 'json')
-
-    def test_read_py(self):
-        self.assert_read(0, 'py')
-        self.assert_read(1, 'py')
-        self.assert_read(2, 'py')
-        self.assert_read(7, 'py')
 
     def test_read_text(self):
         self.assert_read(0, 'text')
