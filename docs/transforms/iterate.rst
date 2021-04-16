@@ -3,7 +3,7 @@ Iterate
 
 .. py:class:: Iterate(pipeline, input, tags, strings, format='csv', **config)
 
-    The ``Iterate`` transform is a cross between ``Fold`` and ``Unnest``.
+    The ``Iterate`` transform is a cross between :py:class:`Fold` and :py:class:`Unnest`.
     It takes a nested value in some format and expands it, but it assumes the value is ragged
     (e.g., a variable length array or a record with variant schemas).
     To adapt the ragged structure to a fixed schema, it produces two columns: The *tags* and the *values*.
@@ -17,14 +17,16 @@ Iterate
 
 .. py:attribute:: pipeline
     :type: Transform
+    :noindex:
 
     The input pipeline (required).
 
 .. py:attribute:: inputs
     :type: tuple(str)
+    :noindex:
 
     The list of columns to be folded.
-    They will be dropped from the output, so use ``Copy`` to preserve them.
+    They will be dropped from the output, so use :py:class:`Copy` to preserve them.
 
 .. py:attribute:: tags
     :type: str
@@ -38,12 +40,18 @@ Iterate
 
 .. py:attribute:: format
     :type: str
+    :noindex:
 
     The format of the nested record or array. Supported nesting formats are:
     * ``csv`` Comma-separated values treated as an array.
     * ``json``, ``jsonl`` JavaScript Object Notation records or arrays (``{..}`` or ``[...]``)
     * ``md`` GitHub Markdown row values treated as an array
     * ``text`` Single text field treated as an array with one text value.
+
+.. py:attribute:: config
+    :type: kwargs
+
+    Configuration parameters that will be passed to the unnesting reader.
 
 Examples:
 ^^^^^^^^^

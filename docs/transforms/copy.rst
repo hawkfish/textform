@@ -1,11 +1,27 @@
 Copy
 ====
 
-The ``Copy`` transform makes duplicates of a field. Its arguments are:
+.. py:class:: Copy(pipeline, input, outputs)
 
-* *pipeline* The input pipeline (required).
-* *input* The name of the field to duplicate. It will be not be removed.
-* *outputs* One or more fields to receive the copies. 
+    The ``Copy`` transform makes one or more duplicates of a field.
+
+.. py:attribute:: pipeline
+    :type: Transform
+    :noindex:
+
+    The input pipeline (required).
+
+.. py:attribute:: input
+    :type: str
+    :noindex:
+
+    The name of the field to duplicate. It will be *not* be removed.
+
+.. py:attribute:: outputs
+    :type: tuple(str)
+    :noindex:
+
+    One or more fields to receive the copies.
 
 Examples:
 ^^^^^^^^^
