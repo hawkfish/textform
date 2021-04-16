@@ -39,7 +39,8 @@ class Reader(object):
     def __init__(self, iterable, **config):
         self._iterable = iterable
 
-        self._pat = re.compile(f"[^-]")
+        #   Header punctuation characters
+        self._pat = re.compile(f"[^-* ]")
 
     def isdata(self, values):
         return max([1 if self._pat.search(value) else 0 for value in values])
@@ -63,10 +64,13 @@ class Writer(object):
     def __init__(self, outfile, fieldnames, **config):
         self._outfile = outfile
 
+    def write(self, s):
+        self._outfile.write(s)
+
     def writerow(self, values):
-        self._outfile.write('|')
-        self._outfile.write(join_escaped(values))
-        self._outfile.write('|\n')
+        self.write('|')
+        self.write(join_escaped(values))
+        self.write('|')
 
 class DictWriter(object):
 
@@ -76,10 +80,13 @@ class DictWriter(object):
 
     def writeheader(self):
         self.writer.writerow(self.fieldnames)
+        self.writer.write('\n')
         self.writer.writerow(['---' for field in self.fieldnames])
+        self.writer.write('\n')
 
     def writerow(self, row):
         self.writer.writerow([row[field] for field in self.fieldnames])
+        self.writer.write('\n')
 
     def writefooter(self):
         pass

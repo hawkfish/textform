@@ -26,7 +26,6 @@ class Writer(object):
         self._outfile.write(s)
 
     def writerow(self, values):
-        if isinstance(values, dict): raise Exception
         self.write(json.dumps(dict(zip(self.fieldnames, values))))
 
 class DictWriter(object):

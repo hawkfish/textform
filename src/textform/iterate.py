@@ -18,7 +18,7 @@ def bind_iterate(name, format, tag, **config):
             return row
 
         elif isinstance(row, (list, tuple,)):
-            return dict(zip(range(len(row), row)))
+            return dict(zip(range(len(row)), row))
 
         else:
             return {tag: row}
@@ -26,21 +26,25 @@ def bind_iterate(name, format, tag, **config):
     return iterate
 
 class Iterate(Transform):
-    def __init__(self, source, input, tags, values, format='csv', **config):
-        super().__init__('iterate', input, (tags, values,), source)
+    def __init__(self, source, input, tags, strings, format='csv', **config):
+        super().__init__('iterate', input, (tags, strings,), source)
 
         self._validateOutputs()
 
-        self.function = bind_iterate(self.name, format, values, **config)
+        self.function = bind_iterate(self.name, format, strings, **config)
         self._buffer = []
         self._position = len(self._buffer)
+
+    def _schema(self):
+        schema = super()._schema()
+        for output in self.outputs:
+            Transform._addSchemaType(schema, output, str)
+        return schema
 
     def _unbuffer(self):
         if self._position < len(self._buffer):
             row = self._buffer[self._position]
             self._position += 1
-
-            self._updateSchemaTypes(row, self.outputs)
 
             return row
 
@@ -56,8 +60,8 @@ class Iterate(Transform):
         del row[self.input]
 
         #   Update the buffer
-        for tag, value in enumerate(ragged):
-            buffered = dict(zip(self.outputs, (tag, value,)))
+        for tag in ragged:
+            buffered = dict(zip(self.outputs, (str(tag), str(ragged[tag]),)))
             buffered.update(row)
             self._buffer.append(buffered)
 
