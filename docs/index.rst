@@ -1,17 +1,17 @@
-.. textform documentation master file, created by
-   sphinx-quickstart on Tue Apr 13 19:23:26 2021.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Welcome to textform!
+====================
 
-Welcome to textform's documentation!
-====================================
+.. py:module:: textform
+
+A data transformation pipeline module based on the seminal
+`Potter's Wheel <http://control.cs.berkeley.edu/pwheel-vldb.pdf>`_ data wrangling formalism.
+The name is a portmanteau of "text" and "transform".
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    transforms/index
-
 
 
 Indices and tables

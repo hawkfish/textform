@@ -16,11 +16,9 @@ Formats:
 Supported unnesting formats are:
 
 * ``csv`` Comma-separated values. The *outputs* will be used to provide the column names.
-* ``json`` JavaScript Object Notation records in array format (``[{..},...]``)
-* ``jsonl`` JavaScript Object Notation Line format (``{...}\n{...}\n...``)
-* ``md`` GitHub Markdown tables with headers
-* ``py`` Python *dict* stream
-* ``text`` Treats the column as a record with a single key taken from the *outputs*.
+* ``json``, ``jsonl`` JavaScript Object Notation records (``{..}``). Only keys from *outputs* will be returned
+* ``md`` GitHub Markdown rows. The *outputs* will be used to provide the column names.
+* ``text`` Treats the column as an array with one text value tagged with the first output name.
 
 Examples:
 ^^^^^^^^^
