@@ -8,6 +8,7 @@ from .drop import Drop
 from .fill import Fill
 from .fold import Fold
 from .format import Format
+from .iterate import Iterate
 from .lag import Lag, Lead
 from .lift import Lift
 from .limit import Limit

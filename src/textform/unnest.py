@@ -11,7 +11,6 @@ def bind_unnest(name, format, outputs, **config):
     def unnest(value):
         nonlocal queue, reader, outputs
 
-        if value is None: raise Exception
         queue.append(value)
 
         result = {output: None for output in outputs}
