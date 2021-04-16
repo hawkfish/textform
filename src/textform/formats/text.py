@@ -1,32 +1,25 @@
 '''Adapt single line text files to the csv API'''
 
-from . import py
+from . import dictinput
 
 class Reader(object):
 
     def __init__(self, iterable, **config):
-        self._iterable = py.Reader(iterable)
+        self._iterable = iterable
 
     def __next__(self):
         return str(next(self._iterable))
 
     next = __next__
 
-class DictReader(object):
-
+class DictReader(dictinput.DictInput):
     def __init__(self, iterable, fieldnames=None, **config):
-        self._iterable = iterable
-
         #   There is only ONE column for text input
-        self.fieldnames = fieldnames
-        if not self.fieldnames:
-            self.fieldnames = tuple(config.get('default_fieldnames', ('text',)))
-        self.fieldnames = self.fieldnames[:1]
+        if not fieldnames:
+            fieldnames = tuple(config.get('default_fieldnames', ('text',)))
+        fieldnames = fieldnames[:1]
 
-    def __next__(self):
-        return {self.fieldnames[0]: str(next(self._iterable))}
-
-    next = __next__
+        super().__init__(Reader(iterable), fieldnames, **config)
 
 class Writer(object):
     def __init__(self, outfile, **config):

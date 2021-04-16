@@ -1,5 +1,6 @@
 import unittest
 from context import *
+from helpers import MockRead
 
 import json
 
@@ -47,7 +48,7 @@ class TestNest(unittest.TestCase):
         inputs = ('Row#', 'String',)
         iterable = iter([{inputs[0]: i, inputs[1]: f"String {i}"} for i in range(lines)])
         config = {'default_fieldnames': inputs}
-        s = txf.Read(iterable, None, 'py', **config)
+        s = MockRead(iterable, inputs)
         self.assertEqual(inputs, s.outputs)
         t = txf.Nest(s, inputs, output, format)
 

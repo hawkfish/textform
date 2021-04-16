@@ -35,3 +35,19 @@ class MockAlternate(txf.Transform):
         self._position += 1
         return row
 
+class MockRead(txf.Transform):
+
+    def __init__(self, iterable, outputs):
+        super().__init__('mockread', (), outputs, None)
+
+        self._iterable = iterable
+
+    def _schema(self):
+        schema = super()._schema()
+        for output in self.outputs:
+            txf.Transform._addSchemaType(schema, output)
+        return schema
+
+    def readrow(self):
+        return next(self._iterable)
+

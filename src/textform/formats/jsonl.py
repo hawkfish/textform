@@ -1,5 +1,5 @@
 import json
-from . import py
+from . import dictinput
 
 #   Adapt JSON reading to the CSV API
 class Reader(object):
@@ -12,7 +12,7 @@ class Reader(object):
 
     next = __next__
 
-class DictReader(py.DictInput):
+class DictReader(dictinput.DictInput):
     def __init__(self, iterable, fieldnames=None, **config):
         super().__init__(Reader(iterable), fieldnames, **config)
 

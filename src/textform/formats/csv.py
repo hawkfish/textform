@@ -1,3 +1,5 @@
+'''Adapters for the csv interface'''
+
 import csv
 
 Reader = csv.reader

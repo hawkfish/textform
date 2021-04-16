@@ -60,7 +60,6 @@ def DictReaderFactory(name, format, iterable, fieldnames, **config):
         'json': json.DictReader,
         'jsonl': jsonl.DictReader,
         'md': md.DictReader,
-        'py': py.DictReader,
         'text': text.DictReader,
     }
 

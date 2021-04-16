@@ -1,6 +1,6 @@
 '''Adapt Markdown table reading to the CSV API'''
 
-from . import py
+from . import dictinput
 
 import re
 
@@ -53,7 +53,7 @@ class Reader(object):
 
     next = __next__
 
-class DictReader(py.DictInput):
+class DictReader(dictinput.DictInput):
 
     def __init__(self, iterable, fieldnames=None, **config):
         super().__init__(Reader(iterable), fieldnames, **config)
