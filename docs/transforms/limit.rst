@@ -21,7 +21,7 @@ Limit
     .. py:attribute:: offset
         :type: int
 
-        The number of input rows to skip before counting starts.  Defaults to ``0``.
+        The number of input rows to skip before counting starts.
 
 Usage:
 ^^^^^^
