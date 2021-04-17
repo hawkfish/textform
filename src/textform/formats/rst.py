@@ -16,7 +16,7 @@ def needs_escape(s):
 
 def escape_transitions(s):
     # "Titles are underlined (or over- and underlined) with a printing nonalphanumeric 7-bit ASCII character"
-    if not needs_escape(s): return s
+    if not isinstance(s, str) or not needs_escape(s): return s
 
     # Find runs of four or more non-transition characters and escape them
     prev = ''

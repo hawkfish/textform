@@ -131,3 +131,5 @@ dmypy.json
 # OSX
 .DS_Store
 
+# textform
+examples/example.py

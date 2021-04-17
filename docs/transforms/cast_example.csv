@@ -1,6 +1,8 @@
-Query,Mode,Run #,Run Count,Time,Branch
-1,PARALLEL,1,5,0.083052,master
-1,PARALLEL,2,5,0.079075,master
-1,PARALLEL,3,5,0.079176,master
-1,PARALLEL,4,5,0.078928,master
-1,PARALLEL,5,5,0.079142,master
+Query,Mode,Run,Branch
+1,PARALLEL,,master
+1,PARALLEL,Cold run...DONE,master
+1,PARALLEL,1/5...0.083052,master
+1,PARALLEL,2/5...0.079075,master
+1,PARALLEL,3/5...0.079176,master
+1,PARALLEL,4/5...0.078928,master
+1,PARALLEL,5/5...0.079142,master
