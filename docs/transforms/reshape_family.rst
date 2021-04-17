@@ -12,5 +12,6 @@ Reshaping transforms change the structure of the rows and columns.
    fold
    iterate
    merge
+   nest
    unfold
 

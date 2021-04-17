@@ -1,29 +1,50 @@
 Nest
 =====
 
-The ``Nest`` transform combines columns into a single field using a particular format. Its arguments are:
+.. py:currentmodule:: textform
 
-* *pipeline* The input pipeline (required).
-* *inputs* The columns to combine. They will be dropped from the output, so use ``Copy`` to preserve them.
-* *output* The output column receiving the merged values.
-* *format* The format to generate the output in. Default: ``'csv'``.
-* *\ *\ *config* Extra arguments to be passed to the formatting object.
+.. py:class:: Nest(source, inputs, output[, format='csv'[, **config]])
 
-``Nest`` is the logical inverse of ``Unnest``.
+    The ``Nest`` transform combines columns into a single string field using a particular format.
+    ``Nest`` is the logical inverse of :py:class:`Unnest`.
+    It is a subclass of :py:class:`Merge`.
 
-Formats:
-^^^^^^^^
-Supported nesting formats are:
+    .. py:attribute:: source
+        :type: Transform
 
-* ``csv`` Comma-separated string
-* ``json``, ``jsonl`` JavaScript Object Notation string
-* ``md`` GitHub Markdown
-* ``py`` Python *dict*
+        The input pipeline.
 
-Examples:
-^^^^^^^^^
+    .. py:attribute:: inputs
+        :type: tuple(str) or str
+
+        The columns to combine.
+        They will be dropped from the output, so use :py:class:`Copy` to preserve them.
+
+    .. py:attribute:: output
+        :type: str
+
+        The output column receiving the merged values.
+
+    .. py:attribute:: format
+        :type: str
+
+        The format to generate the output in.
+        Supported nesting formats are:
+
+        * ``csv`` Comma-separated string
+        * ``json``, ``jsonl`` JavaScript Object Notation string
+        * ``md`` GitHub Markdown row
+        * ``text`` The Python string representation of the inputs as a list
+
+    .. py:attribute:: config
+        :type: kwargs
+
+        Extra arguments to be passed to the formatting object.
+
+Usage
+^^^^^
 
 .. code-block:: python
-  
+
    Nest(p, ('F1', 'F2',) 'CSV', 'csv')
    Nest(p, ('Sales 1992', 'Sales 1993',) 'Dict', 'py')
