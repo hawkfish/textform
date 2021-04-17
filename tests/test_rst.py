@@ -23,10 +23,16 @@ class TestRestructuredText(unittest.TestCase):
         fieldnames = ('F1',)
         row = {'F1': '----'}
 
-        self.assert_row(fieldnames, row, '\\----')
+        self.assert_row(fieldnames, row, '---\\-')
 
     def test_one_row_mixed(self):
         fieldnames = ('F1',)
         row = {'F1': '--$$^^^^'}
 
-        self.assert_row(fieldnames, row, '--$$\\^^^^')
+        self.assert_row(fieldnames, row, '--$$^^^\\^')
+
+    def test_one_row_long(self):
+        fieldnames = ('F1',)
+        row = {'F1': '------------------'}
+
+        self.assert_row(fieldnames, row, '---\\----\\----\\----\\---')
