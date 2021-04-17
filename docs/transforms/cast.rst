@@ -1,13 +1,28 @@
 Cast
 ====
 
-The ``Cast`` transform casts the values in a column to a Python type. Its arguments are:
+.. py:currentmodule:: textform
 
-* *pipeline* The input pipeline (required).
-* *input* The name of the string column to apply the *pattern* to. It will be replaced, so use ``Copy`` to preserve the original.
-* *result_type* A Python type object (e.g., ``int``).
+.. py:class:: Cast(source, input, result_type)
 
-``Cast`` is a special case of ``Format``.
+    The ``Cast`` transform casts the values in a column to a Python type.
+    ``Cast`` is a special case of ``Format``.
+
+    .. py:attribute:: source
+        :type: Transform
+
+        The input pipeline.
+
+    .. py:attribute:: input
+        :type: str
+
+        The name of the column to cast.
+        It will be replaced, so use :py:class:`Copy` to preserve the original.
+
+    .. py:attribute:: result_type
+        :type: type
+
+        A Python type object to perform the cast.
 
 Examples:
 ^^^^^^^^^
@@ -16,3 +31,22 @@ Examples:
 
    Cast(p, 'Year', int)
    Cast(p, 'Timestamp', datetime.datetime)
+
+
+Example
+^^^^^^^
+
+.. csv-table::
+   :file: split_example.csv
+   :header-rows: 1
+   :quote: "
+   :align: left
+
+.. code-block:: python
+
+   Cast(p, 'Query', int)
+
+.. csv-table::
+   :file: cast_example.csv
+   :header-rows: 1
+   :align: left
