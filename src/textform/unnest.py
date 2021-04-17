@@ -13,17 +13,13 @@ def bind_unnest(name, format, outputs, **config):
 
         queue.append(value)
 
-        result = {output: None for output in outputs}
+        result = next(reader)
 
-        values = next(reader)
-        if isinstance(values, dict):
-            result.update(values)
+        if isinstance(result, dict):
+            result = [result[output] for output in outputs]
 
-        elif isinstance(values, (list, tuple,)):
-            result.update(dict(zip(outputs, values)))
-
-        else:
-            result = {output: values for output in outputs}
+        elif not isinstance(result, (list, tuple,)):
+            result = [result,]
 
         return result
 

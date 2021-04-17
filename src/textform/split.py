@@ -3,19 +3,15 @@ from .transform import Transform
 
 import copy
 
-def bind_split(separator, outputs, defaults):
+def bind_split(separator, outputs):
 
     if callable(separator):
         return separator
 
     def split(value):
-        nonlocal separator, outputs, defaults
+        nonlocal separator, outputs
 
-        parts = value.split(separator, len(defaults))
-        while len(parts) < len(defaults):
-            parts.append(defaults[len(parts)])
-
-        return {outputs[i]: parts[i] for i in range(len(outputs))}
+        return value.split(separator, len(outputs))
 
     return split
 
@@ -24,7 +20,7 @@ class Split(Transform):
         name = 'split'
         outputs = Transform._validateStringTuple(name, outputs, 'Output')
         defaults = Transform._validateStringTuple(name, defaults, 'Default', len(outputs))
-        self.function = bind_split(separator, outputs, defaults)
+        self.function = bind_split(separator, outputs)
 
         super().__init__('split', (input,), outputs, source)
 
@@ -43,9 +39,13 @@ class Split(Transform):
 
     def readrow(self):
         row = super().readrow()
-        updates = self.function(row[self.input])
+        parts = list(self.function(row[self.input]))
         del row[self.input]
-        row.update(updates)
+
+        while len(parts) < len(self.defaults):
+            parts.append(self.defaults[len(parts)])
+
+        row.update(dict(zip(self.outputs, parts)))
         self._updateSchemaTypes(row, self.outputs)
 
         return row

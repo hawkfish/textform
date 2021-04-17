@@ -5,25 +5,22 @@ from .transform import Transform
 import copy
 import re
 
-def bind_capture(name, pattern, outputs, defaults):
+def bind_capture(name, pattern, outputs):
 
     regexp = re.compile(pattern)
 
     if regexp.groups != len(outputs):
         raise TransformException(f"Group count {regexp.groups} doesn't match the output count "
-                                 f"{len(defaults)} in {name}")
+                                 f"{len(outputs)} in {name}")
 
     def capture(value):
-        nonlocal regexp, outputs, defaults
+        nonlocal regexp, outputs
 
         match = regexp.search(value)
         if match:
-            return {output: match.group(i+1) or defaults[i] for i, output in enumerate(outputs)}
+            return match.groups()
 
-        result = {output: defaults[i] for i, output in enumerate(outputs)}
-        result.update({outputs[0]: value})
-
-        return result
+        return [value,]
 
     return capture
 
@@ -32,7 +29,7 @@ class Capture(Split):
         name = 'capture'
         outputs = Transform._validateStringTuple(name, outputs, 'Output')
         defaults = Transform._validateStringTuple(name, defaults, 'Default', len(outputs))
-        separator = bind_capture(name, pattern, outputs, defaults)
+        separator = bind_capture(name, pattern, outputs)
 
         super().__init__(source, input, outputs, separator, defaults)
 
