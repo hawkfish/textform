@@ -3,7 +3,7 @@ Merge
 
 .. py:currentmodule:: textform
 
-.. py:class:: Merge(source, inputs, output, glue)
+.. py:class:: Merge(source, inputs, output[, glue=''])
 
     The ``Merge`` transform combines two or more columns into a single field.
     ``Merge`` can be used with :py:class:`Divide` to combine column variants that have been
