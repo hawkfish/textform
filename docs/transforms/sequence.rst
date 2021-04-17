@@ -1,15 +1,38 @@
 Sequence
 ========
 
-The ``Sequence`` transform generate a sequence of integers. Its arguments are:
+.. py:currentmodule:: textform
 
-* *pipeline* The input pipeline. If one is not provided (``None``), ``Add`` will generate rows indefinitely.
-* *output* The name of the output column. It cannot overwrite existing columns. Use ``Drop`` to remove unwanted columns.
-* *start* The start value for the sequence. Default: ``0``.
-* *step* The increment amount for each record. Default: ``1``.
+.. py:class:: Sequence(source, output[, [start=0, step=1]])
 
-Examples:
-^^^^^^^^^
+    The ``Sequence`` transform generate a sequence of integers. Its arguments are:
+
+    .. py:attribute:: source
+        :type: Transform or None
+
+        The input pipeline.
+        If one is not provided, ``Sequence`` will generate rows indefinitely.
+
+    .. py:attribute:: output
+        :type: str
+
+        The name of the output column.
+        It cannot overwrite existing columns.
+        Use :py:class:`Drop` to remove unwanted columns.
+
+    .. py:attribute:: start
+        :type: int
+
+        The start value for the sequence.
+        Note that it defaults to zero, not one.
+
+    .. py:attribute:: step
+        :type: int
+
+        The increment amount for each record.
+
+Usage
+^^^^^
 
 .. code-block:: python
 
