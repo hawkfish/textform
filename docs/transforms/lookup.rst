@@ -1,18 +1,39 @@
 Lookup
 ======
 
-The ``Lookup`` transform replaces column values with the corresponding values in a table. The mapped values do not have to be the same type.
-Its arguments are:
+.. py:currentmodule:: textform
 
-* *pipeline* The input pipeline (required).
-* *input* The name of the column to use to search the table. It will be replaced, so use ``Copy`` to preserve the original.
-* *table* A Python *dict* whose keys are the values of *input*.
-* *default* The value to use if the *input* value is not found in the *table*.
+.. py:class:: Lookup(source, outputs, values)
 
-``Lookup`` is a subclass of ``Format``.
+    The ``Lookup`` transform replaces column values with the corresponding values in a table.
+    The mapped values do not have to be the same type.
+    ``Lookup`` is a subclass of :py:class:`Format`.
 
-Examples:
-^^^^^^^^^
+    .. py:attribute:: source
+        :type: Transform
+
+        The input pipeline.
+
+    .. py:attribute:: input
+        :type: str
+
+        The name of the column to use to search the table.
+        It will be replaced, so use :py:class:`Copy` to preserve the original.
+
+    .. py:attribute:: table
+        :type: dict
+
+        A Python dictionary whose keys are the values of *input*.
+
+    .. py:attribute:: default
+        :type: any
+
+        The value to use if the *input* value is not found in the *table*.
+        It must have the same type as the table values.
+
+
+Usage
+^^^^^
 
 .. code-block:: python
 
