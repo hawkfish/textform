@@ -1,18 +1,33 @@
 Text
 =====
 
-The ``Text`` transform pulls lines from an ``iterable`` in ``text`` format. Its arguments are:
+.. py:currentmodule:: textform
 
-* *iterable* The input. Each row will be generated from the result ``next(iterable)``.
-* *output* The name of the output column containing the lines. It cannot overwrite existing columns. Use ``Drop`` to remove unwanted columns.
-* *pipeline* An optional input pipeline. New rows will be merged with the output of this pipeline.
+.. py:class:: Text(iterable, output[, source=None])
 
-``Text`` is a subclass of ``Read``.
+    The ``Text`` transform pulls lines from an ``iterable`` in ``text`` format.
+    ``Text`` is a subclass of :py:class:`Read`.
 
-Examples:
-^^^^^^^^^
+    .. py:attribute:: iterable
+        :type: iterable
+
+        The input. Each row will be generated from the result of ``next(iterable)``.
+
+    .. py:attribute:: output
+        :type: str
+
+        The name of the output column containing the lines.
+        It cannot overwrite existing columns. Use :py:class:`Drop` to remove unwanted columns.
+
+    .. py:attribute:: source
+        :type: Transform or None
+
+        An optional input pipeline. New rows will be merged with the output of this pipeline.
+
+Usage
+^^^^^
 
 .. code-block:: python
 
-   Text(sys.stdin)
+   Text(sys.stdin, 'Line')
    Text(['Line 1', 'Line 2',], Sequence(None, 'Row #', 1))
