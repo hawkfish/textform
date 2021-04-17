@@ -4,14 +4,17 @@ from context import *
 import io
 import json
 
+def make_text(lines):
+    return io.StringIO('\n'.join(lines) + '\n' if lines else '')
+
 def generate_csv(outputs, lines):
-    return io.StringIO('\n'.join([f'{i},"String {i}"' for i in range(lines)]))
+    return [f'{i},"String {i}"' for i in range(lines)]
 
 def generate_json(outputs, lines):
-    return io.StringIO('\n'.join([json.dumps({outputs[0]: i, outputs[1]: f"String {i}"}) for i in range(lines)]))
+    return [json.dumps({outputs[0]: i, outputs[1]: f"String {i}"}) for i in range(lines)]
 
 def generate_md(outputs, lines):
-    return io.StringIO('\n'.join([f'|{i}|String {i}|' for i in range(lines)]))
+    return [f'|{i}|String {i}|' for i in range(lines)]
 
 def generate_py(outputs, lines):
     return iter([{outputs[0]: i, outputs[1]: f"String {i}"} for i in range(lines)])
@@ -36,7 +39,7 @@ class TestUnnest(unittest.TestCase):
         config = {}
         input = 'Line'
         outputs = ('Row#', 'String',)
-        text = generate_factory[format](outputs, lines)
+        text = make_text(generate_factory[format](outputs, lines))
         s = txf.Text(text, input)
         t = txf.Unnest(s, input, outputs, format, **config)
 

@@ -8,7 +8,7 @@ class Reader(object):
         self._iterable = iterable
 
     def __next__(self):
-        return str(next(self._iterable))
+        return str(next(self._iterable))[:-1]
 
     next = __next__
 

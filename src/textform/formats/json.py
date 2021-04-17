@@ -1,5 +1,4 @@
 from . import jsonl
-import json
 
 Reader = jsonl.Reader
 DictReader = jsonl.DictReader

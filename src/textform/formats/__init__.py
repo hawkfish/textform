@@ -3,6 +3,7 @@ from . import json
 from . import jsonl
 from . import md
 from . import py
+from . import rst
 from . import text
 from ..common import TransformException
 
@@ -109,6 +110,7 @@ def WriterFactory(name, format, outfile, fieldnames, **config):
         'jsonl': jsonl.Writer,
         'md': md.Writer,
         'py': py.Writer,
+        'rst': rst.Writer,
         'text': text.Writer,
     }
 
@@ -124,6 +126,7 @@ def DictWriterFactory(name, format, outfile, fieldnames, **config):
         'jsonl': jsonl.DictWriter,
         'md': md.DictWriter,
         'py': py.DictWriter,
+        'rst': rst.DictWriter,
         'text': text.DictWriter,
     }
 
