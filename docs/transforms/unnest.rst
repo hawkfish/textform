@@ -42,8 +42,8 @@ Unnest
 
     Configuration parameters that will be passed to the unnesting reader.
 
-Examples:
-^^^^^^^^^
+Usage
+^^^^^
 
 .. code-block:: python
 
