@@ -37,10 +37,28 @@ Split
 
         The value(s) to be used for missing elements of the *separator* result.
 
-Examples:
-^^^^^^^^^
+Usage
+^^^^^
 
 .. code-block:: python
 
    Split(p, 'Date', ('Month', 'Day', 'Year',), r'/')
    Split(p, 'Year', ('Century' 'Decade', 'Year',), lambda y: [y // 100, (y % 100) // 10, y % 10])
+
+Example
+^^^^^^^
+
+.. csv-table::
+   :file: split_in_example.csv
+   :header-rows: 1
+   :quote: "
+   :align: left
+
+.. code-block:: python
+
+   Split(p, 'Query', ('Query', 'Mode',), '_', ('00', 'SERIAL',))
+
+.. csv-table::
+   :file: split_example.csv
+   :header-rows: 1
+   :align: left
