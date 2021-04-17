@@ -1,18 +1,37 @@
 Replace
 =======
 
-The ``Replace`` uses a regular expresssion to reformat a column using capture groups. Its arguments are:
+.. py:currentmodule:: textform
 
-* *pipeline* The input pipeline (required).
-* *input* The name of the string column to apply the *pattern* to. It will be replaced, so use ``Copy`` to preserve the original.
-* *search* A regular expression with capture groups that can be referenced in the *replace* string.
-  If the pattern does not match, the value is unchanged.
-* *replace* An expansion string with references to capture groups. 
+.. py:class:: Replace(source, input, search, replace)
 
-``Replace`` is a special case of ``Format``.
+    The ``Replace`` transform uses a regular expresssion to reformat a column using capture groups.
+    ``Replace`` is a subclass of :py:class:`Format`.
 
-Examples:
-^^^^^^^^^
+    .. py:attribute:: source
+        :type: Transform
+
+        The input pipeline.
+
+    .. py:attribute:: input
+        :type: str
+
+        The name of the string column to apply the *pattern* to.
+        It will be replaced, so use :py:class:`Copy` to preserve the original.
+
+    .. py:attribute:: search
+        :type: str
+
+        A regular expression with capture groups that can be referenced in the *replace* string.
+        If the pattern does not match, the value is unchanged.
+
+    .. py:attribute:: replace
+        :type: str
+
+        An expansion string with references to capture groups, using Python's ``expand`` notation.
+
+Usage
+^^^^^
 
 .. code-block:: python
 
