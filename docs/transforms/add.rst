@@ -1,16 +1,50 @@
 Add
 ===
 
-The ``Add`` transform adds one or more constant values to the record stream. Its arguments are
+.. py:currentmodule:: textform
 
-* *pipeline* The input pipeline. If one is not provided (``None``), ``Add`` will generate rows indefinitely.
-* *outputs* The name(s) of the output columns. They cannot overwrite existing columns. Use ``Drop`` to remove unwanted columns.
-* *values* The value(s) for the output columns. There must be the same number as *outputs*.
+.. py:class:: Add(source, outputs, values)
 
-Examples:
-^^^^^^^^^
+    The ``Add`` transform adds one or more constant values to the record stream.
+
+    .. py:attribute:: source
+        :type: Transform
+
+        If one is not provided (``None``), ``Add`` will generate identical rows indefinitely.
+
+    .. py:attribute:: outputs
+        :type: tuple(str), str
+
+        The name(s) of the output columns.
+        They cannot overwrite existing columns. Use :py:class:`Drop` to remove unwanted columns.
+
+    .. py:attribute:: values
+        :type: tuple
+
+        The value(s) for the output columns. There must be the same number as *outputs*.
+
+Usage
+^^^^^
 
 .. code-block:: python
 
-   Add(p, 'InputFile', 'test.csv')
-   Add(p, 'Timestamp', datetime.datetime.now()
+    Add(p, 'InputFile', 'test.csv')
+    Add(p, 'Timestamp', datetime.datetime.now()
+
+Example
+^^^^^^^
+
+.. csv-table::
+   :file: match_example.csv
+   :header-rows: 1
+   :quote: "
+   :align: left
+
+.. code-block:: python
+
+   Add(p, 'Branch', 'master')
+
+.. csv-table::
+   :file: add_example.csv
+   :header-rows: 1
+   :align: left
