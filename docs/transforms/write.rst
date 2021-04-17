@@ -1,31 +1,46 @@
 Write
 =====
 
-The ``Write`` transform writes records to a stream using a specified format.
-It has no impact on the stream except to write the records as they come in.
-Its arguments are:
+.. py:currentmodule:: textform
 
-* *pipeline* The input pipeline (required).
-* *outfile* The writeable stream where the data will be sent.
-* *format* The format to generate the output in. Default: ``'csv'``.
-* *\ *\ *config* Extra arguments to be passed to the formatting object.
+.. py:class:: Write(source, outfile[, format='csv'[, **config]])
 
-``Write`` is the logical inverse of ``Read``.
+    The ``Write`` transform writes records to a stream using a specified format.
+    It has no impact on the stream except to write the records as they come in.
+    ``Write`` is the logical inverse of :py:class:`Read`.
 
-Formats:
-^^^^^^^^
-Supported writing formats are:
+    .. py:attribute:: source
+        :type: Transform
 
-* ``csv`` Comma-Separated Values
-* ``json`` JavaScript Object Notation (an array of objects)
-* ``jsonl`` JavaScript Object Notation lines (one object per row)
-* ``md`` GitHub Markdown
-* ``py`` Python *dict*\ s
+    .. py:attribute:: outfile
+        :type: writable
 
-Examples:
-^^^^^^^^^
+        The stream where the data will be sent.
+
+    .. py:attribute:: format
+        :type: writable
+
+        The format to generate the output in.
+
+        Supported writing formats are:
+
+        * ``csv`` Comma-Separated Values
+        * ``json`` JavaScript Object Notation (an array of objects)
+        * ``jsonl`` JavaScript Object Notation lines (one object per row)
+        * ``md`` GitHub Markdown
+        * ``py`` Python *dict*\ s
+        * ``rst`` CSV format escaped for reStructured text
+
+    .. py:attribute:: config
+        :type: kwargs
+
+        Extra arguments to be passed to the formatting object.
+
+
+Usage
+^^^^^
 
 .. code-block:: python
 
    Write(p, sys.stdout)
-   Write(p, sys.stderr, 'jsonl')
+   Write(p, open("log.json", "w"), 'jsonl')

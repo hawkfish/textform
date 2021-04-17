@@ -127,7 +127,6 @@ def DictWriterFactory(name, format, outfile, fieldnames, **config):
         'md': md.DictWriter,
         'py': py.DictWriter,
         'rst': rst.DictWriter,
-        'text': text.DictWriter,
     }
 
     ValidateOutputFormat(name, format, formats, outfile)

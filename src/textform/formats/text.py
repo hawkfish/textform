@@ -28,17 +28,3 @@ class Writer(object):
     def writerow(self, values):
         self._outfile.write(str(values))
 
-class DictWriter(object):
-
-    def __init__(self, outfile, fieldnames, **config):
-        self.writer = Writer(outfile)
-        self.fieldnames = fieldnames[:1]
-
-    def writeheader(self):
-        pass
-
-    def writerow(self, row):
-        self.writer.writerow(row)
-
-    def writefooter(self):
-        pass
