@@ -1,5 +1,5 @@
-Text
-=====
+Text: import lines as records from a text file
+==============================================
 
 .. py:currentmodule:: textform
 

@@ -1,5 +1,5 @@
-Write
-=====
+Write: export formatted records to a writable object
+====================================================
 
 .. py:currentmodule:: textform
 

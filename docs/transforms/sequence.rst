@@ -1,5 +1,5 @@
-Sequence
-========
+Sequence: generate an integer sequence column
+=============================================
 
 .. py:currentmodule:: textform
 

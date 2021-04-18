@@ -1,5 +1,5 @@
-Read
-=====
+Read: import formatted record data from an iterable
+===================================================
 
 .. py:currentmodule:: textform
 

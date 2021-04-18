@@ -4,7 +4,7 @@ Input/Output
 These transforms move data into and out of the pipeline.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    add
    read

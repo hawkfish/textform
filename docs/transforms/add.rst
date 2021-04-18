@@ -1,5 +1,5 @@
-Add
-===
+Add: insert constant columns
+============================
 
 .. py:currentmodule:: textform
 
