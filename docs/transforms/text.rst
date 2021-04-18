@@ -17,7 +17,6 @@ Text
         :type: str
 
         The name of the output column containing the lines.
-        It cannot overwrite existing columns. Use :py:class:`Drop` to remove unwanted columns.
 
     .. py:attribute:: source
         :type: Transform or None

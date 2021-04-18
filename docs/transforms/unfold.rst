@@ -29,6 +29,7 @@ Unfold
         The output columns receiving the unfolded columns.
         The output columns are broken into equal-sized groups, one per input column.
         The number of *inputs* must be an even multiple of the number of *outputs*.
+        They cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
 
 Limitations
 ^^^^^^^^^^^

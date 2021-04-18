@@ -29,11 +29,13 @@ Divide
         :type: str
 
         The output column receiving the values that pass the predicate.
+        It cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
 
     .. py:attribute:: failed
         :type: str
 
         The output column receiving the values that fail the predicate.
+        It cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
 
     .. py:attribute:: predicate
         :type: str or callable

@@ -5,13 +5,13 @@ Limit
 
 .. py:class:: Limit(source=None[, limit=1[, offset=0]])
 
-    The ``Limit`` transform filters out rows based on their position in the stream. Its arguments are
+    The ``Limit`` transform filters out rows based on their position in the stream.
 
     .. py:attribute:: source
-        :type: Transform
+        :type: Transform or None
 
         The input pipeline.
-        If one is not provided (``None``), ``Limit`` will generate *limit* empty rows.
+        If one is not provided, ``Limit`` will generate *limit* empty rows.
 
     .. py:attribute:: limit
         :type: int

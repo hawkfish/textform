@@ -24,6 +24,7 @@ Merge
         :type: str
 
         The output column receiving the merged values.
+        It cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
 
     .. py:attribute:: glue
         :type: str or callable

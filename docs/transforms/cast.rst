@@ -6,7 +6,7 @@ Cast
 .. py:class:: Cast(source, input, result_type)
 
     The ``Cast`` transform casts the values in a column to a Python type.
-    ``Cast`` is a special case of ``Format``.
+    ``Cast`` is a special case of :py:class:`Format`.
 
     .. py:attribute:: source
         :type: Transform
@@ -17,15 +17,15 @@ Cast
         :type: str
 
         The name of the column to cast.
-        It will be replaced, so use :py:class:`Copy` to preserve the original.
+        The contents will be replaced, so use :py:class:`Copy` to preserve the original.
 
     .. py:attribute:: result_type
         :type: type
 
         A Python type object to perform the cast.
 
-Examples:
-^^^^^^^^^
+Usage
+^^^^^
 
 .. code-block:: python
 

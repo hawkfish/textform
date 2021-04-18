@@ -5,8 +5,7 @@ Format
 
 .. py:class:: Format(source, outputs, function)
 
-    The ``Format`` transform reformats the values of a column.
-    ``Format`` differs from ``Cast`` because the result type has to be inferred at runtime.
+    The ``Format`` transform reformats the values of a column using a user-supplied function.
 
     .. py:attribute:: source
         :type: Transform
@@ -17,7 +16,7 @@ Format
         :type: Transform
 
         The name of the string column to apply the *function* to.
-        It will be replaced, so use :py:class:`Copy` to preserve the original.
+        The contents will be replaced, so use :py:class:`Copy` to preserve the original.
 
     .. py:attribute:: function
         :type: callable

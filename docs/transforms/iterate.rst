@@ -8,6 +8,7 @@ Iterate
     The ``Iterate`` transform is a cross between :py:class:`Fold` and :py:class:`Unnest`.
     It takes a nested value in some format and expands it, but it assumes the value is ragged
     (e.g., a variable length array or a record with variant schemas).
+
     To adapt the ragged structure to a fixed schema, it produces two columns: The *tags* and the *values*.
     Each input row then generates one row per entry from the nested value.
     Because the schema is variable, both columns will be strings
@@ -32,15 +33,16 @@ Iterate
         :type: str
 
         The output column receiving the record keys or the (0-based) array indices.
+        It cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
 
     .. py:attribute:: values
         :type: str
 
         The output column receiving the record values or the array entries.
+        It cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
 
     .. py:attribute:: format
         :type: str
-        :noindex:
 
         The format of the nested record or array. Supported nesting formats are:
 

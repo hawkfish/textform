@@ -17,6 +17,7 @@ Fill
         :type: str
 
         The name of the column to fill in.
+        The contents will be replaced, so use :py:class:`Copy` to preserve the original.
 
     .. py:attribute:: default
         :type: any

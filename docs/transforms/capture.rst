@@ -6,7 +6,7 @@ Capture
 .. py:class:: Capture(source, input, outputs, pattern[, defaults = ''])
 
     The ``Capture`` transform replaces a string column with the capture groups from a regular expression.
-    ``Capture`` is a special case of :py:class:`Split`.
+    ``Capture`` is a subclass of :py:class:`Split`.
 
     .. py:attribute:: source
         :type: Transform
@@ -14,7 +14,7 @@ Capture
         The input pipeline.
 
     .. py:attribute:: input
-        :type: str, str
+        :type: str
 
         The name of the string column to apply the *pattern* to.
         It will be dropped from the output, so use :py:class:`Copy` to preserve it.

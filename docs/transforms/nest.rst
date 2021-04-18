@@ -24,6 +24,7 @@ Nest
         :type: str
 
         The output column receiving the merged values.
+        It cannot overwrite existing columns. Use :py:class:`Drop` to remove unwanted columns.
 
     .. py:attribute:: format
         :type: str

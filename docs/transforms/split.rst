@@ -23,6 +23,7 @@ Split
         :type: tuple(str), str
 
         The output column(s) receiving the split values.
+        They cannot overwrite existing columns. Use :py:class:`Drop` to remove unwanted columns.
 
     .. py:attribute:: separator
         :type: str or callable

@@ -1,30 +1,30 @@
 Copy
 ====
 
+.. py:currentmodule:: textform
+
 .. py:class:: Copy(pipeline, input, outputs)
 
     The ``Copy`` transform makes one or more duplicates of a field.
 
-.. py:attribute:: pipeline
-    :type: Transform
-    :noindex:
+    .. py:attribute:: pipeline
+        :type: Transform
 
-    The input pipeline (required).
+        The input pipeline (required).
 
-.. py:attribute:: input
-    :type: str
-    :noindex:
+    .. py:attribute:: input
+        :type: str
 
-    The name of the field to duplicate. It will be *not* be removed.
+        The name of the field to duplicate. It will be *not* be removed.
 
-.. py:attribute:: outputs
-    :type: tuple(str)
-    :noindex:
+    .. py:attribute:: outputs
+        :type: tuple(str)
 
-    One or more fields to receive the copies.
+        One or more fields to receive the copies.
+        They cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
 
-Examples:
-^^^^^^^^^
+Usage
+^^^^^
 
 .. code-block:: python
 

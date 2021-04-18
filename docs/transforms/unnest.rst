@@ -1,46 +1,44 @@
 Unnest
 ======
 
+.. py:currentmodule:: textform
+
 .. py:class:: Unnest(pipeline, input, outputs, format='csv', **config)
 
     The ``Unnest`` transform extracts one level of a nested record stored as a string in some format.
     ``Unnest`` is the logical inverse of :py:class:`Nest`.
 
-.. py:attribute:: pipeline
-    :type: Transform
-    :noindex:
+    .. py:attribute:: pipeline
+        :type: Transform
 
-    The input pipeline (required).
+        The input pipeline (required).
 
-.. py:attribute:: input
-    :type: str
-    :noindex:
+    .. py:attribute:: input
+        :type: str
 
-    The column to unnest.
-    It will be dropped from the schema, so use :py:class:`Copy` to preserve it.
+        The column to unnest.
+        It will be dropped from the schema, so use :py:class:`Copy` to preserve it.
 
-.. py:attribute:: outputs
-    :type: tuple(str)
-    :noindex:
+    .. py:attribute:: outputs
+        :type: tuple(str)
 
-    The output columns to be extracted. Only the listed fields will be extracted.
+        The output columns to be extracted. Only the listed fields will be extracted.
+        They cannot overwrite existing columns. Use :py:class:`Drop` to remove unwanted columns.
 
-.. py:attribute:: format
-    :type: str
-    :noindex:
+    .. py:attribute:: format
+        :type: str
 
-    The format of the input string. Supported nesting formats are:
+        The format of the input string. Supported unnesting formats are:
 
-    * ``csv`` Comma-separated values. The *outputs* will be used to provide the column names.
-    * ``json``, ``jsonl`` JavaScript Object Notation records (``{..}``). Only keys from *outputs* will be returned
-    * ``md`` GitHub Markdown rows. The *outputs* will be used to provide the column names.
-    * ``text`` Treats the column as an array with one text value tagged with the first output name.
+        * ``csv`` Comma-separated values. The *outputs* will be used to provide the column names.
+        * ``json``, ``jsonl`` JavaScript Object Notation records (``{..}``). Only keys from *outputs* will be returned
+        * ``md`` GitHub Markdown rows. The *outputs* will be used to provide the column names.
+        * ``text`` Treats the column as an array with one text value tagged with the first output name.
 
-.. py:attribute:: config
-    :type: kwargs
-    :noindex:
+    .. py:attribute:: config
+        :type: kwargs
 
-    Configuration parameters that will be passed to the unnesting reader.
+        Configuration parameters that will be passed to the unnesting reader.
 
 Usage
 ^^^^^

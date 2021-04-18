@@ -3,9 +3,10 @@ Read
 
 .. py:currentmodule:: textform
 
-.. py:class:: Read(iterable, [source=None, [, format='csv', **config]]])
+.. py:class:: Read(iterable, [source=None, [, format='csv'[, **config]]])
 
     The ``Read`` transform pulls records from an ``iterable`` using a particular format.
+    The output column names will be determined from the input or the *config* parameters.
     ``Read`` is the logical inverse of :py:class:`Write`.
 
     .. py:attribute:: iterable

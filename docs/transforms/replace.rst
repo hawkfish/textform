@@ -17,13 +17,14 @@ Replace
         :type: str
 
         The name of the string column to apply the *pattern* to.
-        It will be replaced, so use :py:class:`Copy` to preserve the original.
+        The contents will be replaced, so use :py:class:`Copy` to preserve the original.
 
     .. py:attribute:: search
         :type: str
 
         A regular expression with capture groups that can be referenced in the *replace* string.
         If the pattern does not match, the value is unchanged.
+        To avoid this, use :py:class:`Divide` with the same pattern to isolate the values that match.
 
     .. py:attribute:: replace
         :type: str

@@ -18,7 +18,7 @@ Lookup
         :type: str
 
         The name of the column to use to search the table.
-        It will be replaced, so use :py:class:`Copy` to preserve the original.
+        The contents will be replaced, so use :py:class:`Copy` to preserve the original.
 
     .. py:attribute:: table
         :type: dict

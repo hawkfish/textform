@@ -19,7 +19,7 @@ Lag
         :type: str
 
         The name of the string column to lag or lead.
-        It will be replaced, so use :py:class:`Copy` to preserve the original.
+        The contents will be replaced, so use :py:class:`Copy` to preserve the original.
 
     .. py:attribute:: lag
         :type: int
