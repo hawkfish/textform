@@ -11,7 +11,7 @@ Fill
     .. py:attribute:: source
         :type: Transform
 
-        The input pipeline (required).
+        The input pipeline.
 
     .. py:attribute:: input
         :type: str
