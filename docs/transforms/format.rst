@@ -1,17 +1,33 @@
 Format
 ======
 
-The ``Format`` transform reformats the values of a column. Its arguments are:
+.. py:currentmodule:: textform
 
-* *pipeline* The input pipeline (required).
-* *input* The name of the string column to apply the *function* to. It will be replaced, so use ``Copy`` to preserve the original.
-* *function* A Python ``callable`` that returns the reformatted value.
+.. py:class:: Format(source, outputs, function)
 
-``Format`` differs from ``Cast`` because the result type has to be inferred at runtime.
+    The ``Format`` transform reformats the values of a column.
+    ``Format`` differs from ``Cast`` because the result type has to be inferred at runtime.
 
-Examples:
-^^^^^^^^^
+    .. py:attribute:: source
+        :type: Transform
+
+        The input pipeline.
+
+    .. py:attribute:: input
+        :type: Transform
+
+        The name of the string column to apply the *function* to.
+        It will be replaced, so use :py:class:`Copy` to preserve the original.
+
+    .. py:attribute:: function
+        :type: callable
+
+        A Python ``callable`` that receives the original value and returns the reformatted value.
+
+
+Usage
+^^^^^
 
 .. code-block:: python
 
-   Format(p, 'Year', addone)
+   Format(p, 'Year', lambda x: x+1)
