@@ -1,16 +1,16 @@
-Divide
-======
+Divide: Separate one field into two using a predicate
+=====================================================
 
 .. py:currentmodule:: textform
 
 .. py:class:: Divide(source, outputs, values)
 
-    The ``Divide`` transform separates a column into two fields,
+    The ``Divide`` transform separates a field into two fields,
     one containing the values that pass a predicate
     and the other containing the ones that fail.
     If the predicate is a regular expression, matching it will be used as the predicate.
 
-    ``Divide`` can be used to separate a column with multiple formats,
+    ``Divide`` can be used to separate a field with multiple formats,
     find erroneous values or
     pull sections names out from the main data.
 
@@ -22,20 +22,20 @@ Divide
     .. py:attribute:: input
         :type: str
 
-        The name of the column to apply the *predicate* to.
+        The name of the field to apply the *predicate* to.
         It will be dropped from the output, so use :py:class:`Copy` to preserve it.
 
     .. py:attribute:: passed
         :type: str
 
-        The output column receiving the values that pass the predicate.
-        It cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
+        The output field receiving the values that pass the predicate.
+        It cannot overwrite existing fields, so use :py:class:`Drop` to remove unwanted fields.
 
     .. py:attribute:: failed
         :type: str
 
-        The output column receiving the values that fail the predicate.
-        It cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
+        The output field receiving the values that fail the predicate.
+        It cannot overwrite existing fields, so use :py:class:`Drop` to remove unwanted fields.
 
     .. py:attribute:: predicate
         :type: str or callable
@@ -45,7 +45,7 @@ Divide
     .. py:attribute:: fills
         :type: str or tuple(str)
 
-        The value(s) to be used for the column that does not recieve the *input* value.
+        The value(s) to be used for the field that does not recieve the *input* value.
 
 
 Usage

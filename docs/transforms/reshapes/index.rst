@@ -1,7 +1,7 @@
 Reshaping
 =========
 
-Reshaping transforms change the structure of the rows and columns.
+Reshaping transforms change the structure of the rows and fields.
 
 .. toctree::
    :maxdepth: 1
@@ -11,8 +11,6 @@ Reshaping transforms change the structure of the rows and columns.
    drop
    fold
    iterate
-   merge
-   nest
    project
    unfold
 

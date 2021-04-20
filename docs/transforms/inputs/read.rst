@@ -1,4 +1,4 @@
-Read: import formatted record data from an iterable
+Read: Import formatted record data from an iterable
 ===================================================
 
 .. py:currentmodule:: textform
@@ -6,7 +6,7 @@ Read: import formatted record data from an iterable
 .. py:class:: Read(iterable, [source=None, [, format='csv'[, **config]]])
 
     The ``Read`` transform pulls records from an ``iterable`` using a particular format.
-    The output column names will be determined from the input or the *config* parameters.
+    The output field names will be determined from the input or the *config* parameters.
     ``Read`` is the logical inverse of :py:class:`Write`.
 
     .. py:attribute:: iterable
@@ -25,11 +25,11 @@ Read: import formatted record data from an iterable
 
         The format to generate the output in. Supported read formats are:
 
-        * ``csv`` Comma-separated values. The header will be read to provide the column names.
+        * ``csv`` Comma-separated values. The header will be read to provide the field names.
         * ``json`` JavaScript Object Notation records in array format (``[{..},...]``)
         * ``jsonl`` JavaScript Object Notation Line format (``{...}\n{...}\n...``)
         * ``md`` GitHub Markdown tables with headers
-        * ``text`` Treats the file as a single column with a name taken from ``config['default_fieldnames']``.
+        * ``text`` Treats the file as a single field with a name taken from ``config['default_fieldnames']``.
 
     .. py:attribute:: config
         :type: kwargs

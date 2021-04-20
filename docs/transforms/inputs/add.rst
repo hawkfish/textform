@@ -1,5 +1,5 @@
-Add: insert constant columns
-============================
+Add: Insert constant fields
+===========================
 
 .. py:currentmodule:: textform
 
@@ -15,13 +15,13 @@ Add: insert constant columns
     .. py:attribute:: outputs
         :type: tuple(str), str
 
-        The name(s) of the output columns.
-        They cannot overwrite existing columns. Use :py:class:`Drop` to remove unwanted columns.
+        The name(s) of the output fields.
+        They cannot overwrite existing fields. Use :py:class:`Drop` to remove unwanted fields.
 
     .. py:attribute:: values
         :type: tuple
 
-        The value(s) for the output columns. There must be the same number as *outputs*.
+        The value(s) for the output fields. There must be the same number as *outputs*.
 
 Usage
 ^^^^^

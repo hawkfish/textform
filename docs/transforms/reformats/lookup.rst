@@ -5,7 +5,7 @@ Lookup: Replace a value with one from a lookup table
 
 .. py:class:: Lookup(source, outputs, table[, missing=None])
 
-    The ``Lookup`` transform replaces column values with the corresponding values in a table.
+    The ``Lookup`` transform replaces field values with the corresponding values in a table.
     The mapped values do not have to be the same type.
     ``Lookup`` is a subclass of :py:class:`Format`.
 
@@ -17,7 +17,7 @@ Lookup: Replace a value with one from a lookup table
     .. py:attribute:: input
         :type: str
 
-        The name of the column to use to search the table.
+        The name of the field to use to search the table.
         The contents will be replaced, so use :py:class:`Copy` to preserve the original.
 
     .. py:attribute:: table

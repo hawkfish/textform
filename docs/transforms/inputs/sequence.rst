@@ -1,5 +1,5 @@
-Sequence: generate an integer sequence column
-=============================================
+Sequence: Generate an integer sequence field
+============================================
 
 .. py:currentmodule:: textform
 
@@ -16,9 +16,9 @@ Sequence: generate an integer sequence column
     .. py:attribute:: output
         :type: str
 
-        The name of the output column.
-        It cannot overwrite existing columns.
-        Use :py:class:`Drop` to remove unwanted columns.
+        The name of the output field.
+        It cannot overwrite existing fields.
+        Use :py:class:`Drop` to remove unwanted fields.
 
     .. py:attribute:: start
         :type: int

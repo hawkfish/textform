@@ -1,5 +1,5 @@
-Copy
-====
+Copy: Duplicate fields
+======================
 
 .. py:currentmodule:: textform
 
@@ -21,7 +21,7 @@ Copy
         :type: tuple(str)
 
         One or more fields to receive the copies.
-        They cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
+        They cannot overwrite existing fields, so use :py:class:`Drop` to remove unwanted fields.
 
 Usage
 ^^^^^

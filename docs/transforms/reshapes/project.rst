@@ -1,12 +1,12 @@
-Project: Compute a function value as a new column
-=================================================
+Project: Compute a function value as a new field
+================================================
 
 .. py:currentmodule:: textform
 
 .. py:class:: Project(source, inputs, output, function)
 
-    The ``Project`` transform computes (projects) a new column
-    using an arbitrary function of zero or more input columns.
+    The ``Project`` transform computes (projects) a new field
+    using an arbitrary function of zero or more input fields.
 
     .. py:attribute:: source
         :type: Transform
@@ -16,14 +16,14 @@ Project: Compute a function value as a new column
     .. py:attribute:: inputs
         :type: tuple(str) or str
 
-        The columns to combine.
+        The fields to combine.
         They will *not* be dropped from the output.
         Note that nullary functions are supported.
 
     .. py:attribute:: output
         :type: str
 
-        The column containing the computed result.
+        The field containing the computed result.
 
     .. py:attribute:: function
         :type: callable

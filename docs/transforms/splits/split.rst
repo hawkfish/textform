@@ -5,7 +5,7 @@ Split: Split a field using a separator
 
 .. py:class:: Split(source, input, outputs, separator, defaults)
 
-    The ``Split`` transform replaces a column with a set of values generated from the inputs.
+    The ``Split`` transform replaces a field with a set of values generated from the inputs.
 
     .. py:attribute:: source
         :type: Transform
@@ -15,20 +15,20 @@ Split: Split a field using a separator
     .. py:attribute:: input
         :type: str
 
-        The name of the column to split.
+        The name of the field to split.
         It will be dropped from the output, so use :py:class:`Copy` if you need to preserve it.
 
 
     .. py:attribute:: outputs
         :type: tuple(str), str
 
-        The output column(s) receiving the split values.
-        They cannot overwrite existing columns. Use :py:class:`Drop` to remove unwanted columns.
+        The output field(s) receiving the split values.
+        They cannot overwrite existing fields. Use :py:class:`Drop` to remove unwanted fields.
 
     .. py:attribute:: separator
         :type: str or callable
 
-        Either a string or a ``callable`` used to split up the column.
+        Either a string or a ``callable`` used to split up the field.
         If it is a string, the value will be split using ``str.split``.
         If it is a ``callable``, it will be passed the value as a single argument
         and should return a ``list`` of values in the order of the outputs.

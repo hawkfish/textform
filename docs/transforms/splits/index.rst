@@ -1,7 +1,7 @@
 Splitting
 =========
 
-These transforms split a column into multiple columns.
+These transforms split a field into multiple fields.
 
 .. toctree::
    :maxdepth: 1

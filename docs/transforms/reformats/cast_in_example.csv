@@ -1,0 +1,8 @@
+Query,Mode,Run,Branch
+01,PARALLEL,,master
+01,PARALLEL,Cold run...DONE,master
+01,PARALLEL,1/5...0\.083052,master
+01,PARALLEL,2/5...0\.079075,master
+01,PARALLEL,3/5...0\.079176,master
+01,PARALLEL,4/5...0\.078928,master
+01,PARALLEL,5/5...0\.079142,master

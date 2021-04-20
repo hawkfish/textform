@@ -1,11 +1,11 @@
-Drop
-====
+Drop: Remove unneeded fields
+============================
 
 .. py:currentmodule:: textform
 
 .. py:class:: Drop(source, inputs)
 
-    The ``Drop`` transform removes columns from the records.
+    The ``Drop`` transform removes fields from the records.
 
     .. py:attribute:: source
         :type: Transform
@@ -15,7 +15,7 @@ Drop
     .. py:attribute:: inputs
         :type: tuple(str), str
 
-        The name(s) of the columns to remove.
+        The name(s) of the fields to remove.
 
 Usage
 ^^^^^

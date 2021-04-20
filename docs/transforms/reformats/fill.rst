@@ -5,8 +5,8 @@ Fill: Fill in missing values by copying down
 
 .. py:class:: Fill(source, input[, default=''[, blank='']])
 
-    The ``Fill`` (or ``FillDown``) transform fills in blank values by using the most recent value for the column.
-    ``Fill`` is a subclass of :py:class:`Format` because it effectively reformats a column.
+    The ``Fill`` (or ``FillDown``) transform fills in blank values by using the most recent value for the field.
+    ``Fill`` is a subclass of :py:class:`Format` because it effectively reformats a field.
 
     .. py:attribute:: source
         :type: Transform
@@ -16,19 +16,19 @@ Fill: Fill in missing values by copying down
     .. py:attribute:: input
         :type: str
 
-        The name of the column to fill in.
+        The name of the field to fill in.
         The contents will be replaced, so use :py:class:`Copy` to preserve the original.
 
     .. py:attribute:: default
         :type: any
 
         The value to use when there is no most recent value (e.g, at the top of the file).
-        It needs to match the type of the column.
+        It needs to match the type of the field.
 
     .. py:attribute:: blank
         :type: any
 
-        The value to use to determine "blankness" (e.g., for non-string columns it might be ``0`` or ``None``).
+        The value to use to determine "blankness" (e.g., for non-string fields it might be ``0`` or ``None``).
 
 Usage
 ^^^^^

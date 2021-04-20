@@ -16,24 +16,24 @@ Unnest: Parse a string as a formatted record
     .. py:attribute:: input
         :type: str
 
-        The column to unnest.
+        The field to unnest.
         It will be dropped from the schema, so use :py:class:`Copy` to preserve it.
 
     .. py:attribute:: outputs
         :type: tuple(str)
 
-        The output columns to be extracted. Only the listed fields will be extracted.
-        They cannot overwrite existing columns. Use :py:class:`Drop` to remove unwanted columns.
+        The output fields to be extracted. Only the listed fields will be extracted.
+        They cannot overwrite existing fields. Use :py:class:`Drop` to remove unwanted fields.
 
     .. py:attribute:: format
         :type: str
 
         The format of the input string. Supported unnesting formats are:
 
-        * ``csv`` Comma-separated values. The *outputs* will be used to provide the column names.
+        * ``csv`` Comma-separated values. The *outputs* will be used to provide the field names.
         * ``json``, ``jsonl`` JavaScript Object Notation records (``{..}``). Only keys from *outputs* will be returned
-        * ``md`` GitHub Markdown rows. The *outputs* will be used to provide the column names.
-        * ``text`` Treats the column as an array with one text value tagged with the first output name.
+        * ``md`` GitHub Markdown rows. The *outputs* will be used to provide the field names.
+        * ``text`` Treats the field as an array with one text value tagged with the first output name.
 
     .. py:attribute:: config
         :type: kwargs

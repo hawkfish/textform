@@ -12,8 +12,9 @@ what have similar functionality.
    inputs/index
    filters/index
    splits/index
+   merges/index
    reformats/index
-   reshape_family
+   reshapes/index
 
 
 

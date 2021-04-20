@@ -1,14 +1,14 @@
-Unfold
-======
+Unfold: Rotate one field to many
+================================
 
 .. py:currentmodule:: textform
 
 .. py:class:: Unfold(source, inputs, outputs)
 
-    The ``Unfold`` transform unfolds (pivots) a set of columns.
-    Simple unfolding consists of rotating a single input columns into multiple output columns.
-    This can be generalised to multiple input columns where the output columns
-    are broken up into equal-sized groups, each of which is generated from one of the input columns.
+    The ``Unfold`` transform unfolds (pivots) a set of fields.
+    Simple unfolding consists of rotating a single input fields into multiple output fields.
+    This can be generalised to multiple input fields where the output fields
+    are broken up into equal-sized groups, each of which is generated from one of the input fields.
     ``Unfold`` is the inverse of :py:class:`Fold`.
 
     .. py:attribute:: source
@@ -19,17 +19,17 @@ Unfold
     .. py:attribute:: inputs
         :type: tuple(str)
 
-        The list of columns to be unfolded.
+        The list of fields to be unfolded.
         They will be dropped from the output, so use :py:class:`Copy` to preserve them.
-        Each input column contains the values for an entire output group.
+        Each input field contains the values for an entire output group.
 
     .. py:attribute:: outputs
         :type: tuple(str)
 
-        The output columns receiving the unfolded columns.
-        The output columns are broken into equal-sized groups, one per input column.
+        The output fields receiving the unfolded fields.
+        The output fields are broken into equal-sized groups, one per input field.
         The number of *inputs* must be an even multiple of the number of *outputs*.
-        They cannot overwrite existing columns, so use :py:class:`Drop` to remove unwanted columns.
+        They cannot overwrite existing fields, so use :py:class:`Drop` to remove unwanted fields.
 
 Limitations
 ^^^^^^^^^^^

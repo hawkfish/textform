@@ -1,4 +1,4 @@
-Text: import lines as records from a text file
+Text: Import lines as records from a text file
 ==============================================
 
 .. py:currentmodule:: textform
@@ -16,7 +16,7 @@ Text: import lines as records from a text file
     .. py:attribute:: output
         :type: str
 
-        The name of the output column containing the lines.
+        The name of the output field containing the lines.
 
     .. py:attribute:: source
         :type: Transform or None

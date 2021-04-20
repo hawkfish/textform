@@ -5,7 +5,7 @@ Capture: Split a string into capture groups
 
 .. py:class:: Capture(source, input, outputs, pattern[, defaults = ''])
 
-    The ``Capture`` transform replaces a string column with the capture groups from a regular expression.
+    The ``Capture`` transform replaces a string field with the capture groups from a regular expression.
     ``Capture`` is a subclass of :py:class:`Split`.
 
     .. py:attribute:: source
@@ -16,13 +16,13 @@ Capture: Split a string into capture groups
     .. py:attribute:: input
         :type: str
 
-        The name of the string column to apply the *pattern* to.
+        The name of the string field to apply the *pattern* to.
         It will be dropped from the output, so use :py:class:`Copy` to preserve it.
 
     .. py:attribute:: outputs
         :type: tuple(str), str
 
-        The the output column(s)s receiving the capture groups.
+        The the output field(s)s receiving the capture groups.
         There must be the same number as the number of capture groups in the *pattern*.
 
     .. py:attribute:: pattern

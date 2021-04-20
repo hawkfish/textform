@@ -5,7 +5,7 @@ Replace: Rewrite a string using capture groups
 
 .. py:class:: Replace(source, input, search, replace)
 
-    The ``Replace`` transform uses a regular expresssion to reformat a column using capture groups.
+    The ``Replace`` transform uses a regular expresssion to reformat a field using capture groups.
     ``Replace`` is a subclass of :py:class:`Format`.
 
     .. py:attribute:: source
@@ -16,7 +16,7 @@ Replace: Rewrite a string using capture groups
     .. py:attribute:: input
         :type: str
 
-        The name of the string column to apply the *pattern* to.
+        The name of the string field to apply the *pattern* to.
         The contents will be replaced, so use :py:class:`Copy` to preserve the original.
 
     .. py:attribute:: search
