@@ -1,5 +1,5 @@
-Cast
-====
+Cast: Change the data type of a column
+======================================
 
 .. py:currentmodule:: textform
 

@@ -1,5 +1,5 @@
-Formatting
-==========
+Reformatting
+============
 
 These transforms modify a column in place.
 
@@ -12,6 +12,5 @@ These transforms modify a column in place.
    lookup
    lag
    lift
-   project
    replace
 

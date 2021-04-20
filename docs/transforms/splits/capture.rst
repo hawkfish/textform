@@ -1,5 +1,5 @@
-Capture
-=======
+Capture: Split a string into capture groups
+===========================================
 
 .. py:currentmodule:: textform
 

@@ -1,5 +1,5 @@
-Project
-=======
+Project: Compute a function value as a new column
+=================================================
 
 .. py:currentmodule:: textform
 

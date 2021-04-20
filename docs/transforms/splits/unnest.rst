@@ -1,5 +1,5 @@
-Unnest
-======
+Unnest: Parse a string as a formatted record
+============================================
 
 .. py:currentmodule:: textform
 

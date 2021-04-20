@@ -1,5 +1,5 @@
-Format
-======
+Format: Replace a value with a computed value
+=============================================
 
 .. py:currentmodule:: textform
 

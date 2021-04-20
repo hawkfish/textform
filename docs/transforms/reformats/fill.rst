@@ -1,13 +1,12 @@
-Lift
-====
+Fill: Fill in missing values by copying down
+============================================
 
 .. py:currentmodule:: textform
 
-.. py:class:: Lift(source, input[, default=''[, blank='']])
+.. py:class:: Fill(source, input[, default=''[, blank='']])
 
-    The ``Lift`` (or ``FillUp``) transform fills in missing values by using the *next* non-blank value for the column.
-    ``Lift`` is a logical form of :py:class:`Format` because it reformats a column, but it is not a subclass.
-    It is so named because "lift" is roughly "fill" spelled backwards, which suggests the operation.
+    The ``Fill`` (or ``FillDown``) transform fills in blank values by using the most recent value for the column.
+    ``Fill`` is a subclass of :py:class:`Format` because it effectively reformats a column.
 
     .. py:attribute:: source
         :type: Transform
@@ -36,5 +35,23 @@ Usage
 
 .. code-block:: python
 
-   Lift(p, 'State')
-   Lift(p, 'Total', 0.0, 0.0)
+   Fill(p, 'State')
+   Fill(p, 'Amount', 0.0, 0.0)
+
+Example
+^^^^^^^
+
+.. csv-table::
+   :file: fill_in_example.csv
+   :header-rows: 1
+   :quote: "
+   :align: left
+
+.. code-block:: python
+
+   Fill(p, 'Query', 'Q00')
+
+.. csv-table::
+   :file: fill_example.csv
+   :header-rows: 1
+   :align: left

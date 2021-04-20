@@ -1,5 +1,5 @@
-Lag
-===
+Lag: Shift values by a number of rows
+=====================================
 
 .. py:currentmodule:: textform
 

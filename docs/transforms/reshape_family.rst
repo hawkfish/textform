@@ -13,5 +13,6 @@ Reshaping transforms change the structure of the rows and columns.
    iterate
    merge
    nest
+   project
    unfold
 

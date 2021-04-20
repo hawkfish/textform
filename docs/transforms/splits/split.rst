@@ -1,5 +1,5 @@
-Split
-=====
+Split: Split a field using a separator
+======================================
 
 .. py:currentmodule:: textform
 

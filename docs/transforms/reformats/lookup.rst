@@ -1,9 +1,9 @@
-Lookup
-======
+Lookup: Replace a value with one from a lookup table
+====================================================
 
 .. py:currentmodule:: textform
 
-.. py:class:: Lookup(source, outputs, values)
+.. py:class:: Lookup(source, outputs, table[, missing=None])
 
     The ``Lookup`` transform replaces column values with the corresponding values in a table.
     The mapped values do not have to be the same type.
@@ -25,12 +25,11 @@ Lookup
 
         A Python dictionary whose keys are the values of *input*.
 
-    .. py:attribute:: default
+    .. py:attribute:: missing
         :type: any
 
         The value to use if the *input* value is not found in the *table*.
         It must have the same type as the table values.
-
 
 Usage
 ^^^^^

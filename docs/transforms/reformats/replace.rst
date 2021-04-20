@@ -1,5 +1,5 @@
-Replace
-=======
+Replace: Rewrite a string using capture groups
+==============================================
 
 .. py:currentmodule:: textform
 

@@ -11,8 +11,8 @@ what have similar functionality.
 
    inputs/index
    filters/index
-   split_family
-   format_family
+   splits/index
+   reformats/index
    reshape_family
 
 
