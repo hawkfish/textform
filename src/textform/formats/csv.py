@@ -2,10 +2,10 @@
 
 import csv
 
-Reader = csv.reader
+LineReader = csv.reader
 DictReader = csv.DictReader
 
-class Writer(object):
+class LineWriter(object):
 
     def __init__(self, outfile, fieldnames, **config):
         self.writer = csv.writer(outfile, lineterminator="")

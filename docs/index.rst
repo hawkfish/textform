@@ -7,11 +7,16 @@ A data transformation pipeline module based on the seminal
 `Potter's Wheel <http://control.cs.berkeley.edu/pwheel-vldb.pdf>`_ data wrangling formalism.
 The name is a portmanteau of "text" and "transform".
 
+.. py:exception:: TransformException(message=None)
+
+    A module-specific Exception derived from :py:exc:`Exception`
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    transforms/index
+   formats/index
 
 
 Indices and tables

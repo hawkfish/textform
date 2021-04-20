@@ -2,7 +2,7 @@
 
 from . import dictinput
 
-class Reader(object):
+class LineReader(object):
 
     def __init__(self, iterable, **config):
         self._iterable = iterable
@@ -19,12 +19,32 @@ class DictReader(dictinput.DictInput):
             fieldnames = tuple(config.get('default_fieldnames', ('text',)))
         fieldnames = fieldnames[:1]
 
-        super().__init__(Reader(iterable), fieldnames, **config)
+        super().__init__(LineReader(iterable), fieldnames, **config)
 
-class Writer(object):
+class LineWriter(object):
     def __init__(self, outfile, **config):
         self._outfile = outfile
 
+    def write(self, s):
+        self._outfile.write(s)
+
     def writerow(self, values):
         self._outfile.write(str(values))
+
+class DictWriter(object):
+
+    def __init__(self, outfile, fieldnames, **config):
+        self.writer = LineWriter(outfile, fieldnames)
+        self.fieldnames = fieldnames
+
+    def writeheader(self):
+        pass
+
+    def writerow(self, row):
+        #   Slice the row
+        self.writer.writerow([row[field] for field in self.fieldnames])
+        self.writer.write('\n')
+
+    def writefooter(self):
+        pass
 

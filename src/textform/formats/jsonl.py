@@ -2,7 +2,7 @@ import json
 from . import dictinput
 
 #   Adapt JSON reading to the CSV API
-class Reader(object):
+class LineReader(object):
 
     def __init__(self, iterable, **config):
         self._iterable = iterable
@@ -14,9 +14,9 @@ class Reader(object):
 
 class DictReader(dictinput.DictInput):
     def __init__(self, iterable, fieldnames=None, **config):
-        super().__init__(Reader(iterable), fieldnames, **config)
+        super().__init__(LineReader(iterable), fieldnames, **config)
 
-class Writer(object):
+class LineWriter(object):
 
     def __init__(self, outfile, fieldnames, **config):
         self._outfile = outfile
@@ -31,7 +31,7 @@ class Writer(object):
 class DictWriter(object):
 
     def __init__(self, outfile, fieldnames, **config):
-        self.writer = Writer(outfile, fieldnames)
+        self.writer = LineWriter(outfile, fieldnames)
         self.fieldnames = fieldnames
 
     def writeheader(self):

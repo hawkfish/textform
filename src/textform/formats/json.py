@@ -1,13 +1,13 @@
 from . import jsonl
 
-Reader = jsonl.Reader
+LineReader = jsonl.LineReader
 DictReader = jsonl.DictReader
-Writer = jsonl.Writer
+LineWriter = jsonl.LineWriter
 
 class DictWriter(object):
 
     def __init__(self, outfile, fieldnames, **config):
-        self.writer = Writer(outfile, fieldnames)
+        self.writer = LineWriter(outfile, fieldnames)
         self.fieldnames = fieldnames
         self._sep = ''
 

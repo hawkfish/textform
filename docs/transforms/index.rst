@@ -15,12 +15,3 @@ what have similar functionality.
    merges/index
    reformats/index
    reshapes/index
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

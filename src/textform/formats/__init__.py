@@ -43,11 +43,11 @@ def ValidateInputFormat(name, format, formats, iterable):
 def ReaderFactory(name, format, iterable, **config):
 
     formats = {
-        'csv': csv.Reader,
-        'json': json.Reader,
-        'jsonl': jsonl.Reader,
-        'md': md.Reader,
-        'text': text.Reader,
+        'csv': csv.LineReader,
+        'json': json.LineReader,
+        'jsonl': jsonl.LineReader,
+        'md': md.LineReader,
+        'text': text.LineReader,
     }
 
     ValidateInputFormat(name, format, formats, iterable)
@@ -63,6 +63,8 @@ def DictReaderFactory(name, format, iterable, fieldnames, **config):
         'md': md.DictReader,
         'text': text.DictReader,
     }
+
+    ValidateInputFormat(name, format, formats, iterable)
 
     return formats[format](iterable, fieldnames, **config)
 
@@ -105,13 +107,13 @@ def ValidateOutputFormat(name, format, formats, outfile):
 def WriterFactory(name, format, outfile, fieldnames, **config):
 
     formats = {
-        'csv': csv.Writer,
-        'json': json.Writer,
-        'jsonl': jsonl.Writer,
-        'md': md.Writer,
-        'py': py.Writer,
-        'rst': rst.Writer,
-        'text': text.Writer,
+        'csv': csv.LineWriter,
+        'json': json.LineWriter,
+        'jsonl': jsonl.LineWriter,
+        'md': md.LineWriter,
+        'py': py.LineWriter,
+        'rst': rst.LineWriter,
+        'text': text.LineWriter,
     }
 
     ValidateOutputFormat(name, format, formats, outfile)

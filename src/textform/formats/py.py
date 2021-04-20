@@ -2,7 +2,7 @@
 
 # Reader would require a parser for Python object strings
 
-class Writer(object):
+class LineWriter(object):
     def __init__(self, outfile, fieldnames, **config):
         self._outfile = outfile
         self.fieldnames = fieldnames
@@ -13,7 +13,7 @@ class Writer(object):
 class DictWriter(object):
 
     def __init__(self, outfile, fieldnames, **config):
-        self.writer = Writer(outfile)
+        self.writer = LineWriter(outfile)
         self.fieldnames = fieldnames
 
     def writeheader(self):

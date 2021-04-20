@@ -8,7 +8,7 @@ as *data*, we need to escape various things.
 from . import csv
 import re
 
-Reader = csv.Reader
+LineReader = csv.LineReader
 DictReader = csv.DictReader
 
 def needs_escape(s):
@@ -42,21 +42,12 @@ def escape_transitions(s):
 def escape_value(v):
     return escape_transitions(v)
 
-class Writer(object):
-
-    def __init__(self, outfile, fieldnames, **config):
-        self.writer = csv.writer(outfile, lineterminator="")
+class LineWriter(csv.LineWriter):
 
     def writerow(self, values):
-        self.writer.writerow([escape_value(value) for value in values])
+        super().writerow([escape_value(value) for value in values])
 
 class DictWriter(csv.DictWriter):
 
-    def __init__(self, outfile, fieldnames, **config):
-        super().__init__(outfile, fieldnames, lineterminator="\n")
-
     def writerow(self, row):
         super().writerow({field: escape_value(row[field]) for field in row})
-
-    def writefooter(self):
-        pass
