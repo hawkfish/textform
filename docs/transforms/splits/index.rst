@@ -7,7 +7,7 @@ These output fields are in the same position in the field order as the original 
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    capture
    split
