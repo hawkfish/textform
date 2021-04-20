@@ -10,7 +10,7 @@ what have similar functionality.
    :caption: Transforms:
 
    inputs/index
-   filter_family
+   filters/index
    split_family
    format_family
    reshape_family

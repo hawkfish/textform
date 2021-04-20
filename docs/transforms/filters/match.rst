@@ -1,5 +1,5 @@
-Match
-=====
+Match: Filter rows using a regular expression
+=============================================
 
 .. py:currentmodule:: textform
 
@@ -37,3 +37,22 @@ Usage
 
    Match(p, 'Date', r'(\d+)/(\d+)/(\d+)') # Filter to valid dates
    Match(p, 'Line', '-----', True)        # Exclude formatting lines
+
+Example
+^^^^^^^
+
+.. csv-table::
+   :file: match_in_example.csv
+   :header-rows: 1
+   :quote: "
+   :align: left
+
+.. code-block:: python
+
+   Match(p, 'Line', '-----', True)
+
+.. csv-table::
+   :file: match_example.csv
+   :header-rows: 1
+   :align: left
+

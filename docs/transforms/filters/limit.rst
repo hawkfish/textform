@@ -1,5 +1,5 @@
-Limit
-=====
+Limit: Filter rows using the row position
+=========================================
 
 .. py:currentmodule:: textform
 
@@ -35,7 +35,7 @@ Example
 ^^^^^^^
 
 .. csv-table::
-   :file: text_example.csv
+   :file: limit_in_example.csv
    :header-rows: 1
    :quote: "
    :align: left

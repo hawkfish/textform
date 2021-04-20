@@ -1,5 +1,5 @@
-Select
-======
+Select: Filter rows using a callable predicate
+==============================================
 
 .. py:currentmodule:: textform
 
