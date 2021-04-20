@@ -35,7 +35,7 @@ Example
 ^^^^^^^
 
 .. csv-table::
-   :file: match_example.csv
+   :file: add_in_example.csv
    :header-rows: 1
    :quote: "
    :align: left

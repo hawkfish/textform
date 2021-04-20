@@ -60,7 +60,7 @@ Example
 ^^^^^^^
 
 .. csv-table::
-   :file: add_example.csv
+   :file: divide_in_example.csv
    :header-rows: 1
    :quote: "
    :align: left

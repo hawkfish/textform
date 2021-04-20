@@ -9,7 +9,7 @@ what have similar functionality.
    :maxdepth: 2
    :caption: Transforms:
 
-   input_family
+   inputs/index
    filter_family
    split_family
    format_family
