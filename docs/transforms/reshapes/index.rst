@@ -4,7 +4,7 @@ Reshaping
 Reshaping transforms change the structure of the rows and fields.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    copy
    divide

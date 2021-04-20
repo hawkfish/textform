@@ -2,9 +2,10 @@ Reformatting
 ============
 
 These transforms modify a field in place.
+They do not produce an output and the original input is replaced.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    cast
    fill

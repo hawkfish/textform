@@ -1,10 +1,11 @@
 Filtering
 =========
 
-These transforms remove rows.
+Filtering transforms remove rows from the stream.
+They produce no outputs and do not remove their inputs.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    limit
    match
