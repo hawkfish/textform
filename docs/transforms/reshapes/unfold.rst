@@ -1,7 +1,7 @@
 Unfold: Rotate one field to many
 ================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Unfold(source, inputs, outputs)
 

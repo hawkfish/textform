@@ -1,7 +1,7 @@
 Divide: Separate one field into two using a predicate
 =====================================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Divide(source, outputs, values)
 

@@ -1,7 +1,7 @@
 Add: Insert constant fields
 ===========================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Add(source, outputs, values)
 

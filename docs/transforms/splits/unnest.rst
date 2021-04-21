@@ -1,7 +1,7 @@
 Unnest: Parse a string as a record using a layout
 =================================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Unnest(pipeline, input, outputs, layout='csv', **config)
 

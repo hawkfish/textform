@@ -1,7 +1,7 @@
 Project: Compute a function value as a new field
 ================================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Project(source, inputs, output, function)
 

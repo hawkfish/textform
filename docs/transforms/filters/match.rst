@@ -1,7 +1,7 @@
 Match: Filter rows using a regular expression
 =============================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Match(source, input, pattern[, invert=False])
 

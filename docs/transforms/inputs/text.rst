@@ -1,7 +1,7 @@
 Text: Import lines as records from a text file
 ==============================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Text(iterable, output[, source=None])
 

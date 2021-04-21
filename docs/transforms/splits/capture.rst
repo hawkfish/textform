@@ -1,7 +1,7 @@
 Capture: Split a string into capture groups
 ===========================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Capture(source, input, outputs, pattern[, defaults = ''])
 

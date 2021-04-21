@@ -1,7 +1,7 @@
 Text Lines
 ==========
 
-.. py:currentmodule:: textform.layouts.text
+.. py:currentmodule:: txf.layouts.text
 
 The ``text`` layout reads and writes records as single lines of text using an interface
 that looks like :py:mod:`csv`.
@@ -18,7 +18,7 @@ that looks like :py:mod:`csv`.
 
 .. py:class:: LineWriter(outfile, fieldnames, **config)
 
-    An :py:class:`textform.layouts.LineWriter` that returns strings joined with :py:func:`join_escaped`.
+    An :py:class:`txf.layouts.LineWriter` that returns strings joined with :py:func:`join_escaped`.
     It skips rows which are header layoutting.
 
     .. py:method:: writerow(row)
@@ -27,7 +27,7 @@ that looks like :py:mod:`csv`.
 
 .. py:class:: DictWriter(outfile, fieldnames, **config)
 
-    A :py:class:`textform.layouts.DictWriter` that
+    A :py:class:`txf.layouts.DictWriter` that
 
     .. py:method:: writeheader()
 

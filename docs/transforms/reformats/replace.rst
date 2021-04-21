@@ -1,7 +1,7 @@
 Replace: Rewrite a string using capture groups
 ==============================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Replace(source, input, search, replace)
 

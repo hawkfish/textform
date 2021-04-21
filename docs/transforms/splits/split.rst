@@ -1,7 +1,7 @@
 Split: Split a field using a separator
 ======================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Split(source, input, outputs, separator, defaults)
 

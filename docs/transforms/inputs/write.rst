@@ -1,7 +1,7 @@
 Write: Export records to a writable object using a layout
 =========================================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Write(source, outfile[, layout='csv'[, **config]])
 

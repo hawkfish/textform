@@ -1,7 +1,7 @@
 Nest: Merge fields into a string record using a layout
 ======================================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Nest(source, inputs, output[, layout='csv'[, **config]])
 

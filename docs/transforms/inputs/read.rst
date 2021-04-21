@@ -1,7 +1,7 @@
 Read: Import record data from an iterable using a layout
 ========================================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Read(iterable, [source=None[, layout='csv'[, **config]]])
 

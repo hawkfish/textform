@@ -1,7 +1,7 @@
 Limit: Filter rows using the row position
 =========================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Limit(source=None[, limit=1[, offset=0]])
 

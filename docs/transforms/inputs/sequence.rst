@@ -1,7 +1,7 @@
 Sequence: Generate an integer sequence field
 ============================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Sequence(source, output[, [start=0, step=1]])
 

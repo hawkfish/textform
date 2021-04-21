@@ -1,7 +1,7 @@
 JavaScript Object Notation Lines
 ================================
 
-.. py:currentmodule:: textform.layouts.jsonl
+.. py:currentmodule:: txf.layouts.jsonl
 
 The ``jsonl`` layout uses the :py:mod:`json` module to read and write records using an interface
 that looks like :py:mod:`csv`.
@@ -21,7 +21,7 @@ is that line-oriented JSON writes out each records on a separate line.
 
 .. py:class:: LineWriter(outfile, fieldnames, **config)
 
-    This is simply an alias for :py:class:`textform.jsonl.LineWriter`.
+    This is simply an alias for :py:class:`txf.layouts.jsonl.LineWriter`.
 
     .. py:method:: writerow(values)
 
@@ -29,7 +29,7 @@ is that line-oriented JSON writes out each records on a separate line.
 
 .. py:class:: DictWriter(outfile, fieldnames, **config)
 
-    A :py:class:`textform.layouts.DictWriter` that writes JSON records, one per line.
+    A :py:class:`txf.layouts.DictWriter` that writes JSON records, one per line.
 
     .. py:method:: writeheader()
 

@@ -1,7 +1,7 @@
 Copy: Duplicate fields
 ======================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Copy(pipeline, input, outputs)
 

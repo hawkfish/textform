@@ -1,7 +1,7 @@
 Fold: Rotate many fields into one field
 =======================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Fold(pipeline, inputs, outputs, tags=None)
 

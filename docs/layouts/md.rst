@@ -1,7 +1,7 @@
 Google Markdown
 ===============
 
-.. py:currentmodule:: textform.layouts.md
+.. py:currentmodule:: txf.layouts.md
 
 The ``md`` layout reads and writes records  as Markdown tables using an interface
 that looks like :py:mod:`csv`.
@@ -22,12 +22,12 @@ This layout lets you read and write that layout for text record processing.
 
 .. py:class:: LineWriter(outfile, fieldnames, **config)
 
-    An :py:class:`textform.layouts.LineWriter` that returns strings joined with :py:func:`join_escaped`.
+    An :py:class:`txf.layouts.LineWriter` that returns strings joined with :py:func:`join_escaped`.
     It skips rows which are header layoutting.
 
 .. py:class:: DictWriter(outfile, fieldnames, **config)
 
-    A :py:class:`textform.layouts.DictWriter` that
+    A :py:class:`txf.layouts.DictWriter` that
 
     .. py:method:: writeheader()
 

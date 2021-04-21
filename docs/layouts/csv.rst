@@ -1,7 +1,7 @@
 Comma Separated Values
 ======================
 
-:py:mod:`textform` is designed to imitate the builtin :py:mod:`csv` module as closely as possible.
+:py:mod:`txf` is designed to imitate the builtin :py:mod:`csv` module as closely as possible.
 The readers for csv are therefore almost identical to those of the builtin module.
 
 .. py:class:: LineReader()

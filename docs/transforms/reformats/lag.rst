@@ -1,7 +1,7 @@
 Lag: Shift values by a number of rows
 =====================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Lag(self, source, input[, lag=1[, default='']])
 

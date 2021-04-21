@@ -1,7 +1,7 @@
 Fill: Fill in missing values by copying down
 ============================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Fill(source, input[, default=''[, blank='']])
 

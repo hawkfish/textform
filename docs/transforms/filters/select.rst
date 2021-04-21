@@ -1,7 +1,7 @@
 Select: Filter rows using a callable predicate
 ==============================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Select(source, inputs, predicate)
 

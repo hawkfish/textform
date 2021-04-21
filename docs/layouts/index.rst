@@ -1,7 +1,9 @@
 Layouts
 =======
 
-.. py:currentmodule:: textform.layouts
+.. py:module:: txf.layouts
+
+.. py:currentmodule:: txf.layouts
 
 Layouts are classes for handling record string layouts.
 :py:mod:`textform` uses these layouts to convert between strings in various layouts and records.
@@ -66,7 +68,7 @@ There are readers and writers, each of which has a variant for individual string
 
 .. toctree::
    :maxdepth: 2
-   :caption: Formats:
+   :caption: Builtin layouts:
 
    csv
    json

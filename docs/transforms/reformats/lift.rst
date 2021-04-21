@@ -1,7 +1,7 @@
 Lift: Fill in missing values by copying up
 ==========================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Lift(source, input[, default=''[, blank='']])
 

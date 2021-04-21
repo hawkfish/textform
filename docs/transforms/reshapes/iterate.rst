@@ -1,7 +1,7 @@
 Iterate: Expand ragged records into multiple rows
 =================================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Iterate(pipeline, input, tags, values[, layout='csv'[, **config]])
 

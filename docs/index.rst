@@ -1,15 +1,9 @@
 Welcome to textform!
 ====================
 
-.. py:module:: textform
-
-A data translayoution pipeline module based on the seminal
+A data translation pipeline module based on the seminal
 `Potter's Wheel <http://control.cs.berkeley.edu/pwheel-vldb.pdf>`_ data wrangling formalism.
 The name is a portmanteau of "text" and "transform".
-
-.. py:exception:: TransformException(message=None)
-
-    A module-specific Exception derived from :py:exc:`Exception`
 
 .. toctree::
    :maxdepth: 2
@@ -17,7 +11,6 @@ The name is a portmanteau of "text" and "transform".
 
    transforms/index
    layouts/index
-
 
 Indices and tables
 ==================

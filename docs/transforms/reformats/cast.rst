@@ -1,7 +1,7 @@
 Cast: Change the data type of a field
 =====================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Cast(source, input, result_type)
 

@@ -1,7 +1,7 @@
 Drop: Remove unneeded fields
 ============================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Drop(source, inputs)
 

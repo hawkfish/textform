@@ -1,7 +1,7 @@
 Format: Replace a value with a computed value
 =============================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Format(source, outputs, function)
 

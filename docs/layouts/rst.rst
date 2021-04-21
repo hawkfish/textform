@@ -1,7 +1,7 @@
 reStructured Text
 =================
 
-.. py:currentmodule:: textform.layouts.rst
+.. py:currentmodule:: txf.layouts.rst
 
 The ``rst`` layout reads and writes records as *escaped* rst tables using an interface
 that looks like :py:mod:`csv`.
@@ -9,8 +9,8 @@ that looks like :py:mod:`csv`.
 reStructured Text has a facility for reading csv files as tables,
 but the feature allows the embedding for layoutting inlayoution.
 This makes it difficult to export literal tables for examples.
-The :py:mod:`textform.layouts.rst` layoutter escapes layoutting inlayoution
-before routing the result to the :py:mod:`textform.layouts.csv` module.
+The :py:mod:`txf.layouts.rst` layoutter escapes layoutting inlayoution
+before routing the result to the :py:mod:`txf.layouts.csv` module.
 
 .. py:class:: LineReader(iterable, **config)
 
@@ -22,7 +22,7 @@ before routing the result to the :py:mod:`textform.layouts.csv` module.
 
 .. py:class:: LineWriter(outfile, fieldnames, **config)
 
-    A :py:class:`textform.layouts.LineWriter` that escapes ``rst`` layoutting directives.
+    A :py:class:`txf.layouts.LineWriter` that escapes ``rst`` layoutting directives.
 
    .. py:method:: writerow(values)
 
@@ -30,7 +30,7 @@ before routing the result to the :py:mod:`textform.layouts.csv` module.
 
 .. py:class:: DictWriter(outfile, fieldnames, **config)
 
-    A subclass of :py:class:`textform.layouts.csv.DictWriter` that escapes ``rst`` layoutting directives.
+    A subclass of :py:class:`txf.layouts.csv.DictWriter` that escapes ``rst`` layoutting directives.
 
     .. py:method:: writerow(row)
 

@@ -1,7 +1,7 @@
 Lookup: Replace a value with one from a lookup table
 ====================================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Lookup(source, outputs, table[, missing=None])
 

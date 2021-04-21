@@ -1,7 +1,7 @@
 Merge: Combine multiple fields into one
 =======================================
 
-.. py:currentmodule:: textform
+.. py:currentmodule:: txf
 
 .. py:class:: Merge(source, inputs, output[, glue=''])
 
