@@ -4,9 +4,9 @@ from context import *
 import io
 import json
 
-def generate_record(count, format):
+def generate_record(count, layout):
     outfile = io.StringIO()
-    writer = txf.formats.WriterFactory('iterate', format, outfile, [f'{i}' for i in range(count)])
+    writer = txf.layouts.WriterFactory('iterate', layout, outfile, [f'{i}' for i in range(count)])
     writer.writerow([f'Value {i}' for i in range(count)])
     return outfile.getvalue()
 
@@ -24,7 +24,7 @@ def generate_md(count):
 
 class TestIterate(unittest.TestCase):
 
-    def assert_iterate(self, count, generator, format):
+    def assert_iterate(self, count, generator, layout):
         config = {}
         input = 'Nested'
         tags = 'Tag'
@@ -32,7 +32,7 @@ class TestIterate(unittest.TestCase):
         outputs = (tags, strings,)
         s = txf.Add(None, input, generator(count))
         s = txf.Limit(s, 1)
-        t = txf.Iterate(s, input, tags, strings, format, **config)
+        t = txf.Iterate(s, input, tags, strings, layout, **config)
 
         self.assertEqual('iterate', t.name)
         self.assertEqual(s, t.source)

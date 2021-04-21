@@ -1,12 +1,12 @@
 from .split import Split
 from .transform import Transform
 from .common import TransformException
-from .formats import ReaderFactory, ReaderIterator
+from .layouts import ReaderFactory, ReaderIterator
 
-def bind_iterate(name, format, tag, **config):
+def bind_iterate(name, layout, tag, **config):
 
     queue = ReaderIterator()
-    reader = ReaderFactory(name, format, queue, **config)
+    reader = ReaderFactory(name, layout, queue, **config)
 
     def iterate(value):
         nonlocal queue, reader, tag
@@ -26,12 +26,12 @@ def bind_iterate(name, format, tag, **config):
     return iterate
 
 class Iterate(Transform):
-    def __init__(self, source, input, tags, strings, format='csv', **config):
+    def __init__(self, source, input, tags, strings, layout='csv', **config):
         super().__init__('iterate', input, (tags, strings,), source)
 
         self._validateOutputs()
 
-        self.function = bind_iterate(self.name, format, strings, **config)
+        self.function = bind_iterate(self.name, layout, strings, **config)
         self._buffer = []
         self._position = len(self._buffer)
 

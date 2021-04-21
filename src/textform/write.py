@@ -1,14 +1,14 @@
 from .common import TransformException
-from .formats import DictWriterFactory
+from .layouts import DictWriterFactory
 from .transform import Transform
 
 class Write(Transform):
-    def __init__(self, source, outfile, format='csv', **params):
+    def __init__(self, source, outfile, layout='csv', **params):
         super().__init__('write', source.fieldnames if source else (), (), source)
 
         self._requireSource()
 
-        self._writer = DictWriterFactory(self.name, format, outfile, self.fieldnames)
+        self._writer = DictWriterFactory(self.name, layout, outfile, self.fieldnames)
         self._writer.writeheader()
 
     def readrow(self):

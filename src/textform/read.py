@@ -1,13 +1,13 @@
 from .common import TransformException
-from .formats import DictReaderFactory
+from .layouts import DictReaderFactory
 from .transform import Transform
 
 import csv
 
 class Read(Transform):
-    def __init__(self, iterable, source=None, format='csv', **config):
+    def __init__(self, iterable, source=None, layout='csv', **config):
         name = 'read'
-        self._reader = DictReaderFactory(name, format, iterable, None, **config)
+        self._reader = DictReaderFactory(name, layout, iterable, None, **config)
 
         super().__init__(name, (), self._reader.fieldnames, source)
 

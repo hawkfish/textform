@@ -3,10 +3,10 @@ Iterate: Expand ragged records into multiple rows
 
 .. py:currentmodule:: textform
 
-.. py:class:: Iterate(pipeline, input, tags, values[, format='csv'[, **config]])
+.. py:class:: Iterate(pipeline, input, tags, values[, layout='csv'[, **config]])
 
     The ``Iterate`` transform is a cross between :py:class:`Fold` and :py:class:`Unnest`.
-    It takes a nested value in some format and expands it, but it assumes the value is ragged
+    It takes a nested value in some layout and expands it, but it assumes the value is ragged
     (e.g., a variable length array or a record with variant schemas).
 
     To adapt the ragged structure to a fixed schema, it produces two fields: The *tags* and the *values*.
@@ -41,10 +41,10 @@ Iterate: Expand ragged records into multiple rows
         The output field receiving the record values or the array entries.
         It cannot overwrite existing fields, so use :py:class:`Drop` to remove unwanted fields.
 
-    .. py:attribute:: format
+    .. py:attribute:: layout
         :type: str
 
-        The format of the nested record or array. Supported nesting formats are:
+        The layout of the nested record or array. Supported nesting layouts are:
 
         * ``csv`` Comma-separated values treated as an array.
         * ``json``, ``jsonl`` JavaScript Object Notation records or arrays (``{..}`` or ``[...]``)
@@ -54,7 +54,7 @@ Iterate: Expand ragged records into multiple rows
     .. py:attribute:: config
         :type: kwargs
 
-        Configuration parameters that will be passed to the unnesting format reader.
+        Configuration parameters that will be passed to the unnesting layout reader.
 
 Usage
 ^^^^^

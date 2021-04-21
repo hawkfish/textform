@@ -1,18 +1,18 @@
 Google Markdown
 ===============
 
-.. py:currentmodule:: textform.formats.md
+.. py:currentmodule:: textform.layouts.md
 
-The ``md`` format reads and writes records  as Markdown tables using an interface
+The ``md`` layout reads and writes records  as Markdown tables using an interface
 that looks like :py:mod:`csv`.
 
 Standard Markdown does not support tables, but Google Markdown as used in github does.
-This format lets you read and write that format for text record processing.
+This layout lets you read and write that layout for text record processing.
 
 .. py:class:: LineReader(iterable, **config)
 
     An :py:obj:`iterator` that returns strings parsed with :py:func:`split_escaped`.
-    It skips rows which are header formatting.
+    It skips rows which are header layoutting.
 
 .. py:class:: DictReader(iterable[, fieldnames=None[, **config]])
 
@@ -22,12 +22,12 @@ This format lets you read and write that format for text record processing.
 
 .. py:class:: LineWriter(outfile, fieldnames, **config)
 
-    An :py:class:`textform.formats.LineWriter` that returns strings joined with :py:func:`join_escaped`.
-    It skips rows which are header formatting.
+    An :py:class:`textform.layouts.LineWriter` that returns strings joined with :py:func:`join_escaped`.
+    It skips rows which are header layoutting.
 
 .. py:class:: DictWriter(outfile, fieldnames, **config)
 
-    A :py:class:`textform.formats.DictWriter` that
+    A :py:class:`textform.layouts.DictWriter` that
 
     .. py:method:: writeheader()
 
@@ -35,7 +35,7 @@ This format lets you read and write that format for text record processing.
 
     .. py:method:: writerow(row)
 
-        Writes the row in Markdown table format.
+        Writes the row in Markdown table layout.
 
     .. py:method:: writefooter()
 

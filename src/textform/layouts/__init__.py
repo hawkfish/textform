@@ -30,9 +30,9 @@ class ReaderIterator(object):
 
     next = __next__
 
-def ValidateInputFormat(name, format, formats, iterable):
-    if format not in formats:
-        raise TransformException(f"Unknown {name} '{format}'")
+def ValidateInputFormat(name, layout, layouts, iterable):
+    if layout not in layouts:
+        raise TransformException(f"Unknown {name} '{layout}'")
 
     try:
         iterable = iter(iterable)
@@ -40,9 +40,9 @@ def ValidateInputFormat(name, format, formats, iterable):
     except:
         raise TransformException(f"Input to {name} is not iterable")
 
-def ReaderFactory(name, format, iterable, **config):
+def ReaderFactory(name, layout, iterable, **config):
 
-    formats = {
+    layouts = {
         'csv': csv.LineReader,
         'json': json.LineReader,
         'jsonl': jsonl.LineReader,
@@ -50,13 +50,13 @@ def ReaderFactory(name, format, iterable, **config):
         'text': text.LineReader,
     }
 
-    ValidateInputFormat(name, format, formats, iterable)
+    ValidateInputFormat(name, layout, layouts, iterable)
 
-    return formats[format](iterable, **config)
+    return layouts[layout](iterable, **config)
 
-def DictReaderFactory(name, format, iterable, fieldnames, **config):
+def DictReaderFactory(name, layout, iterable, fieldnames, **config):
 
-    formats = {
+    layouts = {
         'csv': csv.DictReader,
         'json': json.DictReader,
         'jsonl': jsonl.DictReader,
@@ -64,9 +64,9 @@ def DictReaderFactory(name, format, iterable, fieldnames, **config):
         'text': text.DictReader,
     }
 
-    ValidateInputFormat(name, format, formats, iterable)
+    ValidateInputFormat(name, layout, layouts, iterable)
 
-    return formats[format](iterable, fieldnames, **config)
+    return layouts[layout](iterable, fieldnames, **config)
 
 class WriterIterator(object):
 
@@ -95,18 +95,18 @@ class WriterIterator(object):
 
     next = __next__
 
-def ValidateOutputFormat(name, format, formats, outfile):
-    if format not in formats:
-        raise TransformException(f"Unknown {name} format: '{format}'")
+def ValidateOutputFormat(name, layout, layouts, outfile):
+    if layout not in layouts:
+        raise TransformException(f"Unknown {name} layout: '{layout}'")
 
     try:
         outfile.write
     except:
         raise TransformException(f"Output for {name} is not writable")
 
-def WriterFactory(name, format, outfile, fieldnames, **config):
+def WriterFactory(name, layout, outfile, fieldnames, **config):
 
-    formats = {
+    layouts = {
         'csv': csv.LineWriter,
         'json': json.LineWriter,
         'jsonl': jsonl.LineWriter,
@@ -116,13 +116,13 @@ def WriterFactory(name, format, outfile, fieldnames, **config):
         'text': text.LineWriter,
     }
 
-    ValidateOutputFormat(name, format, formats, outfile)
+    ValidateOutputFormat(name, layout, layouts, outfile)
 
-    return formats[format](outfile, fieldnames, **config)
+    return layouts[layout](outfile, fieldnames, **config)
 
-def DictWriterFactory(name, format, outfile, fieldnames, **config):
+def DictWriterFactory(name, layout, outfile, fieldnames, **config):
 
-    formats = {
+    layouts = {
         'csv': csv.DictWriter,
         'json': json.DictWriter,
         'jsonl': jsonl.DictWriter,
@@ -131,6 +131,6 @@ def DictWriterFactory(name, format, outfile, fieldnames, **config):
         'rst': rst.DictWriter,
     }
 
-    ValidateOutputFormat(name, format, formats, outfile)
+    ValidateOutputFormat(name, layout, layouts, outfile)
 
-    return formats[format](outfile, fieldnames, **config)
+    return layouts[layout](outfile, fieldnames, **config)

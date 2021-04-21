@@ -1,11 +1,11 @@
-Unnest: Parse a string as a formatted record
-============================================
+Unnest: Parse a string as a record using a layout
+=================================================
 
 .. py:currentmodule:: textform
 
-.. py:class:: Unnest(pipeline, input, outputs, format='csv', **config)
+.. py:class:: Unnest(pipeline, input, outputs, layout='csv', **config)
 
-    The ``Unnest`` transform extracts one level of a nested record stored as a string in some format.
+    The ``Unnest`` transform extracts one level of a nested record stored as a string in some layout.
     ``Unnest`` is the logical inverse of :py:class:`Nest`.
 
     .. py:attribute:: pipeline
@@ -25,10 +25,10 @@ Unnest: Parse a string as a formatted record
         The output fields to be extracted. Only the listed fields will be extracted.
         They cannot overwrite existing fields. Use :py:class:`Drop` to remove unwanted fields.
 
-    .. py:attribute:: format
+    .. py:attribute:: layout
         :type: str
 
-        The format of the input string. Supported unnesting formats are:
+        The layout of the input string. Supported unnesting layouts are:
 
         * ``csv`` Comma-separated values. The *outputs* will be used to provide the field names.
         * ``json``, ``jsonl`` JavaScript Object Notation records (``{..}``). Only keys from *outputs* will be returned

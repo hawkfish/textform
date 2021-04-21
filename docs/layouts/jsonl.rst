@@ -1,9 +1,9 @@
 JavaScript Object Notation Lines
 ================================
 
-.. py:currentmodule:: textform.formats.jsonl
+.. py:currentmodule:: textform.layouts.jsonl
 
-The ``jsonl`` format uses the :py:mod:`json` module to read and write records using an interface
+The ``jsonl`` layout uses the :py:mod:`json` module to read and write records using an interface
 that looks like :py:mod:`csv`.
 
 The difference between strict JSON and line-oriented JSON (:py:mod:`jsonl`)
@@ -29,7 +29,7 @@ is that line-oriented JSON writes out each records on a separate line.
 
 .. py:class:: DictWriter(outfile, fieldnames, **config)
 
-    A :py:class:`textform.formats.DictWriter` that writes JSON records, one per line.
+    A :py:class:`textform.layouts.DictWriter` that writes JSON records, one per line.
 
     .. py:method:: writeheader()
 
@@ -37,7 +37,7 @@ is that line-oriented JSON writes out each records on a separate line.
 
     .. py:method:: writerow(row)
 
-        Writes the row in JSON format with a newline.
+        Writes the row in JSON layout with a newline.
 
     .. py:method:: writefooter()
 

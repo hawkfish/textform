@@ -1,11 +1,11 @@
-Write: Export formatted records to a writable object
-====================================================
+Write: Export records to a writable object using a layout
+=========================================================
 
 .. py:currentmodule:: textform
 
-.. py:class:: Write(source, outfile[, format='csv'[, **config]])
+.. py:class:: Write(source, outfile[, layout='csv'[, **config]])
 
-    The ``Write`` transform writes records to a stream using a specified format.
+    The ``Write`` transform writes records to a stream using a specified layout.
     It has no impact on the stream except to write the records as they come in.
     ``Write`` is the logical inverse of :py:class:`Read`.
 
@@ -17,24 +17,24 @@ Write: Export formatted records to a writable object
 
         The stream where the data will be sent.
 
-    .. py:attribute:: format
+    .. py:attribute:: layout
         :type: writable
 
-        The format to generate the output in.
+        The layout to use for the output.
 
-        Supported writing formats are:
+        Supported write layouts are:
 
         * ``csv`` Comma-Separated Values
         * ``json`` JavaScript Object Notation (an array of objects)
         * ``jsonl`` JavaScript Object Notation lines (one object per row)
         * ``md`` GitHub Markdown
         * ``py`` Python *dict*\ s
-        * ``rst`` CSV format escaped for reStructured text
+        * ``rst`` csv escaped for reStructured text
 
     .. py:attribute:: config
         :type: kwargs
 
-        Extra arguments to be passed to the formatting object.
+        Extra arguments to be passed to the layout object.
 
 
 Usage

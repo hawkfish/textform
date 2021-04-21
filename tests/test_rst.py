@@ -7,7 +7,7 @@ class TestRestructuredText(unittest.TestCase):
 
     def assert_row(self, fieldnames, row, expected):
         outfile = io.StringIO()
-        w = txf.formats.rst.DictWriter(outfile, fieldnames)
+        w = txf.layouts.rst.DictWriter(outfile, fieldnames)
         w.writerow(row)
 
         actual = outfile.getvalue()

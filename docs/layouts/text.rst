@@ -1,9 +1,9 @@
 Text Lines
 ==========
 
-.. py:currentmodule:: textform.formats.text
+.. py:currentmodule:: textform.layouts.text
 
-The ``text`` format reads and writes records as single lines of text using an interface
+The ``text`` layout reads and writes records as single lines of text using an interface
 that looks like :py:mod:`csv`.
 
 .. py:class:: LineReader(iterable, **config)
@@ -18,8 +18,8 @@ that looks like :py:mod:`csv`.
 
 .. py:class:: LineWriter(outfile, fieldnames, **config)
 
-    An :py:class:`textform.formats.LineWriter` that returns strings joined with :py:func:`join_escaped`.
-    It skips rows which are header formatting.
+    An :py:class:`textform.layouts.LineWriter` that returns strings joined with :py:func:`join_escaped`.
+    It skips rows which are header layoutting.
 
     .. py:method:: writerow(row)
 
@@ -27,7 +27,7 @@ that looks like :py:mod:`csv`.
 
 .. py:class:: DictWriter(outfile, fieldnames, **config)
 
-    A :py:class:`textform.formats.DictWriter` that
+    A :py:class:`textform.layouts.DictWriter` that
 
     .. py:method:: writeheader()
 

@@ -1,11 +1,11 @@
-Read: Import formatted record data from an iterable
-===================================================
+Read: Import record data from an iterable using a layout
+========================================================
 
 .. py:currentmodule:: textform
 
-.. py:class:: Read(iterable, [source=None, [, format='csv'[, **config]]])
+.. py:class:: Read(iterable, [source=None[, layout='csv'[, **config]]])
 
-    The ``Read`` transform pulls records from an ``iterable`` using a particular format.
+    The ``Read`` transform pulls records from an ``iterable`` using a particular layout.
     The output field names will be determined from the input or the *config* parameters.
     ``Read`` is the logical inverse of :py:class:`Write`.
 
@@ -20,21 +20,21 @@ Read: Import formatted record data from an iterable
         An optional input pipeline.
         New rows will be merged with the output of this pipeline.
 
-    .. py:attribute:: format
+    .. py:attribute:: layout
         :type: str
 
-        The format to generate the output in. Supported read formats are:
+        The layout to generate the output in. Supported read layouts are:
 
         * ``csv`` Comma-separated values. The header will be read to provide the field names.
-        * ``json`` JavaScript Object Notation records in array format (``[{..},...]``)
-        * ``jsonl`` JavaScript Object Notation Line format (``{...}\n{...}\n...``)
+        * ``json`` JavaScript Object Notation records in array layout (``[{..},...]``)
+        * ``jsonl`` JavaScript Object Notation Line layout (``{...}\n{...}\n...``)
         * ``md`` GitHub Markdown tables with headers
         * ``text`` Treats the file as a single field with a name taken from ``config['default_fieldnames']``.
 
     .. py:attribute:: config
         :type: kwargs
 
-        Extra arguments to be passed to the formatting object.
+        Extra arguments to be passed to the layout object.
 
 Usage
 ^^^^^

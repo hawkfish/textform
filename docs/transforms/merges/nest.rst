@@ -1,11 +1,11 @@
-Nest: Merge fields into a formatted string record
-=================================================
+Nest: Merge fields into a string record using a layout
+======================================================
 
 .. py:currentmodule:: textform
 
-.. py:class:: Nest(source, inputs, output[, format='csv'[, **config]])
+.. py:class:: Nest(source, inputs, output[, layout='csv'[, **config]])
 
-    The ``Nest`` transform combines fields into a single string field using a particular format.
+    The ``Nest`` transform combines fields into a single string field using a particular layout.
     ``Nest`` is the logical inverse of :py:class:`Unnest`.
     It is a subclass of :py:class:`Merge`.
 
@@ -26,11 +26,11 @@ Nest: Merge fields into a formatted string record
         The output field receiving the merged values.
         It cannot overwrite existing fields. Use :py:class:`Drop` to remove unwanted fields.
 
-    .. py:attribute:: format
+    .. py:attribute:: layout
         :type: str
 
-        The format to generate the output in.
-        Supported nesting formats are:
+        The layout to generate the output in.
+        Supported layouts are:
 
         * ``csv`` Comma-separated string
         * ``json``, ``jsonl`` JavaScript Object Notation string
@@ -40,7 +40,7 @@ Nest: Merge fields into a formatted string record
     .. py:attribute:: config
         :type: kwargs
 
-        Extra arguments to be passed to the formatting object.
+        Extra arguments to be passed to the layout object.
 
 Usage
 ^^^^^

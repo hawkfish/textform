@@ -3,7 +3,7 @@ Welcome to textform!
 
 .. py:module:: textform
 
-A data transformation pipeline module based on the seminal
+A data translayoution pipeline module based on the seminal
 `Potter's Wheel <http://control.cs.berkeley.edu/pwheel-vldb.pdf>`_ data wrangling formalism.
 The name is a portmanteau of "text" and "transform".
 
@@ -16,7 +16,7 @@ The name is a portmanteau of "text" and "transform".
    :caption: Contents:
 
    transforms/index
-   formats/index
+   layouts/index
 
 
 Indices and tables

@@ -1,12 +1,12 @@
 from .split import Split
 from .transform import Transform
 from .common import TransformException
-from .formats import ReaderFactory, ReaderIterator
+from .layouts import ReaderFactory, ReaderIterator
 
-def bind_unnest(name, format, outputs, **config):
+def bind_unnest(name, layout, outputs, **config):
 
     queue = ReaderIterator()
-    reader = ReaderFactory(name, format, queue, **config)
+    reader = ReaderFactory(name, layout, queue, **config)
 
     def unnest(value):
         nonlocal queue, reader, outputs
@@ -26,10 +26,10 @@ def bind_unnest(name, format, outputs, **config):
     return unnest
 
 class Unnest(Split):
-    def __init__(self, source, input, outputs, format='csv', **config):
+    def __init__(self, source, input, outputs, layout='csv', **config):
         name = 'unnest'
         outputs = Transform._validateStringTuple(name, outputs, 'Output')
 
-        super().__init__(source, input, outputs, bind_unnest(name, format, outputs, **config))
+        super().__init__(source, input, outputs, bind_unnest(name, layout, outputs, **config))
 
         self.name = name

@@ -10,7 +10,7 @@ Divide: Separate one field into two using a predicate
     and the other containing the ones that fail.
     If the predicate is a regular expression, matching it will be used as the predicate.
 
-    ``Divide`` can be used to separate a field with multiple formats,
+    ``Divide`` can be used to separate a field with multiple layouts,
     find erroneous values or
     pull sections names out from the main data.
 
