@@ -4,6 +4,5 @@ from .iterators import *
 from . import json
 from . import jsonl
 from . import md
-from . import py
 from . import rst
 from . import text

@@ -2,7 +2,6 @@ from . import csv
 from . import json
 from . import jsonl
 from . import md
-from . import py
 from . import rst
 from . import text
 from ..common import TransformException
@@ -61,7 +60,6 @@ def LineWriterFactory(name, layout, outfile, fieldnames, **config):
         'json': json.LineWriter,
         'jsonl': jsonl.LineWriter,
         'md': md.LineWriter,
-        'py': py.LineWriter,
         'rst': rst.LineWriter,
         'text': text.LineWriter,
     }
@@ -77,7 +75,6 @@ def DictWriterFactory(name, layout, outfile, fieldnames, **config):
         'json': json.DictWriter,
         'jsonl': jsonl.DictWriter,
         'md': md.DictWriter,
-        'py': py.DictWriter,
         'rst': rst.DictWriter,
     }
 

@@ -4,33 +4,23 @@ from helpers import MockRead
 
 import json
 
-def expected_csv(inputs, lines):
-    return [f'{i},String {i}' for i in range(lines)]
+def expected_csv(fieldnames, count):
+    return [f'{i},String {i}' for i in range(count)]
 
-def expected_json(inputs, lines):
-    return [json.dumps({inputs[0]: i, inputs[1]: f"String {i}"}) for i in range(lines)]
-
-def expected_py(inputs, lines):
-    return [{inputs[0]: i, inputs[1]: f"String {i}"} for i in range(lines)]
+def expected_json(fieldnames, count):
+    return [json.dumps({fieldnames[0]: i, fieldnames[1]: f"String {i}"}) for i in range(count)]
 
 def expected_md(fieldnames, count):
     sep = '|'
     def md_row(values):
         return '{}{}{}'.format(sep, sep.join(values), sep)
-    expected = [md_row(['Value', str(r)]) for r in range(count)]
-
-    eol = '\n'
-    expected = eol.join(expected)
-    expected += eol
-
-    return expected
+    return [md_row([str(i), f"String {i}"]) for i in range(count)]
 
 expected_factory = {
     'csv': expected_csv,
     'json': expected_json,
     'jsonl': expected_json,
     'md': expected_md,
-    'py': expected_py,
 }
 
 schemas = {
@@ -43,14 +33,14 @@ schemas = {
 
 class TestNest(unittest.TestCase):
 
-    def assert_nest(self, lines, format='csv'):
+    def assert_nest(self, count, layout='csv'):
         output = 'Record'
         inputs = ('Row#', 'String',)
-        iterable = iter([{inputs[0]: i, inputs[1]: f"String {i}"} for i in range(lines)])
+        iterable = iter([{inputs[0]: i, inputs[1]: f"String {i}"} for i in range(count)])
         config = {'default_fieldnames': inputs}
         s = MockRead(iterable, inputs)
         self.assertEqual(inputs, s.outputs)
-        t = txf.Nest(s, inputs, output, format)
+        t = txf.Nest(s, inputs, output, layout)
 
         self.assertEqual('nest', t.name)
         self.assertEqual(s, t.source)
@@ -64,11 +54,11 @@ class TestNest(unittest.TestCase):
         self.assertTrue(output in t.schema)
         self.assertIsNone(t.getSchemaType(output))
 
-        expected = expected_factory[format](inputs, lines)
+        expected = expected_factory[layout](inputs, count)
         for e in expected:
             self.assertEqual(e, t.readrow()[output])
             self.assertTrue(output in t.schema)
-            self.assertEqual(schemas[format], t.getSchemaType(output))
+            self.assertEqual(schemas[layout], t.getSchemaType(output))
 
         self.assertRaises(StopIteration, t.readrow)
 
@@ -87,16 +77,10 @@ class TestNest(unittest.TestCase):
         self.assert_nest(19, 'jsonl')
 
     def test_nest_md(self):
-        self.assert_nest(0, 'py')
-        self.assert_nest(1, 'py')
-        self.assert_nest(2, 'py')
-        self.assert_nest(11, 'py')
-
-    def test_nest_py(self):
-        self.assert_nest(0, 'py')
-        self.assert_nest(1, 'py')
-        self.assert_nest(2, 'py')
-        self.assert_nest(7, 'py')
+        self.assert_nest(0, 'md')
+        self.assert_nest(1, 'md')
+        self.assert_nest(2, 'md')
+        self.assert_nest(11, 'md')
 
     def test_overwrite(self):
         s = txf.Add(None, ('Target', 'Overwrite',), ('String', 1,))
