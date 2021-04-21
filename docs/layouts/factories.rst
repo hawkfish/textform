@@ -45,7 +45,7 @@ or entire files (Dict).
     :param outfile: The destination for the strings.
     :param fields fieldnames: The fields corresponding to the :py:obj:`tuple` values.
     :param config: Optional configuration parameters for the :py:class`DictReader`.
-    :return: :py:class:`LineWriter` that writes layoutted :py:obj:`tuple`\ s
+    :return: :py:class:`LineWriter` that writes layout :py:obj:`tuple`\ s
     :raises TransformException: if the layout is unknown or the *outfile* does not have a :py:meth:`write` method
 
 .. py:function:: DictWriterFactory(name, layout, outfile, fieldnames, **config)
@@ -59,5 +59,27 @@ or entire files (Dict).
     :param writable outfile: The destination for the strings.
     :param fields fieldnames: The fields corresponding to the tuple values.
     :param config: Optional configuration parameters for the :py:class:`DictReader`.
-    :return: A :py:class:`DictWriter` that writes layoutted tuples
+    :return: A :py:class:`DictWriter` that writes layout tuples
     :raises TransformException: if the layout is unknown or the *outfile* does not have a :py:meth:`write` method
+
+.. py:function:: GetLayout(layout)
+
+    Returns the factories for a layout code.
+    If there are no entries, the layout is not defined.
+
+    :param str layout: The layout
+    :return: The factories.
+    :rtype: dict
+
+.. py:function:: RegisterLayout(layout, namespace)
+
+    Adds factories for a layout code, reading them from the :py:func:`dir` of the namespace.
+    Existing factories are replaced.
+
+    :param namespace: An object containing the factories.
+
+.. py:function:: UnregisterLayout(layout)
+
+    Remove the factories for the layout.
+
+    :param namespace: An object containing the factories.

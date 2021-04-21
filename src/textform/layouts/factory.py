@@ -6,8 +6,61 @@ from . import rst
 from . import text
 from ..common import TransformException
 
-def _ValidateInputFormat(name, layout, layouts, iterable):
-    if layout not in layouts:
+_layouts = {
+    'LineReader': {
+        'csv': csv.LineReader,
+        'json': json.LineReader,
+        'jsonl': jsonl.LineReader,
+        'md': md.LineReader,
+        'text': text.LineReader,
+    },
+
+    'DictReader': {
+        'csv': csv.DictReader,
+        'json': json.DictReader,
+        'jsonl': jsonl.DictReader,
+        'md': md.DictReader,
+        'text': text.DictReader,
+    },
+
+    'LineWriter': {
+        'csv': csv.LineWriter,
+        'json': json.LineWriter,
+        'jsonl': jsonl.LineWriter,
+        'md': md.LineWriter,
+        'rst': rst.LineWriter,
+        'text': text.LineWriter,
+    },
+
+    'DictWriter': {
+        'csv': csv.DictWriter,
+        'json': json.DictWriter,
+        'jsonl': jsonl.DictWriter,
+        'md': md.DictWriter,
+        'rst': rst.DictWriter,
+    },
+}
+
+def GetLayout(layout):
+    result = {}
+    for factory in _layouts:
+        if layout in _layouts[factory]:
+            result[factory] = _layouts[factory][layout]
+    return result
+
+def RegisterLayout(layout, namespace):
+    contents = dir(namespace)
+    for factory in _layouts:
+        if factory in contents:
+            _layouts[factory][layout] = getattr(namespace, factory)
+
+def UnregisterLayout(layout):
+    for factory in _layouts:
+        if layout in _layouts[factory]:
+            del _layouts[factory][layout]
+
+def _ValidateInputFormat(name, layout, _layouts, iterable):
+    if layout not in _layouts:
         raise TransformException(f"Unknown {name} '{layout}'")
 
     try:
@@ -18,34 +71,22 @@ def _ValidateInputFormat(name, layout, layouts, iterable):
 
 def LineReaderFactory(name, layout, iterable, **config):
 
-    layouts = {
-        'csv': csv.LineReader,
-        'json': json.LineReader,
-        'jsonl': jsonl.LineReader,
-        'md': md.LineReader,
-        'text': text.LineReader,
-    }
+    readers = _layouts['LineReader']
 
-    _ValidateInputFormat(name, layout, layouts, iterable)
+    _ValidateInputFormat(name, layout, readers, iterable)
 
-    return layouts[layout](iterable, **config)
+    return readers[layout](iterable, **config)
 
 def DictReaderFactory(name, layout, iterable, fieldnames, **config):
 
-    layouts = {
-        'csv': csv.DictReader,
-        'json': json.DictReader,
-        'jsonl': jsonl.DictReader,
-        'md': md.DictReader,
-        'text': text.DictReader,
-    }
+    readers = _layouts['DictReader']
 
-    _ValidateInputFormat(name, layout, layouts, iterable)
+    _ValidateInputFormat(name, layout, readers, iterable)
 
-    return layouts[layout](iterable, fieldnames, **config)
+    return readers[layout](iterable, fieldnames, **config)
 
-def _ValidateOutputFormat(name, layout, layouts, outfile):
-    if layout not in layouts:
+def _ValidateOutputFormat(name, layout, _layouts, outfile):
+    if layout not in _layouts:
         raise TransformException(f"Unknown {name} layout: '{layout}'")
 
     try:
@@ -55,29 +96,16 @@ def _ValidateOutputFormat(name, layout, layouts, outfile):
 
 def LineWriterFactory(name, layout, outfile, fieldnames, **config):
 
-    layouts = {
-        'csv': csv.LineWriter,
-        'json': json.LineWriter,
-        'jsonl': jsonl.LineWriter,
-        'md': md.LineWriter,
-        'rst': rst.LineWriter,
-        'text': text.LineWriter,
-    }
+    readers = _layouts['LineWriter']
 
-    _ValidateOutputFormat(name, layout, layouts, outfile)
+    _ValidateOutputFormat(name, layout, readers, outfile)
 
-    return layouts[layout](outfile, fieldnames, **config)
+    return readers[layout](outfile, fieldnames, **config)
 
 def DictWriterFactory(name, layout, outfile, fieldnames, **config):
 
-    layouts = {
-        'csv': csv.DictWriter,
-        'json': json.DictWriter,
-        'jsonl': jsonl.DictWriter,
-        'md': md.DictWriter,
-        'rst': rst.DictWriter,
-    }
+    readers = _layouts['DictWriter']
 
-    _ValidateOutputFormat(name, layout, layouts, outfile)
+    _ValidateOutputFormat(name, layout, readers, outfile)
 
-    return layouts[layout](outfile, fieldnames, **config)
+    return readers[layout](outfile, fieldnames, **config)
