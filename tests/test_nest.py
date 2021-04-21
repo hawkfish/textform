@@ -28,7 +28,6 @@ schemas = {
     'json': str,
     'jsonl': str,
     'md': str,
-    'py': dict,
 }
 
 class TestNest(unittest.TestCase):

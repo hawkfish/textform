@@ -1,9 +1,9 @@
-Internal layout objects
-=======================
+Internals
+=========
 
 .. py:currentmodule:: txf.layouts
 
-These classes are designed to be used by layout implementors.
+These classes are intended to be used by layout implementors.
 
 .. py:class:: DictReader(iterable[, fieldnames=None[, **config]])
 
