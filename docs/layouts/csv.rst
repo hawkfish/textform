@@ -1,8 +1,10 @@
 Comma Separated Values
 ======================
 
+.. py:module:: txf.layouts.csv
+
 :py:mod:`txf` is designed to imitate the builtin :py:mod:`csv` module as closely as possible.
-The readers for csv are therefore almost identical to those of the builtin module.
+The layout objects for ``csv`` are therefore almost identical to those of the builtin module.
 
 .. py:class:: LineReader()
 

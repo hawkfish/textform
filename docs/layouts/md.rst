@@ -1,7 +1,7 @@
 Google Markdown
 ===============
 
-.. py:currentmodule:: txf.layouts.md
+.. py:module:: txf.layouts.md
 
 The ``md`` layout reads and writes records  as Markdown tables using an interface
 that looks like :py:mod:`csv`.
@@ -17,7 +17,7 @@ This layout lets you read and write that layout for text record processing.
 .. py:class:: DictReader(iterable[, fieldnames=None[, **config]])
 
     An :py:obj:`iterator` that returns strings parsed with :py:func:`split_escaped`.
-    It is a subclass of :py:class:`DictInput` and reads the :py:attr:`fieldnames`
+    It is a subclass of :py:class:`DictReader` and reads the :py:attr:`fieldnames`
     from the header row if they have not been supplied.
 
 .. py:class:: LineWriter(outfile, fieldnames, **config)
@@ -40,15 +40,3 @@ This layout lets you read and write that layout for text record processing.
     .. py:method:: writefooter()
 
         NOP
-
-.. py:function:: split_escaped(field[, sep='|'[, esc='\\']])
-
-    Implements a state machine to split escaped strings using a separator and an escape character.
-
-    :returns: A :py:obj:`tuple` of split strings.
-
-.. py:function:: join_escaped(values[, sep='|'[, esc='\\']])
-
-    Escapes the strings and joins them.
-
-    :returns: A :py:obj:`str` containing the escaped line.

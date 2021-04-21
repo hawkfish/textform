@@ -1,6 +1,6 @@
 '''Base class for implementing csv.DictReader style interface'''
 
-class NumberedIterator(object):
+class _NumberedIterator(object):
 
     def __init__(self, iterable, **config):
         self._iterable = iterable
@@ -16,10 +16,10 @@ class NumberedIterator(object):
 
     next = __next__
 
-class DictInput(object):
+class DictReader(object):
 
     def __init__(self, iterable, fieldnames=None, **config):
-        self.reader = NumberedIterator(iterable)
+        self.reader = _NumberedIterator(iterable)
         self.line_num = 0
         self._fieldnames = fieldnames
         self._defaultfieldnames = config.get('default_fieldnames')

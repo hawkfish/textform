@@ -1,7 +1,7 @@
 JavaScript Object Notation
 ==========================
 
-.. py:currentmodule:: txf.layouts.json
+.. py:module:: txf.layouts.json
 
 The ``json`` layout uses the :py:mod:`json` module to read and write records using an interface
 that looks like :py:mod:`csv`.

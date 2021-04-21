@@ -1,12 +1,12 @@
 from .split import Split
 from .transform import Transform
 from .common import TransformException
-from .layouts import ReaderFactory, ReaderIterator
+from .layouts import LineReaderFactory, BufferedAppender
 
 def bind_iterate(name, layout, tag, **config):
 
-    queue = ReaderIterator()
-    reader = ReaderFactory(name, layout, queue, **config)
+    queue = BufferedAppender()
+    reader = LineReaderFactory(name, layout, queue, **config)
 
     def iterate(value):
         nonlocal queue, reader, tag

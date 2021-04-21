@@ -1,12 +1,12 @@
 from .split import Split
 from .transform import Transform
 from .common import TransformException
-from .layouts import ReaderFactory, ReaderIterator
+from .layouts import LineReaderFactory, BufferedAppender
 
 def bind_unnest(name, layout, outputs, **config):
 
-    queue = ReaderIterator()
-    reader = ReaderFactory(name, layout, queue, **config)
+    queue = BufferedAppender()
+    reader = LineReaderFactory(name, layout, queue, **config)
 
     def unnest(value):
         nonlocal queue, reader, outputs

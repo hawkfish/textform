@@ -1,7 +1,7 @@
 JavaScript Object Notation Lines
 ================================
 
-.. py:currentmodule:: txf.layouts.jsonl
+.. py:module:: txf.layouts.jsonl
 
 The ``jsonl`` layout uses the :py:mod:`json` module to read and write records using an interface
 that looks like :py:mod:`csv`.
@@ -16,7 +16,7 @@ is that line-oriented JSON writes out each records on a separate line.
 .. py:class:: DictReader(iterable, fieldnames=None, **config)
 
     An :py:obj:`iterator` that returns strings parsed with :py:meth:`json.loads`.
-    It is a subclass of :py:class:`DictInput` and reads the :py:attr:`fieldnames`
+    It is a subclass of :py:class:`txf.formats.DictReader` and reads the :py:attr:`fieldnames`
     from the first record if they have not been supplied.
 
 .. py:class:: LineWriter(outfile, fieldnames, **config)

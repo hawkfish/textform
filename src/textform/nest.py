@@ -1,12 +1,12 @@
 from .merge import Merge
 from .transform import Transform
 from .common import TransformException
-from .layouts import WriterIterator, WriterFactory
+from .layouts import BufferedWriter, LineWriterFactory
 
 def bind_nest(name, layout, inputs, **config):
 
-    queue = WriterIterator()
-    writer = WriterFactory(name, layout, queue, inputs, **config)
+    queue = BufferedWriter()
+    writer = LineWriterFactory(name, layout, queue, inputs, **config)
 
     def nest(values):
         nonlocal inputs, queue, writer

@@ -1,6 +1,6 @@
 '''Adapt single line text files to the csv API'''
 
-from . import dictinput
+from . import dictreader
 
 class LineReader(object):
 
@@ -12,7 +12,7 @@ class LineReader(object):
 
     next = __next__
 
-class DictReader(dictinput.DictInput):
+class DictReader(dictreader.DictReader):
     def __init__(self, iterable, fieldnames=None, **config):
         #   There is only ONE column for text input
         if not fieldnames:

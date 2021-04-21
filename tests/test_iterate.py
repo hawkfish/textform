@@ -6,7 +6,7 @@ import json
 
 def generate_record(count, layout):
     outfile = io.StringIO()
-    writer = txf.layouts.WriterFactory('iterate', layout, outfile, [f'{i}' for i in range(count)])
+    writer = txf.layouts.LineWriterFactory('iterate', layout, outfile, [f'{i}' for i in range(count)])
     writer.writerow([f'Value {i}' for i in range(count)])
     return outfile.getvalue()
 

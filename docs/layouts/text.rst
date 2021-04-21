@@ -1,7 +1,7 @@
 Text Lines
 ==========
 
-.. py:currentmodule:: txf.layouts.text
+.. py:module:: txf.layouts.text
 
 The ``text`` layout reads and writes records as single lines of text using an interface
 that looks like :py:mod:`csv`.

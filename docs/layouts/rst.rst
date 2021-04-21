@@ -1,7 +1,7 @@
 reStructured Text
 =================
 
-.. py:currentmodule:: txf.layouts.rst
+.. py:module:: txf.layouts.rst
 
 The ``rst`` layout reads and writes records as *escaped* rst tables using an interface
 that looks like :py:mod:`csv`.

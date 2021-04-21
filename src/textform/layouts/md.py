@@ -1,17 +1,17 @@
 '''Adapt Markdown table reading to the CSV API'''
 
-from . import dictinput
+from . import dictreader
 
 import re
 
-def escape(field, sep='|', esc='\\'):
+def _escape(field, sep='|', esc='\\'):
     field = str(field)
     return (esc+sep).join(field.split(sep))
 
-def join_escaped(values, sep='|', esc='\\'):
-    return '|'.join([escape(value, sep, esc) for value in values])
+def _join_escaped(values, sep='|', esc='\\'):
+    return '|'.join([_escape(value, sep, esc) for value in values])
 
-def split_escaped(field, sep='|', esc='\\'):
+def _split_escaped(field, sep='|', esc='\\'):
     #   No slick Python way, we have to write a state machine
     parts = []
     state = 0
@@ -46,15 +46,15 @@ class LineReader(object):
         return max([1 if self._pat.search(value) else 0 for value in values])
 
     def __next__(self):
-        values = split_escaped(next(self._iterable))[1:-1]
+        values = _split_escaped(next(self._iterable))[1:-1]
         while not self.isdata(values):
-            values = split_escaped(next(self._iterable))[1:-1]
+            values = _split_escaped(next(self._iterable))[1:-1]
 
         return values
 
     next = __next__
 
-class DictReader(dictinput.DictInput):
+class DictReader(dictreader.DictReader):
 
     def __init__(self, iterable, fieldnames=None, **config):
         super().__init__(LineReader(iterable), fieldnames, **config)
@@ -69,7 +69,7 @@ class LineWriter(object):
 
     def writerow(self, values):
         self.write('|')
-        self.write(join_escaped(values))
+        self.write(_join_escaped(values))
         self.write('|')
 
 class DictWriter(object):
