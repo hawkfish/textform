@@ -89,3 +89,52 @@ class TestUnfold(unittest.TestCase):
 
     def test_bad_tag_count(self):
         self.assert_invalid(4, 2, 3)
+
+    def test_voila_6(self):
+        csv = ["#BLENDs,#Queries,Quantile,Value",
+            "5,1,Min,7.22",
+            "5,1,Q25,7.22",
+            "5,1,Median,7.22",
+            "5,1,Q75,7.22",
+            "5,1,Max,7.22",
+            "6,11,Min,3.87",
+            "6,11,Q25,6.54",
+            "6,11,Median,8.03",
+            "6,11,Q75,9.86",
+            "6,11,Max,17.85",
+            "7,85,Min,5.18",
+            "7,85,Q25,7.20",
+            "7,85,Median,8.16",
+            "7,85,Q75,10.14",
+            "7,85,Max,311.77",
+            "8,449,Min,4.81",
+            "8,449,Q25,8.30",
+            "8,449,Median,10.06",
+            "8,449,Q75,13.32",
+            "8,449,Max,353.42",
+            "9,1511,Min,4.70",
+            "9,1511,Q25,9.05",
+            "9,1511,Median,10.98",
+            "9,1511,Q75,15.51",
+            "9,1511,Max,318.32",
+            "10,9216,Min,3.90",
+            "10,9216,Q25,9.75",
+            "10,9216,Median,12.19",
+            "10,9216,Q75,17.21",
+            "10,9216,Max,347.92",
+        ]
+
+        p = txf.Read(csv)
+        p = txf.Cast(p, '#BLENDs', int)
+        p = txf.Cast(p, '#Queries', int)
+        p = txf.Cast(p, 'Value', float)
+        unfolded = ['Min', 'Q25' ,'Median' ,'Q75' ,'Max',]
+        folded = ['Quantile', 'Value',]
+        p = txf.Unfold(p, folded, unfolded)
+        self.assertEqual(['#BLENDs','#Queries', ], p.fixed)
+        actual = 0
+        for row in p:
+            self.assertTrue('#BLENDs' in row, row)
+            self.assertEqual(5 + actual, row['#BLENDs'], actual)
+            actual += 1
+        self.assertEqual((len(csv) - 1) // len(unfolded), actual)

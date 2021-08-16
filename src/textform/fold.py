@@ -24,7 +24,7 @@ class Fold(Transform):
         self._buffer = [{self.tag: tag} for tag in self.tags]
         self._position = len(self._buffer)
 
-        self.fixed = filter(lambda input: input not in self.inputs, self.source.fieldnames)
+        self.fixed = [f for f in filter(lambda input: input not in self.inputs, self.source.fieldnames)]
 
     def _schema(self):
         schema = super()._schema()
