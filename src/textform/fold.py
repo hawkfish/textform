@@ -70,6 +70,9 @@ class Fold(Transform):
         #   Buffer empty, so pivot next row
         row = super().readrow()
 
+        #   Rebuild the buffer because the rows we return are not ours.
+        self._buffer = [{self.tag: tag} for tag in self.tags]
+
         #   Update the folds
         for g, group in enumerate(self._groups):
             output = self.outputs[g+1]

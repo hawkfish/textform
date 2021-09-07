@@ -129,3 +129,12 @@ class TestFold(unittest.TestCase):
             self.assertEqual(5 + actual // len(unfolded), row['#BLENDs'], actual)
             actual += 1
         self.assertEqual((len(csv) - 1) * len(unfolded), actual)
+
+    def test_drop_tags(self):
+        s = None
+        s = txf.Sequence(s, 'Fold 1')
+        s = txf.Sequence(s, 'Fold 2')
+        s = txf.Limit(s, 4)
+        s = txf.Fold(s, ('Fold 1', 'Fold 2',), ('Tags', 'Group',))
+        s = txf.Drop(s, 'Tags')
+        s.pump()

@@ -29,7 +29,7 @@ class Iterate(Transform):
     def __init__(self, source, input, tags, strings, layout='csv', **config):
         super().__init__('iterate', input, (tags, strings,), source)
 
-        self._validateOutputs()
+        self._validateOutputs(self.inputs)
 
         self.function = bind_iterate(self.name, layout, strings, **config)
         self._buffer = []
@@ -54,12 +54,13 @@ class Iterate(Transform):
         if self._position < len(self._buffer):
             return self._unbuffer()
 
-        #   Buffer empty, so expand the next row
+        #   Buffer flushed, so expand the next row
         row = self.source.readrow()
         ragged = self.function(row[self.input])
         del row[self.input]
 
         #   Update the buffer
+        self._buffer = []
         for tag in ragged:
             buffered = dict(zip(self.outputs, (str(tag), str(ragged[tag]),)))
             buffered.update(row)
