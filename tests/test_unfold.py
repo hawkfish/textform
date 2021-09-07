@@ -6,18 +6,23 @@ class TestUnfold(unittest.TestCase):
     def assert_unfold(self, nfolded=2, ngroups=1, nkeys=1):
         keys = [f"Key {k+1}" for k in range(nkeys)]
         inputs = [k for k in keys]
+        groups = [f"Group {g+1}" for g in range(ngroups)]
         folded = ['Tags',]
-        folded.extend([f"Group {g+1}" for g in range(ngroups)])
+        folded.extend(groups)
         inputs.extend(folded)
 
-        values = [f"k{k}" for k in range(nkeys)]
+        values = [f"k{k+1}" for k in range(nkeys)]
         values.append('Tag')
         values.extend([g for g in range(ngroups)])
 
         outputs = [f'Fold {f+1}' for f in range(ngroups * nfolded)]
 
-        s = txf.Add(None, inputs, values)
+        s = txf.Sequence(None, 'RowID', 0)
         s = txf.Limit(s, nfolded)
+        s = txf.Add(s, keys, values[:nkeys])
+        s = txf.Project(s, ('RowID',), 'Tags', lambda r: r % nfolded)
+        s = txf.Add(s, groups, values[nkeys+1:])
+        s = txf.Drop(s, 'RowID')
         t = txf.Unfold(s, folded, outputs)
 
         self.assertEqual('unfold', t.name, )
@@ -131,7 +136,7 @@ class TestUnfold(unittest.TestCase):
         unfolded = ['Min', 'Q25' ,'Median' ,'Q75' ,'Max',]
         folded = ['Quantile', 'Value',]
         p = txf.Unfold(p, folded, unfolded)
-        self.assertEqual(['#BLENDs','#Queries', ], p.fixed)
+        self.assertEqual(('#BLENDs','#Queries',), p.fixed)
         actual = 0
         for row in p:
             self.assertTrue('#BLENDs' in row, row)

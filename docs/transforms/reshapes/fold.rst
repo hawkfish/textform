@@ -44,9 +44,12 @@ Usage
 .. code-block:: python
 
    Fold(p, ('Sales 1992', 'Sales 1993', 'Sales 1994',),
-           ('Year', 'Sales',), ('1992', '1993', '1994',))
-   Fold(p, ('Sales 1992', 'Sales 1993', 'Sales 1994', 'Profit 1992', 'Profit 1993', 'Profit 1994',),
-           ('Year', 'Sales', 'Profit',), ('1992', '1993', '1994',))
+           ('Year', 'Sales',),
+           ('1992', '1993', '1994',))
+   Fold(p, ('Sales 1992', 'Sales 1993', 'Sales 1994',
+            'Profit 1992', 'Profit 1993', 'Profit 1994',),
+           ('Year', 'Sales', 'Profit',),
+           ('1992', '1993', '1994',))
 
 Examples
 ^^^^^^^^
