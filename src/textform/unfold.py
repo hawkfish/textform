@@ -15,6 +15,9 @@ class Unfold(Transform):
 
         self.fixed = [f for f in filter(lambda input: input not in self.inputs, self.source.fieldnames)]
 
+        # Ragged group buffer
+        self._ragged = None
+
     def _schema(self):
         schema = super()._schema()
 
@@ -46,10 +49,29 @@ class Unfold(Transform):
         #   and emitting a row whenever it is complete
         row = None
         for g in range(len(self._groups[0])):
-            folded = super().readrow()
+            folded = self._ragged
+            self._ragged = None
+            if not folded:
+                try:
+                    folded = super().readrow()
+                except StopIteration:
+                    if row: break
+                    raise
 
-            if row is None: row = {fixed: folded[fixed] for fixed in self.fixed}
-            row.update({self._groups[f][g]: folded[self.folds[f]] for f in range(len(self.folds))})
+            if row is None:
+                row = {output: None for output in self.outputs}
+                row.update({fixed: folded[fixed] for fixed in self.fixed})
+
+            elif not all([folded[fixed] == row[fixed] for fixed in self.fixed]):
+                self._ragged = {output: None for output in self.outputs}
+                self._ragged.update(folded)
+                break
+
+            try:
+                row.update({self._groups[f][g]: folded[self.folds[f]] for f in range(len(self.folds))})
+            except:
+                print(folded)
+                raise
 
         self._updateSchemaTypes(row, self.outputs)
 
