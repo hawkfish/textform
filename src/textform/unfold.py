@@ -70,7 +70,6 @@ class Unfold(Transform):
             try:
                 row.update({self._groups[f][g]: folded[self.folds[f]] for f in range(len(self.folds))})
             except:
-                print(folded)
                 raise
 
         self._updateSchemaTypes(row, self.outputs)
