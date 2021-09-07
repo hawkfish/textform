@@ -43,5 +43,53 @@ Usage
 
 .. code-block:: python
 
-   Fold(p, ('Sales 1992', 'Sales 1993', 'Sales 1994',), ('Year', 'Sales',))
-   Fold(p, ('Sales 1992', 'Sales 1993', 'Sales 1994', 'Profit 1992', 'Profit 1993', 'Profit 1994',), ('Year', 'Sales', 'Profit',))
+   Fold(p, ('Sales 1992', 'Sales 1993', 'Sales 1994',),
+           ('Year', 'Sales',), ('1992', '1993', '1994',))
+   Fold(p, ('Sales 1992', 'Sales 1993', 'Sales 1994', 'Profit 1992', 'Profit 1993', 'Profit 1994',),
+           ('Year', 'Sales', 'Profit',), ('1992', '1993', '1994',))
+
+Examples
+^^^^^^^^
+
+Single Fold
+-----------
+
+.. csv-table:: Input
+    :header: "Key", "Sales 1992", "Sales 1993", "Sales 1994"
+    :align: left
+
+    0, "S-0-1992", "S-0-1993", "S-0-1994"
+    1, "S-1-1992", "S-1-1993", "S-1-1994"
+
+.. csv-table:: Output
+    :header: "Key", "Year", "Sales"
+    :align: left
+
+    0, 1992, "S-0-1992"
+    0, 1993, "S-0-1993"
+    0, 1994, "S-0-1994"
+    1, 1992, "S-1-1992"
+    1, 1993, "S-1-1993"
+    1, 1994, "S-1-1994"
+
+Multiple Folds
+--------------
+
+.. csv-table:: Input
+    :header: "Key", "Sales 1992", "Sales 1993", "Sales 1994", "Profit 1992", "Profit 1993", "Profit 1994"
+    :align: left
+    :widths: 1, 8, 8, 8, 8, 8, 8
+
+    0, "S-0-1992", "S-0-1993", "S-0-1994", "P-0-1992", "P-0-1993", "P-0-1994"
+    1, "S-1-1992", "S-1-1993", "S-1-1994", "P-1-1992", "P-1-1993", "P-1-1994"
+
+.. csv-table:: Output
+    :header: "Key", "Year", "Sales", "Profit"
+    :align: left
+
+    0, 1992, "S-0-1992", "P-0-1992"
+    0, 1993, "S-0-1993", "P-0-1993"
+    0, 1994, "S-0-1994", "P-0-1994"
+    1, 1992, "S-1-1992", "P-1-1992"
+    1, 1993, "S-1-1993", "P-1-1993"
+    1, 1994, "S-1-1994", "P-1-1994"

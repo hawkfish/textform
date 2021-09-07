@@ -6,9 +6,9 @@ Unfold: Rotate one field to many
 .. py:class:: Unfold(source, inputs, outputs)
 
     The ``Unfold`` transform unfolds (pivots) a set of fields.
-    Simple unfolding consists of rotating a single input fields into multiple output fields.
-    This can be generalised to multiple input fields where the output fields
-    are broken up into equal-sized groups, each of which is generated from one of the input fields.
+    Simple unfolding consists of rotating a single input field into multiple output fields.
+    This can be generalised to multiple input fields where the output fields are broken up into equal-sized groups,
+    and each group is generated from one of the input fields.
     ``Unfold`` is the inverse of :py:class:`Fold`.
 
     .. py:attribute:: source
@@ -45,3 +45,49 @@ Usage
 
    Unfold(p, ('Year', 'Sales',), ('Sales 1992', 'Sales 1993', 'Sales 1994',))
    Unfold(p, ('Year', 'Sales', 'Profit',), ('Sales 1992', 'Sales 1993', 'Sales 1994', 'Profit 1992', 'Profit 1993', 'Profit 1994',))
+
+Examples
+^^^^^^^^
+
+Single Fold
+-----------
+
+.. csv-table:: Input
+    :header: "Key", "Year", "Sales"
+    :align: left
+
+    0, 1992, "S-0-1992"
+    0, 1993, "S-0-1993"
+    0, 1994, "S-0-1994"
+    1, 1992, "S-1-1992"
+    1, 1993, "S-1-1993"
+    1, 1994, "S-1-1994"
+
+.. csv-table:: Output
+    :header: "Key", "Sales 1992", "Sales 1993", "Sales 1994"
+    :align: left
+
+    0, "S-0-1992", "S-0-1993", "S-0-1994"
+    1, "S-1-1992", "S-1-1993", "S-1-1994"
+
+Multiple Folds
+--------------
+
+.. csv-table:: Input
+    :header: "Key", "Year", "Sales", "Profit"
+    :align: left
+
+    0, 1992, "S-0-1992", "P-0-1992"
+    0, 1993, "S-0-1993", "P-0-1993"
+    0, 1994, "S-0-1994", "P-0-1994"
+    1, 1992, "S-1-1992", "P-1-1992"
+    1, 1993, "S-1-1993", "P-1-1993"
+    1, 1994, "S-1-1994", "P-1-1994"
+
+.. csv-table:: Output
+    :header: "Key", "Sales 1992", "Sales 1993", "Sales 1994", "Profit 1992", "Profit 1993", "Profit 1994"
+    :align: left
+    :widths: 1, 8, 8, 8, 8, 8, 8
+
+    0, "S-0-1992", "S-0-1993", "S-0-1994", "P-0-1992", "P-0-1993", "P-0-1994"
+    1, "S-1-1992", "S-1-1993", "S-1-1994", "P-1-1992", "P-1-1993", "P-1-1994"
