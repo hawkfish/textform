@@ -1,22 +1,29 @@
 from .common import TransformException
 from .transform import Transform
 
+import copy
+
 class Unfold(Transform):
-    def __init__(self, source, inputs, outputs):
+    def __init__(self, source, inputs, outputs, offsets={}):
         super().__init__('unfold', inputs, outputs, source)
 
         self._validateOutputs()
 
         self.tag = self.inputs[0]
-        self.folds = self.inputs[1:]
+        self.folds = tuple(self.inputs[1:])
 
-        group_size = len(self.outputs) // len(self.folds)
-        self._groups = [self.outputs[i:i+group_size] for i in range(0, len(self.outputs), group_size)]
+        self._group_size = len(self.outputs) // len(self.folds)
+        self._groups = tuple([self.outputs[i:i+self._group_size] for i in range(0, len(self.outputs), self._group_size)])
 
-        self.fixed = [f for f in filter(lambda input: input not in self.inputs, self.source.fieldnames)]
+        self.fixed = tuple([f for f in filter(lambda input: input not in self.inputs, self.source.fieldnames)])
 
-        # Ragged group buffer
-        self._ragged = None
+        # Ragged group buffer: {fixed: {tag: values}}
+        self._buffer = {}
+
+        # Map from tag values to group offsets
+        if len(offsets) > self._group_size:
+            raise TransformException(f"Too many tag offsets ({len(offsets)}) in {self.name}")
+        self.offsets = copy.copy(offsets)
 
     def _schema(self):
         schema = super()._schema()
@@ -42,36 +49,57 @@ class Unfold(Transform):
 
         return schema
 
-    def readrow(self):
-        #   Build the row, skipping a ragged end
-        #   To do this in full generality would require
-        #   buffering rows keyed by the fixed values
-        #   and emitting a row whenever it is complete
-        row = None
-        for g in range(len(self._groups[0])):
-            folded = self._ragged
-            self._ragged = None
-            if not folded:
-                try:
-                    folded = super().readrow()
-                except StopIteration:
-                    if row: break
-                    raise
+    def _makeKey(self, row):
+        return tuple([row[field] for field in self.fixed])
 
-            if row is None:
-                row = {output: None for output in self.outputs}
-                row.update({fixed: folded[fixed] for fixed in self.fixed})
+    def _poprow(self, fixed, key):
+        row = {}
+        row.update(fixed)
+        row.update({output: None for output in self.outputs})
 
-            elif not all([folded[fixed] == row[fixed] for fixed in self.fixed]):
-                self._ragged = {output: None for output in self.outputs}
-                self._ragged.update(folded)
-                break
+        # Map the group tags to the output fields
+        tags = self._buffer.get(key, {})
+        for tag, values in tags.items():
+            tag_offset = self.offsets[tag]
+            row.update({self.outputs[tag_offset+i*self._group_size]: values[i] for i in range(len(values))})
 
-            try:
-                row.update({self._groups[f][g]: folded[self.folds[f]] for f in range(len(self.folds))})
-            except:
-                raise
+        del self._buffer[key]
 
         self._updateSchemaTypes(row, self.outputs)
 
         return row
+
+    def readrow(self):
+        while True:
+            folded = None
+            try:
+                folded = super().readrow()
+
+            except StopIteration:
+                if self._buffer:
+                    key = next(iter(self._buffer))
+                    fixed = {self.fixed[f]: key[f] for f in range(len(self.fixed))}
+                    return self._poprow(fixed, key)
+                raise
+
+            # The buffer key is the fixed fields
+            fixed = {fixed: folded[fixed] for fixed in self.fixed}
+
+            # Record the tag mapping
+            tag = folded[self.tag]
+            if not tag in self.offsets:
+                self.offsets[tag] = len(self.offsets)
+                if len(self.offsets) > self._group_size:
+                    raise TransformException(f"Too many generated tag offsets ({len(self.offsets)}) in {self.name}")
+
+            # Get the tags for this key
+            key = self._makeKey(fixed)
+            tags = self._buffer.get(key, {})
+            if not tags: self._buffer[key] = tags
+
+            values = tags.get(tag, [])
+            if not values: tags[tag] = values
+            values.extend([folded[fold] for fold in self.folds])
+
+            if len(tags) == self._group_size:
+                return self._poprow(fixed, key)
