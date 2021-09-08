@@ -1,8 +1,10 @@
 from .common import TransformException
 from .transform import Transform
 
+import copy
+
 class Unfold(Transform):
-    def __init__(self, source, inputs, outputs):
+    def __init__(self, source, inputs, outputs, offsets={}):
         super().__init__('unfold', inputs, outputs, source)
 
         self._validateOutputs()
@@ -19,7 +21,9 @@ class Unfold(Transform):
         self._buffer = {}
 
         # Map from tag values to group offsets
-        self._tag_offsets = {}
+        if len(offsets) > self._group_size:
+            raise TransformException(f"Too many tag offsets ({len(offsets)}) in {self.name}")
+        self.offsets = copy.copy(offsets)
 
     def _schema(self):
         schema = super()._schema()
@@ -56,7 +60,7 @@ class Unfold(Transform):
         # Map the group tags to the output fields
         tags = self._buffer.get(key, {})
         for tag, values in tags.items():
-            tag_offset = self._tag_offsets[tag]
+            tag_offset = self.offsets[tag]
             row.update({self.outputs[tag_offset+i*self._group_size]: values[i] for i in range(len(values))})
 
         del self._buffer[key]
@@ -83,10 +87,10 @@ class Unfold(Transform):
 
             # Record the tag mapping
             tag = folded[self.tag]
-            if not tag in self._tag_offsets:
-                self._tag_offsets[tag] = len(self._tag_offsets)
-                if len(self._tag_offsets) > self._group_size:
-                    raise TransformException("Too many fold tags in {self.name}")
+            if not tag in self.offsets:
+                self.offsets[tag] = len(self.offsets)
+                if len(self.offsets) > self._group_size:
+                    raise TransformException(f"Too many generated tag offsets ({len(self.offsets)}) in {self.name}")
 
             # Get the tags for this key
             key = self._makeKey(fixed)

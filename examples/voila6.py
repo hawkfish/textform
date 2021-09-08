@@ -52,7 +52,9 @@ def main():
     p = Project(p, ('Index',), 'Row', lambda r: r % 8)
     p = Project(p, ('Index',), 'Column', lambda r: r // 8)
     p = Drop(p, 'Index')
-    p = Unfold(p, ('Column', 'Data',), ('#BLENDs', '#Queries', 'Min', 'Q25', 'Median', 'Q75', 'Max',))
+    unfolded = ('#BLENDs', '#Queries', 'Min', 'Q25', 'Median', 'Q75', 'Max',)
+    offsets = {i: i for i in range(len(unfolded))}
+    p = Unfold(p, ('Column', 'Data',), unfolded, offsets)
     p = Drop(p, 'Row')
     # Get rid of the redundant column headers
     p = Match(p, '#BLENDs', '#BLENDs', True)

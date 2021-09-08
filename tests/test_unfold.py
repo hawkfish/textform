@@ -135,7 +135,8 @@ class TestUnfold(unittest.TestCase):
         p = txf.Cast(p, 'Value', float)
         unfolded = ['Min', 'Q25' ,'Median' ,'Q75' ,'Max',]
         folded = ['Quantile', 'Value',]
-        p = txf.Unfold(p, folded, unfolded)
+        offsets = {f: i for (i,f) in enumerate(unfolded)}
+        p = txf.Unfold(p, folded, unfolded, offsets)
         self.assertEqual(('#BLENDs','#Queries',), p.fixed)
         actual = 0
         for row in p:
