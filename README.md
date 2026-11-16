@@ -18,7 +18,7 @@ More complex use cases can be built on top of this kind of record stream. Reshap
 
 ## Example
 
-I created `textform` because I had worked on [a similar research system](https://tc19.tableau.com/learn/sessions/lets-get-physical-preparing-data-text-files) in the past and had two text files produced by the [DuckDB](https://github.com/duckdb/duckdb) performance test suite that I needed to convert into `csv`s:
+I created `textform` because I had worked on [a similar research system](https://www.youtube.com/watch?v=hmUgKNtC43I) in the past and had two text files produced by the [DuckDB](https://github.com/duckdb/duckdb) performance test suite that I needed to convert into `csv`s:
 
 ```
 ------------------
